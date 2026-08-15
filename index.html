@@ -1,1459 +1,1155 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ruvalcaba Villalobos · Órdenes de compra</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0f172a;--bg2:#1e293b;--bg3:#334155;
-  --border:#334155;--border2:#475569;
-  --text:#f1f5f9;--text2:#94a3b8;--text3:#64748b;
-  --info:#3b82f6;--infobg:#1e3a5f;
-  --success:#22c55e;--successbg:#14532d;
-  --danger:#ef4444;--dangerbg:#450a0a;
-  --warning:#f59e0b;--warningbg:#451a03;
-  --radius:10px;
+  --papel:#FAFAF8; --hoja:#FFFFFF; --tinta:#1F2430; --grafito:#5A6270;
+  --rojo:#B3282D; --rojo-osc:#8E1F23; --linea:#E3E1DB; --linea-suave:#EFEDE7;
+  --amb:#B87514; --azul:#1F5FA8; --viol:#6B4FA3; --verde:#1E7A46; --gris:#6B7280;
+  --sombra:0 1px 2px rgba(31,36,48,.06),0 8px 24px rgba(31,36,48,.07);
 }
-body{background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;min-height:100vh}
-.app{padding:0 0 4rem 0;max-width:700px;margin:0 auto}
-.sticky-header{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--border);padding:.75rem 1rem}
-.title-row{display:flex;align-items:center;gap:10px;margin-bottom:.5rem}
-.title-icon{width:36px;height:36px;border-radius:50%;background:var(--infobg);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.title-main{font-size:17px;font-weight:700;color:var(--text);letter-spacing:.3px}
-.title-sub{font-size:11px;color:var(--text3);margin-top:1px}
-.user-bar{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.user-bar-left{flex:1;min-width:0}
-.user-bar-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.prog-label{font-size:11px;color:var(--text3);margin-bottom:3px}
-.pbar{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
-.pfill{height:100%;background:var(--info);border-radius:2px;transition:width .3s}
-.user-bar-btns{display:flex;gap:6px;flex-shrink:0}
-.tabs{display:flex;gap:2px;padding:.5rem 1rem .5rem;background:var(--bg);overflow-x:auto;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{flex:1;min-width:58px;padding:6px 2px;text-align:center;font-size:11px;cursor:pointer;border-radius:6px;color:var(--text3);border:none;background:transparent;white-space:nowrap}
-.tab.active{background:var(--bg2);color:var(--text);font-weight:500;border:1px solid var(--border2)}
-.tab.locked{opacity:.3;cursor:not-allowed}
-.page-content{padding:1rem}
-.section{display:none}.section.active{display:block}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:1rem;overflow:hidden}
-.card-header{padding:9px 14px;background:var(--bg3);font-size:13px;font-weight:500;color:var(--text2);display:flex;justify-content:space-between;align-items:center}
-.btn{padding:7px 14px;border:1px solid var(--border2);border-radius:8px;background:transparent;color:var(--text);font-size:13px;cursor:pointer}
-.btn:hover{background:var(--bg3)}
-.btn-primary{background:var(--infobg);color:var(--info);border-color:var(--info)}
-.btn-danger{background:var(--dangerbg);color:var(--danger);border-color:var(--danger);font-size:12px;padding:4px 10px}
-.btn-warning{background:var(--warningbg);color:var(--warning);border-color:var(--warning);font-size:12px;padding:4px 10px}
-.btn-excel{background:#15803d;color:#fff;border:none;font-size:12px;padding:5px 10px;border-radius:8px;cursor:pointer}
-.btn-excel:hover{opacity:.88}
-.btn-save{background:var(--successbg);color:var(--success);border:1px solid var(--success);font-weight:500;width:100%;padding:12px;font-size:14px;margin-top:1.5rem;border-radius:var(--radius);cursor:pointer}
-.btn-save:disabled{opacity:.35;cursor:not-allowed}
-.text-input{width:100%;padding:8px 12px;border:1px solid var(--border2);border-radius:8px;background:var(--bg3);color:var(--text);font-size:14px}
-.text-input:focus{outline:none;border-color:var(--info)}
-.login-wrap{padding:1.5rem 1rem;max-width:420px;margin:0 auto}
-.login-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem}
-.login-card h2{font-size:16px;font-weight:500;margin-bottom:1rem;color:var(--text)}
-.input-group{margin-bottom:.75rem}
-.input-group label{font-size:12px;color:var(--text2);margin-bottom:4px;display:block}
-.hint{font-size:11px;color:var(--text3)}
-.err-msg{font-size:12px;color:var(--danger);margin-bottom:.5rem}
-.mr{display:flex;align-items:center;padding:7px 12px;border-top:1px solid var(--border);gap:5px}
-.mr.done{background:rgba(30,41,59,0.6)}
-.tn{flex:1;font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:105px}
-.tn.r{text-align:right}
-.tn.done-text{color:var(--text2)}
-.flag{font-size:15px;flex-shrink:0}
-.sinputs{display:flex;align-items:center;gap:4px;flex-shrink:0}
-.sinput{width:28px;height:28px;text-align:center;border:1px solid var(--border2);border-radius:6px;background:var(--bg3);color:var(--text);font-size:13px;font-weight:500;-moz-appearance:textfield}
-.sinput::-webkit-outer-spin-button,.sinput::-webkit-inner-spin-button{-webkit-appearance:none}
-.sinput:focus{outline:none;border-color:var(--info)}
-.sinput:disabled{opacity:.4;cursor:not-allowed}
-.vs{font-size:10px;color:var(--text3)}
-.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;background:var(--border2)}
-.dot.on{background:var(--success)}
-.em{display:flex;align-items:center;padding:8px 12px;border-top:1px solid var(--border);gap:4px}
-.et{flex:1;display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text);min-width:0}
-.et.r{flex-direction:row-reverse;text-align:right}
-.etn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:95px}
-.eph{color:var(--text3);font-style:italic;font-size:11px}
-.pc{display:flex;flex-direction:column;gap:4px;align-items:center;flex-shrink:0;padding:0 4px;min-width:56px}
-.pb{padding:3px 6px;font-size:11px;border:1px solid var(--border2);border-radius:6px;background:transparent;color:var(--text2);cursor:pointer;width:100%;text-align:center}
-.pb:hover{background:var(--bg3)}
-.pb.sel{background:var(--successbg);color:var(--success);border-color:var(--success);font-weight:700}
-.pb.pending{color:var(--danger);border-color:var(--danger)}
-.pb:disabled{opacity:.3;cursor:not-allowed}
-.saved-banner{background:var(--successbg);color:var(--success);border:1px solid var(--success);border-radius:var(--radius);padding:10px 14px;font-size:13px;font-weight:500;text-align:center;margin-bottom:1rem}
-.rt{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.rr{display:flex;align-items:center;padding:10px 14px;border-top:1px solid var(--border);gap:10px}
-.rr:first-child{border-top:none}
-.admin-panel{background:var(--bg2);border:1px solid var(--danger);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1rem}
-.admin-panel h3{font-size:14px;font-weight:500;color:var(--danger);margin-bottom:.75rem}
-.admin-row{display:flex;align-items:center;flex-wrap:wrap;padding:8px 0;border-top:1px solid var(--border);gap:6px}
-.admin-row:first-of-type{border-top:none}
-.status-badge{font-size:11px;padding:2px 8px;border-radius:10px}
-.status-locked{background:var(--warningbg);color:var(--warning)}
-.status-open{background:var(--successbg);color:var(--success)}
-.standings-wrap{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem}
-@media(max-width:500px){.standings-wrap{grid-template-columns:1fr}}
-.standings-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.standings-card .sh{padding:7px 10px;background:var(--bg3);font-size:12px;font-weight:600;color:var(--text2);display:flex;justify-content:space-between}
-.standings-table{width:100%;border-collapse:collapse;font-size:11px}
-.standings-table th{padding:4px 6px;color:var(--text3);font-weight:500;text-align:center;border-bottom:1px solid var(--border)}
-.standings-table th:first-child{text-align:left;padding-left:8px}
-.standings-table td{padding:5px 6px;text-align:center;border-bottom:1px solid var(--border);color:var(--text2)}
-.standings-table td:first-child{text-align:left;padding-left:8px}
-.standings-table tr:last-child td{border-bottom:none}
-.standings-table tr.advances td{color:var(--text);font-weight:700}
-.pos-num{display:inline-block;width:14px;text-align:center;margin-right:2px;color:var(--text3);font-size:10px}
-.modal-bg{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:200;padding:1rem}
-.modal{background:var(--bg2);border-radius:var(--radius);padding:1.5rem;width:100%;max-width:340px;border:1px solid var(--border2)}
-.modal h3{font-size:15px;font-weight:500;margin-bottom:1rem;color:var(--text)}
-.modal-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:1rem}
-.confirm-modal{background:var(--bg2);border-radius:var(--radius);padding:1.5rem;width:100%;max-width:320px;border:1px solid var(--danger)}
-.confirm-modal h3{font-size:15px;font-weight:500;margin-bottom:.5rem;color:var(--danger)}
-.confirm-modal p{font-size:13px;color:var(--text2);margin-bottom:1rem}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid var(--success);color:var(--success);padding:8px 18px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:300;white-space:nowrap}
-.toast.show{opacity:1}
-.final-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center;margin-bottom:1rem}
-.pending-red{color:var(--danger)!important}
-/* Tarjetas */
-.tc-row{display:flex;align-items:center;padding:6px 12px;border-top:1px solid var(--border);gap:6px}
-.tc-row.done{background:rgba(30,41,59,0.5)}
-.tc-name{flex:1;font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tc-inputs{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.tc-group{display:flex;align-items:center;gap:3px}
-.tc-label{font-size:13px}
-.tc-input{width:26px;height:26px;text-align:center;border:1px solid var(--border2);border-radius:6px;background:var(--bg3);color:var(--text);font-size:12px;font-weight:500;-moz-appearance:textfield}
-.tc-input::-webkit-outer-spin-button,.tc-input::-webkit-inner-spin-button{-webkit-appearance:none}
-.tc-input:focus{outline:none;border-color:var(--info)}
-.tc-input:disabled{opacity:.4;cursor:not-allowed}
-.tc-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;background:var(--border2)}
-.tc-dot.on{background:var(--success)}
-.fp-badge{font-size:10px;padding:1px 5px;border-radius:4px;background:var(--warningbg);color:var(--warning);font-weight:600;white-space:nowrap}
-.standings-table th.fp-col,.standings-table td.fp-col{color:var(--warning)}
-/* Resultados reales */
-.res-badge{font-size:10px;padding:2px 6px;border-radius:10px;font-weight:600;white-space:nowrap;flex-shrink:0}
-.res-exact{background:#14532d;color:#22c55e}
-.res-win{background:#1e3a5f;color:#60a5fa}
-.res-miss{background:#450a0a;color:#f87171}
-.res-pending{background:#1e293b;color:#64748b}
-.real-score{font-size:11px;color:var(--text3);padding:0 4px;white-space:nowrap;flex-shrink:0}
-.res-panel{background:var(--bg2);border:1px solid var(--info);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1rem}
-.res-panel h3{font-size:14px;font-weight:500;color:var(--info);margin-bottom:.75rem}
-.res-tabs{display:flex;gap:4px;margin-bottom:.75rem;flex-wrap:wrap}
-.res-tab{padding:5px 12px;border:1px solid var(--border2);border-radius:6px;background:transparent;color:var(--text3);font-size:12px;cursor:pointer}
-.res-tab.active{background:var(--infobg);color:var(--info);border-color:var(--info)}
-.res-match{display:flex;align-items:center;padding:6px 0;border-top:1px solid var(--border);gap:6px}
-.res-match:first-of-type{border-top:none}
-.res-team{flex:1;font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.res-team.r{text-align:right}
-.res-sinput{width:28px;height:26px;text-align:center;border:1px solid var(--border2);border-radius:6px;background:var(--bg3);color:var(--text);font-size:12px;font-weight:500;-moz-appearance:textfield}
-.res-sinput::-webkit-outer-spin-button,.res-sinput::-webkit-inner-spin-button{-webkit-appearance:none}
-.res-sinput:focus{outline:none;border-color:var(--info)}
-.res-elim-row{display:flex;align-items:center;padding:6px 0;border-top:1px solid var(--border);gap:8px;flex-wrap:wrap}
-.res-elim-row:first-of-type{border-top:none}
-.res-winner-btn{padding:3px 10px;font-size:11px;border:1px solid var(--border2);border-radius:6px;background:transparent;color:var(--text2);cursor:pointer;white-space:nowrap}
-.res-winner-btn.sel{background:var(--successbg);color:var(--success);border-color:var(--success);font-weight:700}
-.pts-total-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;background:var(--infobg);color:var(--info);margin-left:4px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{font-family:"IBM Plex Sans",system-ui,sans-serif;background:var(--papel);color:var(--tinta);font-size:14.5px;line-height:1.5}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit;font-size:14px;color:var(--tinta);background:#fff;border:1px solid var(--linea);border-radius:6px;padding:8px 10px;width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid rgba(179,40,45,.35);outline-offset:1px;border-color:var(--rojo)}
+textarea{resize:vertical;min-height:74px}
+h1,h2,h3{font-family:"Archivo",sans-serif}
+.mono{font-family:"IBM Plex Mono",monospace}
+.hide{display:none!important}
+
+/* ── Marca ── */
+.logo-login{width:92px;display:block;margin:0 auto 16px}
+.logo-mark{height:34px;width:auto;display:block}
+.marca{display:flex;align-items:center;gap:10px}
+.marca-tri{width:26px;height:26px;background:var(--rojo);clip-path:polygon(100% 0,100% 100%,0 0);border-radius:2px;flex:none}
+.marca-nom{font-family:"Archivo";font-weight:800;font-size:16px;letter-spacing:.2px;line-height:1.1}
+.marca-sub{font-size:11px;color:var(--grafito);letter-spacing:.6px;text-transform:uppercase}
+
+/* ── Login ── */
+#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;
+  background:linear-gradient(180deg,#F6F5F1 0%,var(--papel) 60%)}
+.login-card{background:var(--hoja);border:1px solid var(--linea);border-radius:12px;box-shadow:var(--sombra);padding:34px 30px;width:100%;max-width:400px}
+.login-card h1{font-size:21px;margin:18px 0 2px}
+.login-card .sub{color:var(--grafito);font-size:13px;margin-bottom:22px}
+.campo{margin-bottom:14px}
+.campo label{display:block;font-size:12px;font-weight:600;color:var(--grafito);margin-bottom:5px;letter-spacing:.3px;text-transform:uppercase}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:none;border-radius:7px;padding:10px 16px;font-weight:600;font-size:14px;transition:filter .12s}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-rojo{background:var(--rojo);color:#fff}.btn-rojo:hover:not(:disabled){filter:brightness(1.08)}
+.btn-borde{background:#fff;color:var(--tinta);border:1px solid var(--linea)}.btn-borde:hover{background:var(--linea-suave)}
+.btn-tinta{background:var(--tinta);color:#fff}
+.btn-lg{width:100%;padding:12px}
+.aviso-login{margin-top:16px;font-size:12.5px;color:var(--grafito);text-align:center}
+.err{color:var(--rojo);font-size:13px;margin-top:8px;min-height:18px;text-align:center}
+
+/* ── App shell ── */
+header.top{background:var(--hoja);border-bottom:1px solid var(--linea);position:sticky;top:0;z-index:40}
+.top-in{max-width:1180px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px}
+.top-user{margin-left:auto;display:flex;align-items:center;gap:12px;font-size:13px;color:var(--grafito)}
+.top-user b{color:var(--tinta)}
+.rol-tag{font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;background:var(--linea-suave);border:1px solid var(--linea);border-radius:99px;padding:2px 9px;color:var(--grafito);font-weight:600}
+nav.tabs{max-width:1180px;margin:0 auto;padding:0 20px;display:flex;gap:4px}
+nav.tabs button{background:none;border:none;border-bottom:2.5px solid transparent;padding:10px 14px;font-size:13.5px;font-weight:600;color:var(--grafito)}
+nav.tabs button.act{color:var(--rojo);border-bottom-color:var(--rojo)}
+main{max-width:1180px;margin:0 auto;padding:22px 20px 90px}
+
+/* ── Hoja (tarjeta-documento) ── */
+.hoja{background:var(--hoja);border:1px solid var(--linea);border-radius:10px;box-shadow:var(--sombra)}
+.hoja-cab{padding:14px 18px;border-bottom:1px solid var(--linea-suave);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.hoja-cab h2{font-size:15.5px}
+.hoja-cuerpo{padding:18px}
+.seccion{font-family:"Archivo";font-weight:700;font-size:13px;letter-spacing:.4px;margin:20px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--tinta)}
+.seccion:first-child{margin-top:0}
+
+/* ── Sello de folio ── */
+.folio-sello{font-family:"IBM Plex Mono";font-weight:600;font-size:12px;letter-spacing:1.5px;color:var(--rojo);border:1.5px solid var(--rojo);border-radius:4px;padding:3px 9px;white-space:nowrap}
+
+/* ── Chips de estatus ── */
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;border-radius:99px;padding:3px 11px;white-space:nowrap}
+.chip::before{content:"";width:7px;height:7px;border-radius:99px;background:currentColor}
+.ch-Pendiente{color:var(--amb);background:#FBF3E4}
+.ch-Autorizada{color:var(--azul);background:#E8F0FA}
+.ch-Ordenada{color:var(--viol);background:#EFEAF8}
+.ch-Recibida{color:var(--verde);background:#E6F4EC}
+.ch-Rechazada{color:var(--rojo);background:#FBEAEA}
+.ch-Cancelada{color:var(--gris);background:#EEF0F2}
+.ch-Pagada{color:#0F766E;background:#E0F2F0}
+.caja-pago{border-color:#0F766E!important;background:#F7FCFB!important}
+.caja-pago h3{color:#0F766E!important}
+
+/* ── Ruta de estatus (carril de firmas) ── */
+.ruta{display:flex;align-items:center;gap:0;flex-wrap:wrap;margin:4px 0 2px}
+.ruta .paso{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--grafito)}
+.ruta .paso .pto{width:22px;height:22px;border-radius:99px;border:2px solid var(--linea);display:flex;align-items:center;justify-content:center;font-size:11px;background:#fff;color:var(--grafito)}
+.ruta .paso.ok .pto{background:var(--tinta);border-color:var(--tinta);color:#fff}
+.ruta .paso.act .pto{border-color:var(--rojo);color:var(--rojo)}
+.ruta .paso.act{color:var(--rojo)}
+.ruta .lin{width:34px;height:2px;background:var(--linea);margin:0 8px}
+.ruta .lin.ok{background:var(--tinta)}
+.ruta .paso.malo .pto{background:var(--rojo);border-color:var(--rojo);color:#fff}
+.ruta .paso.malo{color:var(--rojo)}
+
+/* ── Tablas documento ── */
+table.doc{width:100%;border-collapse:collapse;font-size:13.5px}
+table.doc th{background:var(--tinta);color:#fff;font-weight:600;text-align:left;padding:8px 10px;font-size:12px;letter-spacing:.3px}
+table.doc td{border:1px solid var(--linea);padding:8px 10px;vertical-align:top;background:#fff}
+table.doc tr:nth-child(even) td{background:#FCFCFA}
+.tabla-scroll{overflow-x:auto;border-radius:6px;border:1px solid var(--linea)}
+.tabla-scroll table.doc td{border-left:none;border-right:1px solid var(--linea-suave);border-top:none;border-bottom:1px solid var(--linea-suave)}
+
+/* ── Grid datos generales ── */
+.dg{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px 16px}
+.dg .campo{margin:0}
+.dg-ver{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 22px;font-size:13.5px}
+.dg-ver .par b{display:block;font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--grafito);margin-bottom:2px}
+
+/* ── Lista de órdenes ── */
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.toolbar input[type=search]{max-width:260px}
+.filtros{display:flex;gap:6px;flex-wrap:wrap}
+.filtros button{border:1px solid var(--linea);background:#fff;border-radius:99px;padding:5px 13px;font-size:12.5px;font-weight:600;color:var(--grafito)}
+.filtros button.act{background:var(--tinta);border-color:var(--tinta);color:#fff}
+table.lista{width:100%;border-collapse:collapse;font-size:13.5px}
+table.lista th{text-align:left;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--grafito);padding:10px 12px;border-bottom:2px solid var(--tinta)}
+table.lista td{padding:11px 12px;border-bottom:1px solid var(--linea-suave);vertical-align:middle}
+table.lista tbody tr{cursor:pointer}
+table.lista tbody tr:hover td{background:#FBFAF6}
+.urg{color:var(--rojo);font-weight:700;font-size:11px;letter-spacing:.5px}
+.vacio{padding:52px 20px;text-align:center;color:var(--grafito)}
+.vacio b{display:block;font-size:15px;color:var(--tinta);margin-bottom:4px}
+
+/* ── Partidas del formulario ── */
+.part-fila{border:1px solid var(--linea);border-radius:8px;padding:12px;margin-bottom:10px;background:#FCFCFA;position:relative}
+.part-grid{display:grid;grid-template-columns:70px 1fr 1fr;gap:10px}
+.part-grid2{display:grid;grid-template-columns:1fr 130px 110px;gap:10px;margin-top:10px}
+.part-num{position:absolute;top:-9px;left:10px;background:var(--tinta);color:#fff;font-family:"IBM Plex Mono";font-size:10.5px;padding:1px 8px;border-radius:4px;letter-spacing:1px}
+.part-x{position:absolute;top:8px;right:8px;background:none;border:none;color:var(--grafito);font-size:16px;padding:4px}
+.part-x:hover{color:var(--rojo)}
+.total-linea{display:flex;justify-content:flex-end;gap:14px;align-items:baseline;margin-top:6px;font-size:14px}
+.total-linea b{font-family:"IBM Plex Mono";font-size:17px}
+
+/* ── Modal detalle ── */
+#velo{position:fixed;inset:0;background:rgba(31,36,48,.45);z-index:80;display:flex;align-items:flex-start;justify-content:center;padding:26px 14px;overflow-y:auto}
+.modal{background:var(--hoja);border-radius:12px;box-shadow:0 24px 70px rgba(0,0,0,.28);width:100%;max-width:880px;animation:sube .18s ease-out}
+@keyframes sube{from{transform:translateY(10px);opacity:.6}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.modal{animation:none}}
+.modal-cab{padding:16px 20px;border-bottom:1px solid var(--linea);display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:0;background:var(--hoja);border-radius:12px 12px 0 0;z-index:5}
+.modal-cab .x{margin-left:auto;background:none;border:none;font-size:22px;color:var(--grafito);padding:4px 8px}
+.modal-cuerpo{padding:20px}
+.acciones{display:flex;gap:9px;flex-wrap:wrap;padding:14px 20px;border-top:1px solid var(--linea);background:#FBFAF7;border-radius:0 0 12px 12px}
+
+/* ── Autorización dentro del detalle ── */
+.caja-aut{border:1.5px solid var(--rojo);border-radius:10px;padding:16px;margin-top:18px;background:#FFFDFC}
+.caja-aut h3{color:var(--rojo);font-size:14px;margin-bottom:12px;letter-spacing:.3px}
+.radios{display:flex;gap:14px;flex-wrap:wrap}
+.radios label{display:flex;align-items:center;gap:7px;font-size:13.5px;border:1px solid var(--linea);border-radius:7px;padding:8px 12px;cursor:pointer;background:#fff}
+.radios input{width:auto}
+.check-part{width:auto;transform:scale(1.15)}
+.firma-wrap{border:1.5px dashed var(--linea);border-radius:8px;background:#fff;touch-action:none;overflow:hidden}
+.firma-wrap canvas{width:100%;height:150px;display:block;cursor:crosshair}
+
+/* ── Comentarios / historial ── */
+.coment{border-left:3px solid var(--linea);padding:7px 12px;margin-bottom:8px;font-size:13.5px;background:#FCFCFA;border-radius:0 6px 6px 0}
+.coment .quien{font-weight:600}
+.coment .cuando{color:var(--grafito);font-size:11.5px;margin-left:8px}
+.hist-item{font-size:12.5px;color:var(--grafito);padding:4px 0;border-bottom:1px dashed var(--linea-suave)}
+.hist-item b{color:var(--tinta)}
+
+/* ── Usuarios ── */
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;align-items:start}
+
+/* ── Toast ── */
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--tinta);color:#fff;padding:11px 20px;border-radius:9px;font-size:13.5px;opacity:0;pointer-events:none;transition:.22s;z-index:200;max-width:90vw;text-align:center}
+#toast.ver{opacity:1;transform:translateX(-50%)}
+
+/* ── Reportes ── */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:12px;margin-bottom:16px}
+.kpi{background:var(--hoja);border:1px solid var(--linea);border-radius:10px;padding:14px 16px;box-shadow:var(--sombra)}
+.kpi small{display:block;font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--grafito);margin-bottom:4px}
+.kpi b{font-family:"Archivo";font-size:23px;font-weight:700}
+.kpi .sub2{font-size:12px;color:var(--grafito);margin-top:2px}
+.rep-fila{display:flex;align-items:center;gap:12px;padding:8px 2px;border-bottom:1px solid var(--linea-suave);font-size:13.5px}
+.rep-fila .nom{width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rep-fila .cnt{color:var(--grafito);font-size:12px;width:78px;flex:none}
+.rep-fila .mon{font-family:"IBM Plex Mono";width:128px;text-align:right;flex:none}
+.barra{flex:1;height:8px;background:var(--linea-suave);border-radius:99px;min-width:50px}
+.barra i{display:block;height:100%;background:var(--rojo);border-radius:99px}
+.pir-chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--linea);border-radius:99px;padding:5px 6px 5px 13px;font-size:13px;background:#fff}
+.pir-chip button{border:none;background:var(--linea-suave);border-radius:99px;width:20px;height:20px;font-size:11px;color:var(--grafito);line-height:1}
+.pir-chip button:hover{background:var(--rojo);color:#fff}
+
+/* ── Impresión ── */
+#print-root{display:none}
+@media print{
+  body>*{display:none!important}
+  #print-root{display:block!important;font-size:12.5px;color:#000}
+  .pr-hoja{padding:10mm 6mm;page-break-after:always}
+  .pr-cab{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10mm}
+  .pr-tit h1{font-size:19px;font-family:"Archivo";margin-bottom:3px}
+  .pr-tit .sub{font-size:11.5px;color:#333}
+  .pr-marca{text-align:right;font-size:11px;color:#444}
+  .pr-logo{width:24mm;display:block;margin-left:auto}
+  .pr-sec{font-weight:700;font-size:13px;border-bottom:2px solid #000;padding-bottom:4px;margin:8mm 0 4mm;font-family:"Archivo"}
+  table.pr-t{width:100%;border-collapse:collapse;font-size:11.5px}
+  table.pr-t th{background:#3a3f4b;color:#fff;padding:5px 7px;text-align:left;font-size:10.5px}
+  table.pr-t td{border:1px solid #999;padding:5px 7px;vertical-align:top}
+  .pr-firmas{display:flex;justify-content:space-between;gap:30px;margin-top:26mm}
+  .pr-firma{width:44%;text-align:center;font-size:11px}
+  .pr-firma .raya{border-top:1px solid #000;padding-top:5px}
+  .pr-obs{font-size:12px;white-space:pre-wrap}
+}
+@media(max-width:640px){
+  .part-grid,.part-grid2{grid-template-columns:1fr}
+  main{padding:14px 12px 80px}
+  .top-in{padding:10px 12px}
+}
 </style>
 </head>
 <body>
-<div class="app">
-  <div id="top-anchor"></div>
-  <div class="sticky-header" id="sticky-header" style="display:none">
-    <div class="title-row">
-      <div class="title-icon">⚽</div>
-      <div>
-        <div class="title-main">RUVICIA · Quiniela Mundial 2026</div>
-        <div class="title-sub">FIFA World Cup · USA · CAN · MEX</div>
-      </div>
-    </div>
-    <div class="user-bar">
-      <div class="user-bar-left">
-        <div class="user-bar-name" id="ulabel"></div>
-        <div class="prog-label" id="plabel">0 / 103 predicciones</div>
-        <div class="pbar"><div class="pfill" id="pfill" style="width:0%"></div></div>
-      </div>
-      <div class="user-bar-btns">
-        <button class="btn-excel" onclick="downloadExcel()">📥 Excel</button>
-        <button class="btn" style="font-size:12px;padding:5px 10px" onclick="logout()">Salir</button>
-      </div>
-    </div>
-    <div class="tabs">
-      <button class="tab active" onclick="showTab('posiciones')">Posiciones</button>
-      <button class="tab" onclick="showTab('tarjetas')">Tarjetas</button>
-      <button class="tab" onclick="showTab('grupos')">Grupos</button>
-      <button class="tab" id="tb-r32" onclick="showTab('r32')">16vos</button>
-      <button class="tab" id="tb-r16" onclick="showTab('r16')">Octavos</button>
-      <button class="tab" id="tb-qf"  onclick="showTab('qf')">Cuartos</button>
-      <button class="tab" id="tb-sf"  onclick="showTab('sf')">Semis</button>
-      <button class="tab" id="tb-final" onclick="showTab('final')">Final</button>
-      <button class="tab" onclick="showTab('ranking')">Ranking</button>
-    </div>
-  </div>
 
-  <div id="login-section">
-    <div class="login-wrap">
-      <div style="text-align:center;padding:2rem 0 1.5rem">
-        <div style="font-size:38px;margin-bottom:.75rem">⚽</div>
-        <div style="font-size:22px;font-weight:700;color:var(--text);letter-spacing:.5px">RUVICIA</div>
-        <div style="font-size:15px;font-weight:500;color:var(--text2);margin-top:4px">Quiniela Mundial 2026</div>
-        <div style="font-size:12px;color:var(--text3);margin-top:4px">FIFA World Cup · USA · CAN · MEX</div>
-      </div>
-      <div class="login-card">
-        <h2 id="login-title">Entrar a la quiniela</h2>
-        <div class="input-group">
-          <label>Nombre de usuario</label>
-          <input type="text" class="text-input" id="uinput" placeholder="Tu nombre" maxlength="20" oninput="checkIfExists()"/>
-        </div>
-        <div class="input-group">
-          <label>Contraseña (máx. 8 caracteres)</label>
-          <input type="password" class="text-input" id="pinput" placeholder="Tu contraseña" maxlength="8"/>
-        </div>
-        <div class="input-group" id="confirm-group" style="display:none">
-          <label>Confirmar contraseña</label>
-          <input type="password" class="text-input" id="pinput2" placeholder="Repite tu contraseña" maxlength="8"/>
-        </div>
-        <div class="err-msg" id="login-err" style="display:none"></div>
-        <button class="btn btn-primary" style="width:100%;padding:10px" onclick="enterQ()" id="login-btn">Entrar</button>
-        <p class="hint" style="margin-top:.75rem" id="login-hint">Si es tu primera vez, se creará tu cuenta automáticamente.</p>
-      </div>
-      <div id="login-rankings"></div>
-      <div style="text-align:center;margin-top:1rem">
-        <button class="btn" style="font-size:12px;color:var(--text3)" onclick="showAdminLogin()">⚙️ Administrador</button>
-      </div>
-    </div>
-  </div>
+<!-- ══ LOGIN ══ -->
+<div id="login">
+  <div class="login-card">
+    <img class="logo-full logo-login" alt="Ruvalcaba Villalobos · Consultores Fiscales">
+    <h1 style="text-align:center">Órdenes de compra</h1>
+    <div class="sub" style="text-align:center">Solicitud · Autorización · Seguimiento</div>
 
-  <div id="main-section" style="display:none">
-    <div class="page-content">
-      <div id="saved-banner" class="saved-banner" style="display:none">✅ Quiniela guardada — ya no se puede editar</div>
-      <div id="tab-posiciones" class="section active"></div>
-      <div id="tab-tarjetas"   class="section"></div>
-      <div id="tab-grupos"     class="section"></div>
-      <div id="tab-r32"        class="section"></div>
-      <div id="tab-r16"        class="section"></div>
-      <div id="tab-qf"         class="section"></div>
-      <div id="tab-sf"         class="section"></div>
-      <div id="tab-final"      class="section"></div>
-      <div id="tab-ranking"    class="section"><div id="ranking-content"></div></div>
+    <div id="login-form">
+      <div class="campo"><label>Usuario</label><input id="li-nom" autocomplete="username"></div>
+      <div class="campo"><label>Contraseña</label><input id="li-pw" type="password" autocomplete="current-password"></div>
+      <button class="btn btn-rojo btn-lg" id="li-btn" disabled>Conectando…</button>
+      <div class="err" id="li-err"></div>
+      <div class="aviso-login">¿No tienes acceso? Pídelo al administrador.</div>
     </div>
-  </div>
 
-  <div id="admin-section" style="display:none">
-    <div class="page-content">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
-        <div style="font-size:16px;font-weight:500">⚙️ Panel Administrador</div>
-        <div style="display:flex;gap:8px">
-          <button class="btn-excel" onclick="downloadAllExcel()">📥 Exportar todo</button>
-          <button class="btn" style="font-size:12px" onclick="logoutAdmin()">Salir</button>
-        </div>
-      </div>
-      <div id="admin-panel-content"></div>
-      <div id="admin-results-content"></div>
+    <div id="setup-form" class="hide">
+      <div class="err" style="color:var(--tinta);text-align:left;margin-bottom:12px">Aún no hay usuarios. Crea la cuenta del <b>administrador</b> para empezar.</div>
+      <div class="campo"><label>Tu nombre</label><input id="su-nom"></div>
+      <div class="campo"><label>Contraseña</label><input id="su-pw" type="password"></div>
+      <button class="btn btn-tinta btn-lg" id="su-btn">Crear administrador</button>
+      <div class="err" id="su-err"></div>
     </div>
   </div>
 </div>
 
-<div id="admin-modal" style="display:none">
-  <div class="modal-bg">
-    <div class="modal">
-      <h3>🔐 Administrador</h3>
-      <input type="password" class="text-input" id="admin-pass-input" placeholder="Contraseña" style="margin-bottom:.75rem" onkeydown="if(event.key==='Enter')checkAdminPass();if(event.key==='Escape')closeAdminModal()"/>
-      <div class="err-msg" id="admin-err" style="display:none">Contraseña incorrecta</div>
-      <div class="modal-btns">
-        <button class="btn" onclick="closeAdminModal()">Cancelar</button>
-        <button class="btn btn-primary" onclick="checkAdminPass()">Entrar</button>
+<!-- ══ APP ══ -->
+<div id="app" class="hide">
+  <header class="top">
+    <div class="top-in">
+      <div class="marca">
+        <img class="logo-mark" alt="Ruvalcaba Villalobos">
+        <div><div class="marca-nom">Órdenes de compra</div><div class="marca-sub">Ruvalcaba Villalobos</div></div>
       </div>
+      <div class="top-user"><span>Hola, <b id="u-nom"></b></span><span class="rol-tag" id="u-rol"></span><button class="btn btn-borde" id="btn-salir">Salir</button></div>
     </div>
-  </div>
+    <nav class="tabs">
+      <button data-tab="ordenes" class="act">Órdenes</button>
+      <button data-tab="nueva">Nueva solicitud</button>
+      <button data-tab="reportes" id="tab-reportes-btn" class="hide">Reportes</button>
+      <button data-tab="usuarios" id="tab-usuarios-btn" class="hide">Administración</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ── Lista ── -->
+    <section id="view-ordenes">
+      <div class="toolbar">
+        <input type="search" id="buscar" placeholder="Buscar folio, solicitante, concepto…">
+        <div class="filtros" id="filtros">
+          <button data-f="Todas" class="act">Todas</button>
+          <button data-f="Pendiente">Pendientes</button>
+          <button data-f="Autorizada">Autorizadas</button>
+          <button data-f="Ordenada">Ordenadas</button>
+          <button data-f="Recibida">Recibidas</button>
+          <button data-f="PorPagar">Por pagar</button>
+          <button data-f="Pagada">Pagadas</button>
+          <button data-f="Rechazada">Rechazadas</button>
+        </div>
+        <button class="btn btn-borde" id="btn-excel" style="margin-left:auto">⬇ Excel</button>
+      </div>
+      <div class="hoja"><div id="lista-wrap"></div></div>
+    </section>
+
+    <!-- ── Nueva solicitud ── -->
+    <section id="view-nueva" class="hide">
+      <div class="hoja">
+        <div class="hoja-cab"><span class="folio-sello" id="ns-folio">FOLIO NUEVO</span><h2 id="ns-titulo">Solicitud de compra</h2></div>
+        <div class="hoja-cuerpo">
+          <div class="seccion">Datos generales</div>
+          <div class="dg">
+            <div class="campo"><label>Solicitante</label><input id="ns-sol" disabled></div>
+            <div class="campo"><label>Fecha de solicitud</label><input id="ns-fecha" type="date"></div>
+            <div class="campo"><label>Pirámide (área)</label><input id="ns-area" list="areas-dl" placeholder="Administrativo, Sistemas…"><datalist id="areas-dl"><option>Administrativo</option><option>Sistemas</option><option>Contabilidad</option><option>Fiscal</option><option>Auditoría</option><option>Nóminas</option><option>Dirección</option></datalist></div>
+            <div class="campo"><label>Prioridad</label><select id="ns-prio"><option>Normal</option><option>Urgente</option></select></div>
+            <div class="campo" style="grid-column:1/-1"><label>Se necesita para</label><input id="ns-para" placeholder="Ej. Stock laptop, papelería del mes…"></div>
+          </div>
+
+          <div class="seccion">Productos cotizados</div>
+          <div id="partidas"></div>
+          <button class="btn btn-borde" id="btn-add-part">＋ Agregar producto</button>
+          <div class="total-linea"><span>Total estimado:</span><b id="ns-total" class="mono">$0.00</b></div>
+
+          <div class="seccion">Observaciones / recomendación</div>
+          <textarea id="ns-obs" placeholder="Ej. recomendación del encargado de Sistemas, comparativa de opciones…"></textarea>
+
+          <div class="seccion">Firma del solicitante</div>
+          <div class="firma-wrap"><canvas id="firma-sol-canvas" width="600" height="180"></canvas></div>
+          <div style="display:flex;gap:10px;align-items:center;margin-top:6px;flex-wrap:wrap">
+            <button class="btn btn-borde" id="firma-sol-limpiar" style="padding:5px 12px;font-size:12px">Borrar firma</button>
+            <span style="font-size:12px;color:var(--grafito)">Obligatoria. Firma con el mouse o con el dedo; aparecerá al pie de la solicitud.</span>
+          </div>
+
+          <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
+            <button class="btn btn-rojo" id="btn-guardar-sol">Guardar solicitud</button>
+            <button class="btn btn-borde hide" id="btn-cancelar-edit">Descartar cambios</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Reportes ── -->
+    <section id="view-reportes" class="hide">
+      <div class="toolbar">
+        <div class="filtros" id="rep-modo"><button data-m="mes" class="act">Mensual</button><button data-m="anio">Anual</button></div>
+        <input type="month" id="rep-mes" style="max-width:175px">
+        <select id="rep-anio" class="hide" style="max-width:130px"></select>
+        <button class="btn btn-borde" id="btn-rep-excel" style="margin-left:auto">⬇ Excel del reporte</button>
+      </div>
+      <div id="rep-wrap"></div>
+    </section>
+
+    <!-- ── Usuarios (admin) ── -->
+    <section id="view-usuarios" class="hide">
+      <div class="grid-2">
+        <div class="hoja">
+          <div class="hoja-cab"><h2>Dar de alta un usuario</h2></div>
+          <div class="hoja-cuerpo">
+            <div class="campo"><label>Nombre</label><input id="us-nom"></div>
+            <div class="campo"><label>Contraseña</label><input id="us-pw"></div>
+            <div class="campo"><label>Rol</label><select id="us-rol">
+              <option value="solicitante">Solicitante — crea solicitudes</option>
+              <option value="autorizador">Autorizador (socio) — autoriza y avanza estatus</option>
+              <option value="pagos">Pagos / Facturación — registra pagos y cierra órdenes</option>
+              <option value="admin">Administrador — todo</option>
+            </select></div>
+            <div class="campo"><label>Pirámide (área)</label><input id="us-area" list="areas-dl"></div>
+            <button class="btn btn-rojo" id="btn-add-user">Dar de alta</button>
+            <div class="err" id="us-err"></div>
+          </div>
+        </div>
+        <div class="hoja">
+          <div class="hoja-cab"><h2>Usuarios registrados</h2></div>
+          <div class="hoja-cuerpo" id="users-wrap"></div>
+        </div>
+        <div class="hoja">
+          <div class="hoja-cab"><h2>Pirámides (áreas)</h2></div>
+          <div class="hoja-cuerpo">
+            <div style="display:flex;gap:8px"><input id="pir-nueva" placeholder="Nueva pirámide…"><button class="btn btn-rojo" id="btn-add-pir" style="flex:none">Agregar</button></div>
+            <div id="pirs-wrap" style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px"></div>
+            <div style="font-size:12px;color:var(--grafito);margin-top:12px">Aparecen como sugerencias al crear solicitudes y dar de alta usuarios. Quitar una no afecta las órdenes ya guardadas.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 </div>
 
-<div id="confirm-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);align-items:center;justify-content:center;z-index:500;padding:1rem">
-  <div class="confirm-modal">
-    <h3>⚠️ Confirmar</h3>
-    <p id="confirm-msg"></p>
-    <div class="modal-btns">
-      <button class="btn" onclick="closeConfirm()">Cancelar</button>
-      <button class="btn btn-danger" id="confirm-ok">Confirmar</button>
-    </div>
-  </div>
-</div>
-<div class="toast" id="toast"></div>
+<!-- ══ Modal detalle ══ -->
+<div id="velo" class="hide"><div class="modal" id="modal"></div></div>
 
-<script>
-const ADMIN_PASS="Quiniela2026.TV06";
+<div id="toast"></div>
+<div id="print-root"></div>
+<script id="app-js">
+/* ═════════ Firebase (misma base que la quiniela, nodo aparte "compras/") ═════════ */
+const FB_CONFIG={apiKey:"AIzaSyCaVVot0SSNbnN01CvBIBexrACq1nvROos",authDomain:"mundial-ruvicia.firebaseapp.com",databaseURL:"https://mundial-ruvicia-default-rtdb.firebaseio.com",projectId:"mundial-ruvicia",storageBucket:"mundial-ruvicia.firebasestorage.app",messagingSenderId:"1054166310534",appId:"1:1054166310534:web:d80a83fdf76667c515bb07"};
+const RAIZ="compras"; // TODO el sistema vive bajo compras/ — jamás toca los nodos de la quiniela
+const LOGO_FULL="data:image/png;base64,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";
+const LOGO_MARK="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABACAIAAAACpWdhAAAH2klEQVR42t2baWxU1xXHz33vvtk8HnvGC+MFYxvbeMELtvHCeCV4H7OI1GkJ4AZ1gYjdVav0S9QSteoHslSq+qnfolZVIr7QqGorhFpcoFvAQAolJNiucDA1jYmx/ebd5fTDGEpWxvZ7M0POR/vp3vebc+65/3vPeQQRJ0YvXhh+nSgqAQJfUpNSUs3e0PFtCgAfjI1cOv+mpjngy2uchWrbn3Mn+SkA3L93h1I7pXaIzMMEAMiTEguIQATTcwrqA90HVJVSAJi5N0kIIUSJbACUKCVniEgURVGooigQv2uBoOQ2h7s5eNSZ4EUEghLvTFzT56YjBJaCGaG5ufv/nZ4av3Pr6t3J92Y/mgIAlWqEEMA48y8AZ3qg+0Bj1/Phv1AgmJ5VvNRwkdNT42PXz139x8nb45cFSqra4gpYsFBOYWNN2+AjHkcEwMhjEgHIp543QrM3Lp/66+lfTN36F9XshJB4CHIphcPl2faNn/tzyj8BbI7Nzkyd/d3PLp9/gwBRFBrrZCWFYG1bX6hp2fXxNW0OMCIAAYKIF4ZfH37rVcGZoqgxBGbGXGFFZ3D3cZXaEPChxFDMSoZkYbci1c272ra+oKhUoohJlgJAIViiNzPQe0iltoc7qbnAD+dDAKhoeLqhc58UHDDaWZssvANu6N6f6i8I/wKPphPF9PnCc6xv21NU1c25HgNRxUPF1cGy2i2f+V/Fgp+YAICiqk09B93JfiE5kuj5WQjDl5bf1HNIUekngtki4P+bNy23onEABY8aL6JUVK2p95DHl/l5zyiWvkFZ7dZEb6aQ0cheSIAxvbx+e1Fl5xc8Zi2wx5eZV9IsBYuOqErPLm3o2LuQuWICDAD5pa2U2tHidI0oqc3ZGhxK8KQtaIJYAadmFLk8qSillXsvCmFUN+3MLW6Cxx1dLQdOTPYnJvnRShHCWSgrr3r9xj2RPGw5sKKoHm8GolUelpI7XMmt/d91uJIggtOpEoV04nB6rFvDUvC6jXsycis/c9eNDTCx7OTEmb6qOFDV9OwiIi4qWs8SgSkkd3nSWvqO2uyu+AKe/ehuhPdHi9mHEBAbu55Pzy5dXE6xmtYIzc5MTyiKYnrUFFV2VNRvX3QStRp4emp8ZnrSXA9zYST5sgO9hxVVizvgD8ZG9Pl7xDwPI0pCSKD3oDd1FSxcyMUNsBDsxpXTgNLEOz3BQqW1W0qqgw9EFYkj4InRi7fe/7tq3t2t4CwlsyjQc2DJa8RCYCnFyPAvWWgeTFrAiFLVbM29hxOT/EtXftYBv/fO6RtXTlNqMyWaEYBzvaJxYHVZ+7KkrnXJ+cxbL0vJzCq7CaZn5FQ1dOxd5oCWAM/PTZ868dLdyfdNWb0IIKW02d0t/UPOhOTlHmZMp9Xn7p1689jNa2c0zW6OFAcUwljXsnNlQd3yRzNZ1n/4n9FTJ46NXju7UGEy44zEeCinsD7C424UgBfuU4Rg10d+/+ff/nR6akzTHAslt+U6FyXnLndKS3DI7kiME2AipRh/9/zF4V/dvPpHiZLaHIgm6AwMb0Qo6jd9059TvqgSp8nAD2cWnI1dPzty7tfj189xI6RSm6pSgqbwAhBgIX312o0VDQMmLjq6pDeBkH7/5tU/XTr3xsToBc5DVLXTcIpCMKv/Azn3JGe0Bo9qNmeEtxmWAM/PfvjupT9c+cuJ2/++gigVqlFqNzfzLdTcCdnQvT/FX2ju4I8HRsSwy2amb197+zfv/O3k1O0bhBCqahb18hAAxvTS2s1ldVtNH/zxwIQQAPjn2yfPnDx+f3oSFIVqYbVoVVODEIY3NTfQc1BRKJo9TaTCIz2rxJOcIaVQVWodLQIiSkWhgd5DSb5sK6aJFDh1RUH/11/LK2tlLIQPspP5wUyAcX1t/fY1VV0Whc8ipKU7Kb13x0/WVHYJHrLobThn6ZmlDZ37TL/0W6KWdrl9nc8cK6nuZ4YuUaKpfkaUVLO39B12e9KsO7Qu+od0OD0dAz+oDHxVcMPcAgrnxrrAs3mlrZZewiwlcjSbc+O2769vfw6lkCgQcJmuRgDG9Oz8mvpN3wKLbYlLRaW25uBQQ8deQEQpl9loLZE7XEnNwSN2Z2KcAgOgoqgbuvc39R0BQqTky3Gw4Ky2bTArrwbDJYW4BA67lKxv39O+5XtEVYVYfLcOQSTIWCivKFDdvDs8KLG4E9uE7F/VtGPT9hc1u1PwxfVyIIIU3O1Ja9n8HZsjAaJi5mx3a+u2dT3zktOVzIUBkcsSRERs6NyXnlUC0TLT9veiys6eHT92ub2chSJUhJzpBWufKq9/GqJoZgqavJKWvp3HE30ZPAIpJgRL8q1s7juiUu1JBQaAnML6/sFXfCvyOde/ILAREQgJ9B70pedBdM18yZqRU9E/+Epa5hrGPrfwz7heUhMsXte7iAUft8AAkOovDO5+OWNVpWHM48dbiBGQcyNlRX6g+0C4/xOj+7GAVYcSX3r+5sFXVxU1cPZobCOipJqtpe+ox5v56WbmJxgYARO9GcFdx1eXtXMj9ICZcG5UNA4UlD8FMTKrgMPq2pWY0v21H62p7jEMHQE51/0ryx70f0JMvnyxtiCOiM4Eb9fAD8vrthmhWaq5moNDzgQvxM6s/diGEAKANod701deVKjN5fblFm2AmBrBaH2HISVHKVVqM6tosjT7H+e4JlZ2jh4dAAAAAElFTkSuQmCC";
+document.querySelectorAll(".logo-full").forEach(i=>i.src=LOGO_FULL);
+document.querySelectorAll(".logo-mark").forEach(i=>i.src=LOGO_MARK);
+let db=null,_ready=false;
 
-// ====================================================================
-//  CONFIGURACIÓN DE FIREBASE
-//  Reemplaza estos valores con los de TU proyecto:
-//  Firebase console -> ⚙ Configuración del proyecto -> "Tus apps" -> Web
-//  (databaseURL aparece al crear la Realtime Database)
-// ====================================================================
-const FB_CONFIG={
-  apiKey:"AIzaSyCaVVot0SSNbnN01CvBIBexrACq1nvROos",
-  authDomain:"mundial-ruvicia.firebaseapp.com",
-  databaseURL:"https://mundial-ruvicia-default-rtdb.firebaseio.com",
-  projectId:"mundial-ruvicia",
-  storageBucket:"mundial-ruvicia.firebasestorage.app",
-  messagingSenderId:"1054166310534",
-  appId:"1:1054166310534:web:d80a83fdf76667c515bb07"
-};
-const GRP={
-  A:["México","Sudáfrica","Corea del Sur","Chequia"],
-  B:["Canadá","Bosnia y Herz.","Qatar","Suiza"],
-  C:["Brasil","Marruecos","Haití","Escocia"],
-  D:["Estados Unidos","Paraguay","Australia","Turquía"],
-  E:["Alemania","Curazao","C. de Marfil","Ecuador"],
-  F:["Países Bajos","Japón","Túnez","Suecia"],
-  G:["Bélgica","Egipto","Irán","Nueva Zelanda"],
-  H:["España","Cabo Verde","Arabia Saudita","Uruguay"],
-  I:["Francia","Senegal","Noruega","Iraq"],
-  J:["Argentina","Argelia","Austria","Jordania"],
-  K:["Portugal","Colombia","Uzbekistán","RD Congo"],
-  L:["Inglaterra","Croacia","Ghana","Panamá"]
-};
-const FL={
-  "México":"🇲🇽","Sudáfrica":"🇿🇦","Corea del Sur":"🇰🇷","Chequia":"🇨🇿",
-  "Canadá":"🇨🇦","Bosnia y Herz.":"🇧🇦","Qatar":"🇶🇦","Suiza":"🇨🇭",
-  "Brasil":"🇧🇷","Marruecos":"🇲🇦","Haití":"🇭🇹","Escocia":"🏴󠁧󠁢󠁳󠁣󠁴󠁿",
-  "Estados Unidos":"🇺🇸","Paraguay":"🇵🇾","Australia":"🇦🇺","Turquía":"🇹🇷",
-  "Alemania":"🇩🇪","Curazao":"🇨🇼","C. de Marfil":"🇨🇮","Ecuador":"🇪🇨",
-  "Países Bajos":"🇳🇱","Japón":"🇯🇵","Túnez":"🇹🇳","Suecia":"🇸🇪",
-  "Bélgica":"🇧🇪","Egipto":"🇪🇬","Irán":"🇮🇷","Nueva Zelanda":"🇳🇿",
-  "España":"🇪🇸","Cabo Verde":"🇨🇻","Arabia Saudita":"🇸🇦","Uruguay":"🇺🇾",
-  "Francia":"🇫🇷","Senegal":"🇸🇳","Noruega":"🇳🇴","Iraq":"🇮🇶",
-  "Argentina":"🇦🇷","Argelia":"🇩🇿","Austria":"🇦🇹","Jordania":"🇯🇴",
-  "Portugal":"🇵🇹","Colombia":"🇨🇴","Uzbekistán":"🇺🇿","RD Congo":"🇨🇩",
-  "Inglaterra":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","Croacia":"🇭🇷","Ghana":"🇬🇭","Panamá":"🇵🇦"
-};
+const $=id=>document.getElementById(id);
+const keyEnc=s=>encodeURIComponent(s).replace(/\./g,"%2E");
+const hoyISO=()=>new Date().toISOString().slice(0,10);
+const fmtF=iso=>{if(!iso)return"—";const[a,m,d]=iso.split("-");return d+"/"+m+"/"+a.slice(2)};
+const fmtM=n=>isNaN(n)?"—":new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN"}).format(n);
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ahora=()=>{const d=new Date();return d.toISOString().slice(0,10)+" "+d.toTimeString().slice(0,5)};
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("ver");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("ver"),2600)}
 
-// Cruces oficiales FIFA (Wikipedia)
-const R32=[
-  {id:"m73", role1:2,g1:"A", role2:2,g2:"B"},
-  {id:"m74", role1:1,g1:"E", role2:3,pool2:["A","B","C","D","F"]},
-  {id:"m75", role1:1,g1:"F", role2:2,g2:"C"},
-  {id:"m76", role1:1,g1:"C", role2:2,g2:"F"},
-  {id:"m77", role1:1,g1:"I", role2:3,pool2:["C","D","F","G","H"]},
-  {id:"m78", role1:2,g1:"E", role2:2,g2:"I"},
-  {id:"m79", role1:1,g1:"A", role2:3,pool2:["C","E","F","H","I"]},
-  {id:"m80", role1:1,g1:"L", role2:3,pool2:["E","H","I","J","K"]},
-  {id:"m81", role1:1,g1:"D", role2:3,pool2:["B","E","F","I","J"]},
-  {id:"m82", role1:1,g1:"G", role2:3,pool2:["A","E","H","I","J"]},
-  {id:"m83", role1:2,g1:"K", role2:2,g2:"L"},
-  {id:"m84", role1:1,g1:"H", role2:2,g2:"J"},
-  {id:"m85", role1:1,g1:"B", role2:3,pool2:["E","F","G","I","J"]},
-  {id:"m86", role1:1,g1:"J", role2:2,g2:"H"},
-  {id:"m87", role1:1,g1:"K", role2:3,pool2:["D","E","I","J","L"]},
-  {id:"m88", role1:2,g1:"D", role2:2,g2:"G"},
-];
-const R16=[
-  {id:"m89",f1:"m74",f2:"m77"},{id:"m90",f1:"m73",f2:"m75"},
-  {id:"m91",f1:"m76",f2:"m78"},{id:"m92",f1:"m79",f2:"m80"},
-  {id:"m93",f1:"m83",f2:"m84"},{id:"m94",f1:"m81",f2:"m82"},
-  {id:"m95",f1:"m86",f2:"m88"},{id:"m96",f1:"m85",f2:"m87"},
-];
-const QF=[
-  {id:"m97",f1:"m89",f2:"m90"},{id:"m98",f1:"m93",f2:"m94"},
-  {id:"m99",f1:"m91",f2:"m92"},{id:"m100",f1:"m95",f2:"m96"},
-];
-const SF=[{id:"m101",f1:"m97",f2:"m98"},{id:"m102",f1:"m99",f2:"m100"}];
-const FIN=[{id:"m104",f1:"m101",f2:"m102"}];
-const ALL_ELIM=[...R32,...R16,...QF,...SF,...FIN];
-const TOTAL=247; // 72 grupos + 31 eliminatorias + 144 tarjetas (48 equipos x 3)
-const TAB_ORDER=["posiciones","tarjetas","grupos","r32","r16","qf","sf","final","ranking"];
-let CU=null,activeTab="posiciones";
-const REAL_USER="__REAL__"; // usuario virtual: sus "picks" son los resultados reales (para armar el bracket real en el panel admin)
+/* ═════════ Estado en memoria ═════════ */
+const cache={users:{},ord:{}};
+let CU=null; // usuario actual {n, rol, area}
+let filtroEstatus="Todas", editandoFolio=null, modalFolio=null;
+let formSucio=false,_firmaTiene=false,_firmaCanvas=null;
+let _firmaSolTiene=false,_firmaSolCanvas=null,_firmaSolCtx=null;
 
-// ===== Backend Firebase (con caché local en memoria) =====
-// El estado de cada usuario se guarda como string JSON bajo state/users/{clave}
-// para que cada participante escriba SOLO en su propio espacio (sin pisarse).
-// Los resultados reales (solo admin) se guardan en results/blob.
-var _cache={state:{users:{},deleted:[]},results:{grp:{},elim:{},tc:{}}};
-var _fbReady=false, fbDB=null;
-function keyEnc(n){return encodeURIComponent(n).replace(/\./g,"%2E");}
-function gS(){return _cache.state;}
-function sS(d){_cache.state=d;return true;} // solo caché; las escrituras reales son granulares
-function fbWriteUser(u){
-  if(!_fbReady||!fbDB)return;
-  try{
-    var obj=_cache.state.users[u];
-    var ref=fbDB.ref("state/users/"+keyEnc(u));
-    if(obj===undefined||obj===null){ref.remove();}
-    else{ref.set(JSON.stringify(Object.assign({name:u},obj)));}
-  }catch(e){console.error("fbWriteUser",e);showToast("⚠️ Error al guardar datos");}
-}
-function fbWriteDeleted(){if(_fbReady&&fbDB){try{fbDB.ref("state/deleted").set(JSON.stringify(_cache.state.deleted||[]));}catch(e){console.error(e);}}}
-function fbWriteResults(){if(_fbReady&&fbDB){try{fbDB.ref("results/blob").set(JSON.stringify(_cache.results||{}));}catch(e){console.error(e);}}}
-function uD(u){const d=gS();return(d.users&&d.users[u])||{picks:{},saved:false,pts:0,pw:""};}
-function getPicks(u){if(u===REAL_USER)return realPicksObj();return uD(u).picks||{};}
-// Construye un objeto tipo "picks" a partir de los resultados REALES capturados por el admin.
-// Reutiliza toda la lógica de standings/bracket que ya existe, pero alimentada con datos reales.
-function realPicksObj(){
-  const r=_cache.results||{};const p={};
-  if(r.grp)Object.keys(r.grp).forEach(k=>{p[k]=r.grp[k];});            // marcadores reales de grupos
-  if(r.elim)Object.keys(r.elim).forEach(s=>{p["w_"+s]=r.elim[s];});   // ganadores reales de eliminatorias
-  return p;
-}
-// ¿Ya se capturaron TODOS los partidos reales de un grupo?
-function realGroupDone(g){
-  const teams=GRP[g];const picks=realPicksObj();
-  return getMat(teams).every((_,i)=>{const pk=picks[g+"-"+i];return pk&&pk.s1!==undefined&&pk.s2!==undefined;});
-}
-function allRealGroupsDone(){return Object.keys(GRP).every(realGroupDone);}
-// Resuelve un lado de una llave de 16vos con datos REALES, solo si ya está determinado.
-function realR32Side(slot,side){
-  const role=side===1?slot.role1:slot.role2;
-  const g=side===1?slot.g1:slot.g2;
-  const pool=side===2?slot.pool2:null;
-  if(role===1||role===2)return realGroupDone(g)?groupPos(g,role,REAL_USER):null;
-  if(role===3)return allRealGroupsDone()?best3rd(pool,REAL_USER,slot.id):null; // los 3ros solo se conocen con TODOS los grupos terminados
-  return null;
-}
-function isSaved(u){return !!(uD(u).saved);}
-function getPoints(u){return calcUserPts(u);}
-function getUserPw(u){return uD(u).pw||"";}
-function userExists(u){const d=gS();return !!(d.users&&d.users[u]);}
-function sP(u,k,v){if(isSaved(u))return;const d=_cache.state;if(!d.users)d.users={};if(!d.users[u])d.users[u]={picks:{},saved:false,pts:0,pw:""};d.users[u].picks[k]=v;fbWriteUser(u);}
-function createUser(u,pw){const d=_cache.state;if(!d.users)d.users={};d.users[u]={picks:{},saved:false,pts:0,pw};fbWriteUser(u);}
-function saveAll(){const d=_cache.state;if(!d.users)d.users={};if(!d.users[CU])d.users[CU]={picks:{},saved:false,pts:0,pw:""};d.users[CU].saved=true;fbWriteUser(CU);document.getElementById("saved-banner").style.display="block";renderFinal();showToast("¡Quiniela guardada!");}
-function adminUnlock(u){const d=_cache.state;if(!d.users||!d.users[u])return;d.users[u].saved=false;fbWriteUser(u);renderAdminPanel();showToast(`${u} desbloqueado ✓`);}
-function adminDelete(u){
-  const d=_cache.state;
-  if(!d.users||!d.users[u]){showToast("Usuario no encontrado");return;}
-  delete d.users[u];
-  // Guardar en lista negra para que loadSimulations no vuelva a crear el usuario
-  if(!d.deleted)d.deleted=[];
-  if(!d.deleted.includes(u))d.deleted.push(u);
-  fbWriteUser(u);      // obj ahora undefined -> se elimina de Firebase
-  fbWriteDeleted();
-  try{renderAdminPanel();}catch(e){console.error(e);}
-  showToast("✅ "+u+" eliminado");
-}
-function allUsers(){const d=gS();return d.users?Object.keys(d.users):[];}
-function fl(t){return FL[t]||"🏳";}
-function getMat(t){const m=[];for(let i=0;i<t.length;i++)for(let j=i+1;j<t.length;j++)m.push([t[i],t[j]]);return m;}
-
-// ---- Standings ----
-// Fair play: amarilla=-1, roja doble amarilla=-3, roja directa=-4, amarilla+roja directa=-5
-function getFP(team,picks){
-  const ya=parseInt(picks["tc_"+team+"_ya"])||0;
-  const rd=parseInt(picks["tc_"+team+"_rd"])||0;
-  const da=parseInt(picks["tc_"+team+"_da"])||0;
-  return ya*(-1)+rd*(-4)+da*(-3);
-}
-function countTCDone(u){
-  const picks=getPicks(u);let n=0;
-  Object.values(GRP).flat().forEach(team=>{
-    if(picks["tc_"+team+"_ya"]!==undefined&&picks["tc_"+team+"_rd"]!==undefined&&picks["tc_"+team+"_da"]!==undefined)n++;
+const ESTATUS_FLUJO=["Pendiente","Autorizada","Ordenada","Recibida","Pagada"];
+const TARJETAS=["Servifis","Ruvalcaba Villalobos Cía."];
+const PIR_DEF=["Administrativo","Sistemas","Contabilidad","Fiscal","Auditoría","Nóminas","Dirección"];
+let pirsCache=null; // null = usar PIR_DEF hasta que llegue el catálogo de la base
+function getPirs(){return pirsCache&&pirsCache.length?pirsCache:PIR_DEF.slice()}
+function savePirs(arr){return db.ref(RAIZ+"/config/piramides").set(JSON.stringify(arr))}
+function renderAreasDL(){$("areas-dl").innerHTML=getPirs().map(p=>`<option>${esc(p)}</option>`).join("")}
+function renderPirs(){
+  if(!isAdmin())return;
+  $("pirs-wrap").innerHTML=getPirs().map(p=>`<span class="pir-chip">${esc(p)}<button data-delpir="${esc(p)}" title="Quitar">✕</button></span>`).join("");
+  document.querySelectorAll("[data-delpir]").forEach(b=>b.onclick=()=>{
+    const p=b.dataset.delpir;
+    if(confirm('¿Quitar la pirámide "'+p+'" de las sugerencias?'))savePirs(getPirs().filter(x=>x!==p)).then(()=>toast("Pirámide quitada"));
   });
-  return n;
 }
-function calcStandings(g,u){
-  const teams=GRP[g];const picks=getPicks(u);
-  const stats=new Map();
-  teams.forEach((t,idx)=>{stats.set(idx,{pts:0,gf:0,ga:0,gd:0,name:t,idx,played:0,fp:0});});
-  const matches=[]; // resultados, para la mini-tabla de enfrentamiento directo (head-to-head)
-  getMat(teams).forEach(([t1,t2],i)=>{
-    const p=picks[g+"-"+i];if(!p||p.s1===undefined||p.s2===undefined)return;
-    const s1=parseInt(p.s1),s2=parseInt(p.s2);
-    const i1=teams.indexOf(t1),i2=teams.indexOf(t2);if(i1<0||i2<0||i1===i2)return;
-    stats.get(i1).gf+=s1;stats.get(i1).ga+=s2;stats.get(i1).gd+=s1-s2;stats.get(i1).played++;
-    stats.get(i2).gf+=s2;stats.get(i2).ga+=s1;stats.get(i2).gd+=s2-s1;stats.get(i2).played++;
-    if(s1>s2)stats.get(i1).pts+=3;else if(s1<s2)stats.get(i2).pts+=3;
-    else{stats.get(i1).pts+=1;stats.get(i2).pts+=1;}
-    matches.push({i1,i2,s1,s2});
-  });
-  teams.forEach((t,idx)=>{stats.get(idx).fp=getFP(t,picks);});
-  const arr=[...stats.values()];
-  // Mini-tabla de enfrentamiento directo: solo los partidos jugados ENTRE los equipos empatados
-  function h2h(idxList){
-    const m={};idxList.forEach(i=>m[i]={pts:0,gd:0,gf:0});
-    matches.forEach(({i1,i2,s1,s2})=>{
-      if(idxList.indexOf(i1)>=0&&idxList.indexOf(i2)>=0){
-        m[i1].gf+=s1;m[i1].gd+=s1-s2;m[i2].gf+=s2;m[i2].gd+=s2-s1;
-        if(s1>s2)m[i1].pts+=3;else if(s1<s2)m[i2].pts+=3;else{m[i1].pts++;m[i2].pts++;}
+
+/* ═════════ Acceso a datos ═════════ */
+function uRef(){return db.ref(RAIZ+"/usuarios")}
+function oRef(){return db.ref(RAIZ+"/ordenes")}
+function getUser(n){const j=cache.users[keyEnc(n)];if(!j)return null;try{return JSON.parse(j)}catch(e){return null}}
+function allUsers(){return Object.values(cache.users).map(j=>{try{return JSON.parse(j)}catch(e){return null}}).filter(Boolean)}
+function getOrd(f){const j=cache.ord[f];if(!j)return null;try{return JSON.parse(j)}catch(e){return null}}
+function allOrds(){return Object.keys(cache.ord).map(getOrd).filter(Boolean).sort((a,b)=>b.folio.localeCompare(a.folio))}
+function saveUser(u){return uRef().child(keyEnc(u.n)).set(JSON.stringify(u))}
+function saveOrd(o){return oRef().child(o.folio).set(JSON.stringify(o))}
+
+const isAdmin=()=>CU&&CU.rol==="admin";
+const puedeAut=()=>CU&&(CU.rol==="admin"||CU.rol==="autorizador");
+const puedePagar=()=>CU&&(CU.rol==="admin"||CU.rol==="pagos");
+const veReportes=()=>CU&&(CU.rol==="admin"||CU.rol==="autorizador"||CU.rol==="pagos");
+
+/* ═════════ Arranque ═════════ */
+function boot(){
+  firebase.initializeApp(FB_CONFIG);db=firebase.database();
+  Promise.all([uRef().once("value"),oRef().once("value")]).then(([su,so])=>{
+    cache.users=su.val()||{};cache.ord=so.val()||{};
+    _ready=true;
+    // listeners en vivo
+    uRef().on("child_added",s=>{cache.users[s.key]=s.val();refresco("u")});
+    uRef().on("child_changed",s=>{cache.users[s.key]=s.val();refresco("u")});
+    uRef().on("child_removed",s=>{delete cache.users[s.key];refresco("u")});
+    oRef().on("child_added",s=>{cache.ord[s.key]=s.val();refresco("o",s.key)});
+    oRef().on("child_changed",s=>{cache.ord[s.key]=s.val();refresco("o",s.key)});
+    oRef().on("child_removed",s=>{delete cache.ord[s.key];refresco("o",s.key)});
+    db.ref(RAIZ+"/config/piramides").on("value",sn=>{
+      try{pirsCache=sn.val()?JSON.parse(sn.val()):null}catch(e){pirsCache=null}
+      renderAreasDL();
+      if(CU&&isAdmin()&&!$("view-usuarios").classList.contains("hide"))renderPirs();
+    });
+    initLogin();
+  }).catch(e=>{$("li-err").textContent="No se pudo conectar a la base: "+e.message});
+}
+function refresco(tipo,clave){
+  if(!CU)return;
+  if(tipo==="o"){
+    if(!$("view-ordenes").classList.contains("hide"))renderLista();
+    if(modalFolio&&(clave===undefined||clave===modalFolio)&&!formSucio)abrirDetalle(modalFolio,true);
+  }
+  if(tipo==="u"&&!$("view-usuarios").classList.contains("hide")&&!userEditando)renderUsers();
+}
+
+/* ═════════ Login / sesión ═════════ */
+function initLogin(){
+  const hayUsers=Object.keys(cache.users).length>0;
+  if(!hayUsers){$("login-form").classList.add("hide");$("setup-form").classList.remove("hide");}
+  else{
+    $("li-btn").disabled=false;$("li-btn").textContent="Entrar";
+    const ses=localStorage.getItem("rv_oc_ses");
+    if(ses){try{const{n,pw}=JSON.parse(ses);const u=getUser(n);if(u&&u.pw===pw){entrar(u);return}}catch(e){}}
+  }
+}
+$("su-btn").onclick=()=>{
+  const n=$("su-nom").value.trim(),pw=$("su-pw").value;
+  if(!n||!pw){$("su-err").textContent="Escribe nombre y contraseña.";return}
+  const u={n,pw,rol:"admin",area:"Sistemas"};
+  saveUser(u).then(()=>{localStorage.setItem("rv_oc_ses",JSON.stringify({n,pw}));entrar(u);toast("Administrador creado")});
+};
+$("li-btn").onclick=intentarLogin;
+$("li-pw").addEventListener("keydown",e=>{if(e.key==="Enter")intentarLogin()});
+function intentarLogin(){
+  const n=$("li-nom").value.trim(),pw=$("li-pw").value;
+  const u=getUser(n);
+  if(!u){$("li-err").textContent="Ese usuario no existe. Pide tu alta al administrador.";return}
+  if(u.pw!==pw){$("li-err").textContent="Contraseña incorrecta.";return}
+  localStorage.setItem("rv_oc_ses",JSON.stringify({n,pw}));entrar(u);
+}
+function entrar(u){
+  CU=u;$("login").classList.add("hide");$("app").classList.remove("hide");
+  $("u-nom").textContent=u.n;$("u-rol").textContent=u.rol;
+  $("tab-usuarios-btn").classList.toggle("hide",!isAdmin());
+  $("tab-reportes-btn").classList.toggle("hide",!veReportes());
+  if(!$("rep-mes").value)$("rep-mes").value=hoyISO().slice(0,7);
+  renderAreasDL();
+  $("ns-sol").value=u.n;$("ns-fecha").value=hoyISO();if(u.area)$("ns-area").value=u.area;
+  if(!$("partidas").children.length)addPartida();
+  initFirmaSol();
+  if(CU.rol==="pagos"){filtroEstatus="PorPagar";document.querySelectorAll("#filtros button").forEach(x=>x.classList.toggle("act",x.dataset.f==="PorPagar"))}
+  irTab("ordenes");
+}
+$("btn-salir").onclick=()=>{localStorage.removeItem("rv_oc_ses");location.reload()};
+
+/* ═════════ Tabs ═════════ */
+document.querySelectorAll("nav.tabs button").forEach(b=>b.onclick=()=>irTab(b.dataset.tab));
+function irTab(t){
+  document.querySelectorAll("nav.tabs button").forEach(b=>b.classList.toggle("act",b.dataset.tab===t));
+  ["ordenes","nueva","reportes","usuarios"].forEach(v=>$("view-"+v).classList.toggle("hide",v!==t));
+  if(t==="ordenes")renderLista();
+  if(t==="reportes")renderReporte();
+  if(t==="usuarios"){renderUsers();renderPirs()}
+}
+
+/* ═════════ Usuarios (admin) ═════════ */
+$("btn-add-user").onclick=()=>{
+  if(!isAdmin())return;
+  const n=$("us-nom").value.trim(),pw=$("us-pw").value,rol=$("us-rol").value,area=$("us-area").value.trim();
+  if(!n||!pw){$("us-err").textContent="Nombre y contraseña son obligatorios.";return}
+  if(getUser(n)){$("us-err").textContent="Ya existe un usuario con ese nombre.";return}
+  saveUser({n,pw,rol,area}).then(()=>{$("us-nom").value="";$("us-pw").value="";$("us-area").value="";$("us-err").textContent="";toast("Usuario dado de alta: "+n)});
+};
+$("btn-add-pir").onclick=()=>{
+  if(!isAdmin())return;
+  const n=$("pir-nueva").value.trim();if(!n)return;
+  if(getPirs().some(p=>p.toLowerCase()===n.toLowerCase())){toast("Esa pirámide ya existe");return}
+  savePirs([...getPirs(),n]).then(()=>{$("pir-nueva").value="";toast("Pirámide agregada: "+n)});
+};
+$("pir-nueva").addEventListener("keydown",e=>{if(e.key==="Enter")$("btn-add-pir").click()});
+let userEditando=null;
+function renderUsers(){
+  const us=allUsers().sort((a,b)=>a.n.localeCompare(b.n));
+  if(!us.length){$("users-wrap").innerHTML=`<div class="vacio">Sin usuarios todavía.</div>`;return}
+  $("users-wrap").innerHTML=`<div class="tabla-scroll"><table class="doc"><thead><tr><th>Nombre</th><th>Rol</th><th>Área</th><th>Contraseña</th><th style="width:160px"></th></tr></thead><tbody>`+
+    us.map(u=>{
+      if(u.n===userEditando){
+        return `<tr>
+          <td><input id="ue-nom" value="${esc(u.n)}" style="min-width:120px"></td>
+          <td><select id="ue-rol">${["solicitante","autorizador","pagos","admin"].map(r=>`<option value="${r}" ${u.rol===r?"selected":""}>${r}</option>`).join("")}</select></td>
+          <td><input id="ue-area" list="areas-dl" value="${esc(u.area||"")}" style="min-width:110px"></td>
+          <td><input id="ue-pw" class="mono" value="${esc(u.pw)}" style="min-width:110px"></td>
+          <td style="white-space:nowrap">
+            <button class="btn btn-rojo" id="ue-save" style="padding:5px 11px;font-size:12px">Guardar</button>
+            <button class="btn btn-borde" id="ue-cancel" style="padding:5px 11px;font-size:12px">Cancelar</button>
+          </td></tr>`;
       }
-    });
-    return m;
-  }
-  // Orden oficial FIFA 2026:
-  //  1) puntos (todos los partidos del grupo)
-  //  2) entre los empatados en puntos: ENFRENTAMIENTO DIRECTO -> pts, dif. de goles, goles entre ellos
-  //  3) diferencia de goles general
-  //  4) goles general
-  //  5) fair play (mayor fp = menos tarjetas)
-  //  6) (oficialmente ranking FIFA; aquí usamos el orden del grupo como último recurso)
-  arr.sort((a,b)=>{
-    if(b.pts!==a.pts)return b.pts-a.pts;
-    const tied=arr.filter(x=>x.pts===a.pts).map(x=>x.idx);
-    if(tied.length>=2){
-      const m=h2h(tied);
-      if(m[b.idx].pts!==m[a.idx].pts)return m[b.idx].pts-m[a.idx].pts;
-      if(m[b.idx].gd!==m[a.idx].gd)return m[b.idx].gd-m[a.idx].gd;
-      if(m[b.idx].gf!==m[a.idx].gf)return m[b.idx].gf-m[a.idx].gf;
-    }
-    if(b.gd!==a.gd)return b.gd-a.gd;
-    if(b.gf!==a.gf)return b.gf-a.gf;
-    if(b.fp!==a.fp)return b.fp-a.fp;
-    return a.idx-b.idx;
+      return `<tr><td>${esc(u.n)}${u.n===CU.n?' <span class="rol-tag">tú</span>':""}</td><td>${esc(u.rol)}</td><td>${esc(u.area||"—")}</td><td class="mono">${esc(u.pw)}</td>
+        <td style="white-space:nowrap">
+          <button class="btn btn-borde" data-edituser="${esc(u.n)}" style="padding:4px 10px;font-size:12px">✎ Editar</button>
+          ${u.n===CU.n?"":`<button class="btn btn-borde" data-deluser="${esc(u.n)}" style="padding:4px 10px;font-size:12px;color:var(--rojo)">Quitar</button>`}
+        </td></tr>`;
+    }).join("")+`</tbody></table></div>`;
+  document.querySelectorAll("[data-edituser]").forEach(b=>b.onclick=()=>{userEditando=b.dataset.edituser;renderUsers();const i=$("ue-pw");if(i){i.focus();i.select()}});
+  document.querySelectorAll("[data-deluser]").forEach(b=>b.onclick=()=>{
+    const n=b.dataset.deluser;const u=getUser(n);
+    if(u&&u.rol==="admin"&&allUsers().filter(x=>x.rol==="admin").length<=1){toast("No puedes quitar al último administrador");return}
+    if(confirm("¿Quitar el acceso de "+n+"? Sus órdenes creadas se conservan."))uRef().child(keyEnc(n)).remove().then(()=>toast("Usuario eliminado"));
   });
-  return arr;
+  const bc=$("ue-cancel");if(bc)bc.onclick=()=>{userEditando=null;renderUsers()};
+  const bs=$("ue-save");if(bs)bs.onclick=guardarEdicionUser;
 }
-function groupPos(g,pos,u){const s=calcStandings(g,u);return s[pos-1]?s[pos-1].name:null;}
-function best3rdSet(u){
-  const thirds=[];
-  Object.keys(GRP).forEach(g=>{const s=calcStandings(g,u);if(s.length>=3)thirds.push({...s[2],grp:g});});
-  thirds.sort((a,b)=>b.pts-a.pts||b.gd-a.gd||b.gf-a.gf||b.fp-a.fp);
-  return new Set(thirds.slice(0,8).map(t=>t.name));
-}
-// Conjunto de los 32 equipos que (según u) clasifican a 16avos:
-// los 2 primeros de cada grupo + los 8 mejores terceros.
-function qualifiedSet(u){
-  const set=new Set();
-  Object.keys(GRP).forEach(g=>{const s=calcStandings(g,u);if(s[0])set.add(s[0].name);if(s[1])set.add(s[1].name);});
-  best3rdSet(u).forEach(n=>set.add(n));
-  return set;
+function guardarEdicionUser(){
+  const viejo=getUser(userEditando);if(!viejo){userEditando=null;renderUsers();return}
+  const n=$("ue-nom").value.trim(),pw=$("ue-pw").value,rol=$("ue-rol").value,area=$("ue-area").value.trim();
+  if(!n||!pw){toast("Nombre y contraseña no pueden quedar vacíos");return}
+  if(n!==viejo.n&&getUser(n)){toast("Ya existe un usuario llamado "+n);return}
+  if(viejo.rol==="admin"&&rol!=="admin"&&allUsers().filter(x=>x.rol==="admin").length<=1){toast("Debe quedar al menos un administrador");return}
+  const nuevo={n,pw,rol,area};
+  const esYo=viejo.n===CU.n;
+  const fin=()=>{
+    userEditando=null;
+    if(esYo){
+      localStorage.setItem("rv_oc_ses",JSON.stringify({n,pw}));
+      if(rol!==CU.rol){location.reload();return}
+      CU={...CU,n,pw,rol,area};$("u-nom").textContent=n;$("ns-sol").value=n;
+    }
+    renderUsers();toast("Usuario actualizado");
+  };
+  if(n!==viejo.n){
+    uRef().child(keyEnc(n)).set(JSON.stringify(nuevo)).then(()=>uRef().child(keyEnc(viejo.n)).remove()).then(fin).catch(e=>toast("Error: "+e.message));
+  }else{
+    saveUser(nuevo).then(fin).catch(e=>toast("Error: "+e.message));
+  }
 }
 
-// ── Tabla OFICIAL FIFA de asignación de mejores terceros (Mundial 2026) ──
-// La FIFA publica, para CADA combinación posible de los 8 grupos cuyo 3er lugar
-// clasifica, a qué llave (ganador de grupo) va el tercero de cada grupo. Esto NO se
-// puede deducir solo con "que no haya revancha": existen varios cruces válidos y solo
-// uno es el oficial. Clave: las 8 letras de grupo (ordenadas) con 3er lugar clasificado.
-// Valor: { slotId: grupoDelTercero que va en esa llave }.
-const FIFA_THIRD_TABLE={
-  // Combinación REAL del Mundial 2026 (terceros de B, D, E, F, I, J, K, L):
-  // m74=1E, m77=1I, m79=1A, m80=1L, m81=1D, m82=1G, m85=1B, m87=1K
-  "BDEFIJKL":{m74:"D",m77:"F",m79:"E",m80:"K",m81:"B",m82:"I",m85:"J",m87:"L"}
+/* ═════════ Formulario de solicitud ═════════ */
+$("btn-add-part").onclick=()=>addPartida();
+function addPartida(p){
+  const wrap=$("partidas");const i=wrap.children.length;
+  const d=document.createElement("div");d.className="part-fila";
+  d.innerHTML=`<span class="part-num">Nº ${String(i+1).padStart(2,"0")}</span>
+    <button class="part-x" title="Quitar producto">✕</button>
+    <div class="part-grid">
+      <div class="campo"><label>Cant.</label><input class="p-cant" type="number" min="1" value="${p?esc(p.cant):1}"></div>
+      <div class="campo"><label>Producto / descripción</label><textarea class="p-desc" style="min-height:56px">${p?esc(p.desc):""}</textarea></div>
+      <div class="campo"><label>Justificación (para qué o para quién)</label><textarea class="p-just" style="min-height:56px">${p?esc(p.just):""}</textarea></div>
+    </div>
+    <div class="part-grid2">
+      <div class="campo"><label>Producto solicitado para (área)</label><input class="p-para" list="areas-dl" value="${p?esc(p.para):""}"></div>
+      <div class="campo"><label>Costo unit. est.</label><input class="p-costo" type="number" min="0" step="0.01" value="${p?esc(p.costo):""}"></div>
+      <div class="campo"><label>Envío</label><input class="p-envio" value="${p?esc(p.envio):"Gratis"}"></div>
+    </div>`;
+  d.querySelector(".part-x").onclick=()=>{d.remove();renum();totalForm()};
+  d.querySelectorAll(".p-cant,.p-costo").forEach(inp=>inp.addEventListener("input",totalForm));
+  wrap.appendChild(d);totalForm();
+}
+function renum(){[...$("partidas").children].forEach((f,i)=>f.querySelector(".part-num").textContent="Nº "+String(i+1).padStart(2,"0"))}
+function leerPartidas(){
+  return [...$("partidas").children].map(f=>({
+    cant:parseFloat(f.querySelector(".p-cant").value)||1,
+    desc:f.querySelector(".p-desc").value.trim(),
+    just:f.querySelector(".p-just").value.trim(),
+    para:f.querySelector(".p-para").value.trim(),
+    costo:parseFloat(f.querySelector(".p-costo").value)||0,
+    envio:f.querySelector(".p-envio").value.trim()||"Gratis"
+  })).filter(p=>p.desc);
+}
+function totalForm(){const t=leerPartidas().reduce((s,p)=>s+p.cant*p.costo,0);$("ns-total").textContent=fmtM(t)}
+
+$("btn-guardar-sol").onclick=()=>{
+  const parts=leerPartidas();
+  if(!$("ns-area").value.trim()){toast("Falta la pirámide (área)");return}
+  if(!$("ns-para").value.trim()){toast('Falta el campo "Se necesita para"');return}
+  if(!parts.length){toast("Agrega al menos un producto con descripción");return}
+  if(!_firmaSolTiene||!_firmaSolCanvas){toast("Falta la firma del solicitante");return}
+  $("btn-guardar-sol").disabled=true;
+  const base={
+    fechaSol:$("ns-fecha").value||hoyISO(),solicitante:CU.n,area:$("ns-area").value.trim(),
+    prioridad:$("ns-prio").value,para:$("ns-para").value.trim(),partidas:parts,obs:$("ns-obs").value.trim(),
+    firmaSol:_firmaSolCanvas.toDataURL("image/png")
+  };
+  if(editandoFolio){
+    const o=getOrd(editandoFolio);
+    if(!o||o.estatus!=="Pendiente"){toast("Esta solicitud ya no se puede editar");$("btn-guardar-sol").disabled=false;return}
+    Object.assign(o,base);o.hist.push({f:ahora(),u:CU.n,a:"Editó la solicitud"});
+    saveOrd(o).then(()=>{finFormulario();toast("Solicitud "+o.folio+" actualizada")});
+  }else{
+    db.ref(RAIZ+"/config/seq").transaction(v=>(v||0)+1).then(r=>{
+      const folio=String(r.snapshot.val()).padStart(3,"0");
+      const o={folio,...base,estatus:"Pendiente",aut:null,coms:[],hist:[{f:ahora(),u:CU.n,a:"Creó la solicitud"}]};
+      return saveOrd(o).then(()=>{finFormulario();toast("Solicitud creada · Folio "+folio)});
+    }).catch(e=>{toast("Error al guardar: "+e.message);$("btn-guardar-sol").disabled=false});
+  }
 };
-// Cache de asignación de 3ros para evitar duplicados en R32 (por usuario)
-// Se recalcula cada vez que se llama resolveR32Side con side=1 (inicio de nuevo recorrido)
-const _third3Cache={u:null,map:{}};
-function buildThirdCache(u){
-  const thirds=Object.keys(GRP).map(g=>{const s=calcStandings(g,u);return s.length>=3?{g,t:s[2]}:null;}).filter(Boolean);
-  thirds.sort((a,b)=>b.t.pts-a.t.pts||b.t.gd-a.t.gd||b.t.gf-a.t.gf||b.t.fp-a.t.fp);
-  const top8=thirds.slice(0,8);
-  const slots=R32.filter(s=>s.role2===3); // las 8 llaves que reciben un mejor tercero
-  const map={};
-  // 1) Tabla OFICIAL de la FIFA según el conjunto de grupos con 3er lugar clasificado
-  const key=top8.map(e=>e.g).sort().join("");
-  const official=FIFA_THIRD_TABLE[key];
-  if(official){
-    const byGroup={};top8.forEach(e=>{byGroup[e.g]=e.t.name;});
-    let ok=true;
-    slots.forEach(s=>{const nm=byGroup[official[s.id]];if(nm)map[s.id]=nm;else ok=false;});
-    if(ok){_third3Cache.u=u;_third3Cache.map=map;return;}
-    slots.forEach(s=>{delete map[s.id];}); // no cuadró: usar respaldo
-  }
-  // 2) Respaldo: emparejamiento por backtracking — cada llave recibe un tercero cuyo grupo
-  // esté en su pool permitido, sin repetir, garantizando que los 8 queden colocados (bracket
-  // válido, sin revanchas). Determinista: llaves en orden de bracket, terceros por ranking.
-  const used=new Set();
-  function bt(i){
-    if(i>=slots.length)return true;
-    const slot=slots[i];
-    for(const e of top8){
-      if(used.has(e.t.name))continue;
-      if(slot.pool2.indexOf(e.g)<0)continue;
-      map[slot.id]=e.t.name;used.add(e.t.name);
-      if(bt(i+1))return true;
-      used.delete(e.t.name);delete map[slot.id];
-    }
-    return false;
-  }
-  bt(0);
-  slots.forEach(s=>{if(!map[s.id])map[s.id]=null;}); // si faltan datos, queda sin definir
-  _third3Cache.u=u;_third3Cache.map=map;
+function finFormulario(){
+  editandoFolio=null;$("btn-guardar-sol").disabled=false;$("btn-guardar-sol").textContent="Guardar solicitud";
+  $("btn-cancelar-edit").classList.add("hide");$("ns-folio").textContent="FOLIO NUEVO";$("ns-titulo").textContent="Solicitud de compra";
+  $("partidas").innerHTML="";addPartida();$("ns-para").value="";$("ns-obs").value="";$("ns-prio").value="Normal";$("ns-fecha").value=hoyISO();
+  limpiaFirmaSol();
+  irTab("ordenes");
 }
-function best3rd(pool,u,slotId){
-  if(_third3Cache.u!==u)buildThirdCache(u);
-  if(slotId)return _third3Cache.map[slotId]||null;
-  // fallback sin slotId: buscar el mejor no usado del pool
-  let best=null,bpts=-1,bgd=-1,bgf=-1;
-  pool.forEach(g=>{const s=calcStandings(g,u);if(s.length<3)return;const t=s[2];
-    if(t.pts>bpts||(t.pts===bpts&&t.gd>bgd)||(t.pts===bpts&&t.gd===bgd&&t.gf>bgf)){bpts=t.pts;bgd=t.gd;bgf=t.gf;best=t.name;}});
-  return best;
+$("btn-cancelar-edit").onclick=finFormulario;
+function editarSolicitud(f){
+  const o=getOrd(f);if(!o)return;
+  editandoFolio=f;cerrarModal();irTab("nueva");
+  $("ns-folio").textContent="FOLIO "+o.folio;$("ns-titulo").textContent="Editar solicitud";
+  $("ns-fecha").value=o.fechaSol;$("ns-area").value=o.area;$("ns-prio").value=o.prioridad;$("ns-para").value=o.para;$("ns-obs").value=o.obs||"";
+  $("partidas").innerHTML="";o.partidas.forEach(p=>addPartida(p));
+  if(o.firmaSol)cargaFirmaSol(o.firmaSol);else limpiaFirmaSol();
+  $("btn-guardar-sol").textContent="Guardar cambios";$("btn-cancelar-edit").classList.remove("hide");
 }
 
-// Resolve the two sides of a match for display
-// For R32: compute from group standings
-// For R16+: read the stored winner of the feeder match
-function resolveR32Side(slot,side,u){
-  const role=side===1?slot.role1:slot.role2;
-  const g=side===1?slot.g1:slot.g2;
-  const pool=side===2?slot.pool2:null;
-  if(role===1||role===2)return groupPos(g,role,u);
-  if(role===3)return best3rd(pool,u,slot.id);
-  return null;
+/* ═════════ Lista de órdenes ═════════ */
+$("buscar").addEventListener("input",renderLista);
+document.querySelectorAll("#filtros button").forEach(b=>b.onclick=()=>{
+  filtroEstatus=b.dataset.f;
+  document.querySelectorAll("#filtros button").forEach(x=>x.classList.toggle("act",x===b));
+  renderLista();
+});
+function totalDe(o){
+  if(o.aut&&o.aut.items)return o.aut.items.reduce((s,i)=>s+i.cant*i.costo,0);
+  return o.partidas.reduce((s,p)=>s+p.cant*p.costo,0);
+}
+function renderLista(){
+  const q=$("buscar").value.trim().toLowerCase();
+  let os=allOrds();
+  if(filtroEstatus==="PorPagar")os=os.filter(o=>["Autorizada","Ordenada","Recibida"].includes(o.estatus)&&!o.pago);
+  else if(filtroEstatus!=="Todas")os=os.filter(o=>o.estatus===filtroEstatus);
+  if(q)os=os.filter(o=>(o.folio+" "+o.solicitante+" "+o.para+" "+o.area+" "+(o.aut?o.aut.prov:"")).toLowerCase().includes(q));
+  if(!os.length){$("lista-wrap").innerHTML=`<div class="vacio"><b>Sin órdenes que mostrar</b>Crea la primera en la pestaña "Nueva solicitud".</div>`;return}
+  $("lista-wrap").innerHTML=`<div class="tabla-scroll" style="border:none"><table class="lista"><thead><tr>
+    <th>Folio</th><th>Fecha</th><th>Solicitante</th><th>Área</th><th>Se necesita para</th><th style="text-align:right">Total</th><th>Estatus</th></tr></thead><tbody>`+
+    os.map(o=>`<tr data-folio="${o.folio}">
+      <td><span class="folio-sello">${o.folio}</span></td>
+      <td class="mono">${fmtF(o.fechaSol)}</td>
+      <td>${esc(o.solicitante)}${o.prioridad==="Urgente"?' <span class="urg">⚡ URGENTE</span>':""}</td>
+      <td>${esc(o.area)}</td>
+      <td>${esc(o.para)}</td>
+      <td class="mono" style="text-align:right">${fmtM(totalDe(o))}</td>
+      <td><span class="chip ch-${o.estatus}">${o.estatus}</span></td></tr>`).join("")+`</tbody></table></div>`;
+  document.querySelectorAll("#lista-wrap tr[data-folio]").forEach(tr=>tr.onclick=()=>abrirDetalle(tr.dataset.folio));
 }
 
-function getMatchPair(slot,u,isR32){
-  let n1,n2;
-  if(isR32){
-    // Rebuild third cache when starting a new R32 render pass
-    if(_third3Cache.u!==u)buildThirdCache(u);
-    n1=resolveR32Side(slot,1,u);n2=resolveR32Side(slot,2,u);
-  }
-  else{n1=getPicks(u)["w_"+slot.f1]||null;n2=getPicks(u)["w_"+slot.f2]||null;}
-  if(n1&&n2&&n1===n2){n2=null;}
-  return{n1,n2};
-}
+/* ═════════ Excel ═════════ */
+$("btn-excel").onclick=()=>{
+  const rows=allOrds().map(o=>({Folio:o.folio,"Fecha solicitud":fmtF(o.fechaSol),Solicitante:o.solicitante,"Área":o.area,
+    "Se necesita para":o.para,Prioridad:o.prioridad,Estatus:o.estatus,
+    "Proveedor elegido":o.aut?o.aut.prov:"","Tarjeta":o.aut?o.aut.tarjeta:"","Fecha de pedido":o.aut?fmtF(o.aut.fecha):"",
+    "Total estimado":o.partidas.reduce((s,p)=>s+p.cant*p.costo,0),"Total autorizado":o.aut?o.aut.items.reduce((s,i)=>s+i.cant*i.costo,0):"",
+    "Fecha de pago":o.pago?fmtF(o.pago.fecha):"","Nº factura":o.pago?o.pago.factura:"","Monto pagado":o.pago?o.pago.monto:""}));
+  if(!rows.length){toast("No hay órdenes para exportar");return}
+  const ws=XLSX.utils.json_to_sheet(rows);const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,"Órdenes");XLSX.writeFile(wb,"ordenes_compra_RV.xlsx");
+};
 
-// Placeholder label when team not yet resolved
-function phLabel(slot,side){
-  if(side===1){return slot.role1===3?`3°(mejor)`:`${slot.role1}°Gr.${slot.g1}`;}
-  else{if(slot.role2===3)return`3°(mejor)`;if(slot.g2)return`${slot.role2}°Gr.${slot.g2}`;return"Por definir";}
+/* ═════════ Detalle ═════════ */
+function rutaHTML(o){
+  if(o.estatus==="Rechazada"||o.estatus==="Cancelada")
+    return `<div class="ruta"><div class="paso ok"><span class="pto">1</span>Solicitud</div><div class="lin ok"></div><div class="paso malo"><span class="pto">✕</span>${o.estatus}</div></div>`;
+  const idx=ESTATUS_FLUJO.indexOf(o.estatus);
+  const nom=["Solicitud","Autorización","Ordenada","Recibida","Pagada"];
+  return `<div class="ruta">`+ESTATUS_FLUJO.map((e,i)=>{
+    const cls=i<idx?"ok":(i===idx?(i===ESTATUS_FLUJO.length-1?"ok":"act"):"");
+    const pto=i<idx||(i===idx&&i===ESTATUS_FLUJO.length-1)?"✓":i+1;
+    return (i?`<div class="lin ${i<=idx?"ok":""}"></div>`:"")+`<div class="paso ${cls}"><span class="pto">${pto}</span>${nom[i]}</div>`;
+  }).join("")+`</div>`;
 }
-
-function countGDone(u){const p=getPicks(u);let n=0;Object.entries(GRP).forEach(([g,t])=>{getMat(t).forEach((_,i)=>{const pk=p[g+"-"+i];if(pk&&pk.s1!==undefined&&pk.s2!==undefined)n++;});});return n;}
-function countED(u,slots){return slots.filter(s=>getPicks(u)["w_"+s.id]).length;}
-function totalPicks(u){return countGDone(u)+countED(u,R32)+countED(u,R16)+countED(u,QF)+countED(u,SF)+countED(u,FIN)+countTCDone(u)*3;}
-function unlock(){return{r32:countGDone(CU)>=72,r16:countED(CU,R32)>=16,qf:countED(CU,R16)>=8,sf:countED(CU,QF)>=4,final:countED(CU,SF)>=2};}
-function updateTabLocks(){const u=unlock();[["r32",u.r32],["r16",u.r16],["qf",u.qf],["sf",u.sf],["final",u.final]].forEach(([id,ok])=>{const el=document.getElementById("tb-"+id);if(el)el.classList.toggle("locked",!ok);});}
-function updateProg(){const done=totalPicks(CU);document.getElementById("plabel").textContent=`${done} / ${TOTAL} predicciones`;document.getElementById("pfill").style.width=Math.round(done/TOTAL*100)+"%";}
-
-function checkIfExists(){
-  const name=document.getElementById("uinput").value.trim();const exists=userExists(name);
-  document.getElementById("confirm-group").style.display=exists?"none":"block";
-  document.getElementById("login-title").textContent=exists?"Bienvenido de vuelta":"Crear cuenta";
-  document.getElementById("login-btn").textContent=exists?"Entrar":"Registrarse";
-  document.getElementById("login-hint").textContent=exists?"Ingresa tu contraseña para continuar.":"Elige una contraseña para tu cuenta.";
-}
-function enterQ(){
-  const name=document.getElementById("uinput").value.trim();
-  const pw=document.getElementById("pinput").value;
-  const pw2=document.getElementById("pinput2").value;
-  document.getElementById("login-err").style.display="none";
-  if(!name){showErr("Escribe tu nombre");return;}
-  if(!pw){showErr("Escribe una contraseña");return;}
-  if(userExists(name)){if(getUserPw(name)!==pw){showErr("Contraseña incorrecta");return;}}
-  else{if(pw.length<4){showErr("Mínimo 4 caracteres");return;}if(pw!==pw2){showErr("Las contraseñas no coinciden");return;}createUser(name,pw);}
-  CU=name;
-  document.getElementById("login-section").style.display="none";
-  document.getElementById("main-section").style.display="block";
-  document.getElementById("sticky-header").style.display="block";
-  document.getElementById("ulabel").textContent="Hola, "+name+" 👋";
-  if(isSaved(CU))document.getElementById("saved-banner").style.display="block";
-  else document.getElementById("saved-banner").style.display="none";
-  activeTab="posiciones";updateTabActiveStyle("posiciones");renderTabContent("posiciones");
-  updateProg();updateTabLocks();
-}
-function showErr(msg){const e=document.getElementById("login-err");e.textContent=msg;e.style.display="block";}
-function logout(){
-  CU=null;document.getElementById("login-section").style.display="block";document.getElementById("main-section").style.display="none";document.getElementById("sticky-header").style.display="none";
-  ["uinput","pinput","pinput2"].forEach(id=>document.getElementById(id).value="");
-  document.getElementById("login-err").style.display="none";document.getElementById("confirm-group").style.display="block";
-  document.getElementById("login-title").textContent="Entrar a la quiniela";document.getElementById("login-btn").textContent="Entrar";
-  renderLoginRankings();
-}
-function updateTabActiveStyle(tab){
-  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-  document.querySelectorAll(".tab").forEach((t,i)=>{if(TAB_ORDER[i]===tab)t.classList.add("active");});
-  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
-  document.getElementById("tab-"+tab).classList.add("active");
-}
-function renderTabContent(tab){
-  if(tab==="posiciones")renderStandings();
-  else if(tab==="tarjetas")renderTarjetas();
-  else if(tab==="grupos")renderGroups();
-  else if(tab==="r32")renderElimTab("r32",R32,"Dieciseisavos de final",true);
-  else if(tab==="r16")renderElimTab("r16",R16,"Octavos de final",false);
-  else if(tab==="qf")renderElimTab("qf",QF,"Cuartos de final",false);
-  else if(tab==="sf")renderElimTab("sf",SF,"Semifinales",false);
-  else if(tab==="final")renderFinal();
-  else if(tab==="ranking")renderRanking();
-}
-function showTab(tab){
-  const nu={r32:"r32",r16:"r16",qf:"qf",sf:"sf",final:"final"};
-  if(nu[tab]){const u=unlock();if(!u[tab]){const msgs={r32:"Completa los 72 partidos de grupos primero.",r16:"Elige los 16 ganadores de 16vos.",qf:"Elige los 8 ganadores de octavos.",sf:"Elige los 4 ganadores de cuartos.",final:"Elige los 2 ganadores de semis."};showToast(msgs[tab]);return;}}
-  activeTab=tab;updateTabActiveStyle(tab);renderTabContent(tab);
-}
-
-// ---- POSICIONES ----
-function renderStandings(){
-  const c=document.getElementById("tab-posiciones");const thirds=best3rdSet(CU);
-  const picks=getPicks(CU);
-  const hasFP=Object.values(GRP).flat().some(t=>picks["tc_"+t+"_ya"]!==undefined);
-  const fpLink=hasFP?' · <span style="color:var(--warning)">FP</span> = Fair Play':' · <a onclick="showTab(\'tarjetas\')">+ Tarjetas FP</a>';
-  let html=`<div style="font-size:12px;color:var(--text3);margin-bottom:.75rem"><b style="color:var(--text)">Negritas</b> = clasifican a 16vos · Se actualiza con tus marcadores${fpLink}</div><div class="standings-wrap">`;
-  Object.entries(GRP).forEach(([g,teams])=>{
-    const rows=calcStandings(g,CU);const mat=getMat(teams);
-    const done=mat.filter((_,i)=>{const p=picks[g+"-"+i];return p&&p.s1!==undefined&&p.s2!==undefined;}).length;
-    html+=`<div class="standings-card"><div class="sh"><span>Grupo ${g}</span><span style="color:var(--text3);font-weight:400">${done}/${mat.length}</span></div>
-      <table class="standings-table"><thead><tr><th>Equipo</th><th>PJ</th><th>Pts</th><th>GD</th><th>GF</th>${hasFP?'<th class="fp-col">FP</th>':''}</tr></thead><tbody>`;
-    rows.forEach((row,i)=>{
-      const advances=(i<2)||(i===2&&thirds.has(row.name));
-      const fpVal=row.fp||0;
-      html+=`<tr class="${advances?"advances":""}"><td><span class="pos-num">${i+1}</span>${fl(row.name)} ${row.name}</td><td>${row.played}</td><td>${row.pts}</td><td>${row.gd>=0?"+"+row.gd:row.gd}</td><td>${row.gf}</td>${hasFP?`<td class="fp-col">${fpVal}</td>`:''}</tr>`;
-    });
-    html+=`</tbody></table></div>`;
+function abrirDetalle(f,silencio){
+  const o=getOrd(f);if(!o){cerrarModal();return}
+  modalFolio=f;
+  const esPend=o.estatus==="Pendiente";
+  const totalEst=o.partidas.reduce((s,p)=>s+p.cant*p.costo,0);
+  let h=`<div class="modal-cab"><span class="folio-sello">FOLIO ${o.folio}</span><h2 style="font-size:16px">${esPend?"Solicitud de compra":"Orden de compra"}</h2>
+    <span class="chip ch-${o.estatus}">${o.estatus}</span><button class="x" id="m-x">✕</button></div><div class="modal-cuerpo">`;
+  h+=rutaHTML(o);
+  h+=`<div class="seccion">Datos generales</div><div class="dg-ver">
+    <div class="par"><b>Solicitante</b>${esc(o.solicitante)}</div>
+    <div class="par"><b>Fecha de solicitud</b><span class="mono">${fmtF(o.fechaSol)}</span></div>
+    <div class="par"><b>Pirámide</b>${esc(o.area)}</div>
+    <div class="par"><b>Prioridad</b>${o.prioridad==="Urgente"?'<span class="urg">⚡ URGENTE</span>':"Normal"}</div>
+    <div class="par" style="grid-column:1/-1"><b>Se necesita para</b>${esc(o.para)}</div>
+    ${o.firmaSol?`<div class="par" style="grid-column:1/-1"><b>Firma del solicitante</b><img src="${o.firmaSol}" alt="Firma del solicitante" style="max-width:200px;border:1px solid var(--linea);border-radius:6px;background:#fff;display:block;margin-top:3px"></div>`:""}</div>`;
+  // Partidas
+  h+=`<div class="seccion">Productos cotizados</div><div class="tabla-scroll"><table class="doc"><thead><tr>
+    ${esPend&&puedeAut()?"<th></th>":""}<th>N.º</th><th>Cant.</th><th>Producto / descripción</th><th>Justificación</th><th>Para</th><th>Costo unit. est.</th><th>Envío</th></tr></thead><tbody>`;
+  o.partidas.forEach((p,i)=>{
+    h+=`<tr>${esPend&&puedeAut()?`<td style="text-align:center"><input type="checkbox" class="check-part" data-i="${i}" ${i===0?"checked":""}></td>`:""}
+      <td class="mono">${String(i+1).padStart(2,"0")}</td><td>${p.cant}</td><td>${esc(p.desc)}</td><td>${esc(p.just)}</td><td>${esc(p.para)}</td>
+      <td class="mono">${fmtM(p.costo)}</td><td>${esc(p.envio)}</td></tr>`;
   });
-  html+=`</div>`;c.innerHTML=html;
-}
+  h+=`</tbody></table></div><div class="total-linea"><span>Total estimado:</span><b class="mono">${fmtM(totalEst)}</b></div>`;
+  if(o.obs)h+=`<div class="seccion">Observaciones / recomendación</div><div style="white-space:pre-wrap;font-size:13.5px">${esc(o.obs)}</div>`;
 
-// ---- TARJETAS ----
-function renderTarjetas(){
-  const c=document.getElementById("tab-tarjetas");
-  const picks=getPicks(CU);const saved=isSaved(CU);
-  let totalDone=0;const totalTeams=Object.values(GRP).flat().length;
-  let html=`<div style="font-size:12px;color:var(--text3);margin-bottom:.75rem;line-height:1.6">
-    Predice las tarjetas de cada equipo en fase de grupos.<br>
-    <span style="color:var(--warning)">🟡 Amarilla = -1pt &nbsp; 🟥 Roja directa = -4pts &nbsp; 🟡🔴 Doble amarilla = -3pts</span><br>
-    <span style="color:var(--text2)">2 puntos por país atinado en cada tipo · Desempate FIFA en posiciones</span>
+  // Bloque de autorización (formulario si Pendiente y puede autorizar; datos si ya existe)
+  if(esPend&&puedeAut()){
+    h+=`<div class="caja-aut"><h3>Autorización para compra con tarjeta de crédito</h3>
+      <div style="font-size:12.5px;color:var(--grafito);margin-bottom:10px">Palomea arriba la(s) opción(es) que se compran, ajusta el costo final si cambió, y completa:</div>
+      <div class="dg">
+        <div class="campo"><label>Proveedor elegido</label><input id="aut-prov" placeholder="Ej. ABASTEO (Opción 1)"></div>
+        <div class="campo"><label>Fecha de pedido</label><input id="aut-fecha" type="date" value="${hoyISO()}"></div>
+      </div>
+      <div class="campo" style="margin-top:10px"><label>Tarjeta en uso</label><div class="radios">
+        ${TARJETAS.map((t,i)=>`<label><input type="radio" name="aut-tarj" value="${esc(t)}" ${i===1?"checked":""}>${esc(t)}</label>`).join("")}
+        <label><input type="radio" name="aut-tarj" value="__otra">Otra: <input id="aut-tarj-otra" style="width:130px;padding:4px 8px" placeholder="¿cuál?"></label>
+      </div></div>
+      <div id="aut-costos"></div>
+      <div class="campo" style="margin-top:10px"><label>Observaciones de la autorización</label><textarea id="aut-obs" placeholder="Ej. Se autoriza la opción 1 conforme a la recomendación de Sistemas…"></textarea></div>
+      <div class="campo" style="margin-top:12px"><label>Firma digital del autorizador — primera llave</label>
+        <div class="firma-wrap"><canvas id="firma-canvas" width="600" height="180"></canvas></div>
+        <div style="display:flex;gap:10px;align-items:center;margin-top:6px;flex-wrap:wrap">
+          <button class="btn btn-borde" id="firma-limpiar" style="padding:5px 12px;font-size:12px">Borrar firma</button>
+          <span style="font-size:12px;color:var(--grafito)">Firma con el mouse o con el dedo. Al autorizar se descarga el Word <b>sin firmar</b> para recabar la firma en papel (segunda llave).</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:9px;margin-top:12px;flex-wrap:wrap">
+        <button class="btn btn-rojo" id="btn-autorizar">✓ Autorizar compra</button>
+        <button class="btn btn-borde" id="btn-rechazar" style="color:var(--rojo)">✕ Rechazar</button>
+      </div></div>`;
+  }
+  if(o.aut){
+    const totAut=o.aut.items.reduce((s,i)=>s+i.cant*i.costo,0);
+    h+=`<div class="seccion">Autorización de compra</div><div class="dg-ver">
+      <div class="par"><b>Proveedor elegido</b>${esc(o.aut.prov)}</div>
+      <div class="par"><b>Tarjeta en uso</b>${esc(o.aut.tarjeta)}</div>
+      <div class="par"><b>Fecha de pedido</b><span class="mono">${fmtF(o.aut.fecha)}</span></div>
+      <div class="par"><b>Autorizó</b>${esc(o.aut.quien)}</div>
+      ${o.aut.firma?`<div class="par" style="grid-column:1/-1"><b>Firma digital</b><img src="${o.aut.firma}" alt="Firma del autorizador" style="max-width:220px;border:1px solid var(--linea);border-radius:6px;background:#fff;display:block;margin-top:3px"></div>`:""}</div>
+      <div class="tabla-scroll" style="margin-top:10px"><table class="doc"><thead><tr><th>N.º</th><th>Cant.</th><th>Producto / descripción</th><th>Proveedor</th><th>Costo unit.</th><th>Envío</th></tr></thead><tbody>`+
+      o.aut.items.map((p,i)=>`<tr><td class="mono">${String(i+1).padStart(2,"0")}</td><td>${p.cant}</td><td>${esc(p.desc)}</td><td>${esc(o.aut.prov)}</td><td class="mono">${fmtM(p.costo)}</td><td>${esc(p.envio)}</td></tr>`).join("")+
+      `</tbody></table></div><div class="total-linea"><span>Total del pedido (IVA y envío incluido):</span><b class="mono">${fmtM(totAut)}</b></div>`;
+    if(o.aut.obs)h+=`<div style="white-space:pre-wrap;font-size:13.5px;margin-top:8px"><b>Observaciones:</b> ${esc(o.aut.obs)}</div>`;
+  }
+  if(!o.pago&&puedePagar()&&["Autorizada","Ordenada","Recibida"].includes(o.estatus)){
+    const sug=o.aut?o.aut.items.reduce((s,i)=>s+i.cant*i.costo,0):0;
+    h+=`<div class="caja-aut caja-pago"><h3>Registrar pago y factura final</h3>
+      <div class="dg">
+        <div class="campo"><label>Fecha de pago</label><input id="pg-fecha" type="date" value="${hoyISO()}"></div>
+        <div class="campo"><label>Monto pagado</label><input id="pg-monto" type="number" step="0.01" min="0" value="${sug||""}"></div>
+        <div class="campo"><label>Forma de pago</label><input id="pg-forma" value="${esc(o.aut?("Tarjeta "+o.aut.tarjeta):"")}" placeholder="Tarjeta, transferencia…"></div>
+        <div class="campo"><label>Nº de factura</label><input id="pg-fact" placeholder="Ej. A-1234"></div>
+        <div class="campo"><label>Folio fiscal (UUID) — opcional</label><input id="pg-uuid" class="mono" placeholder="XXXX-XXXX-…"></div>
+        <div class="campo"><label>Archivo(s) de la factura — PDF, XML o imagen</label><input id="pg-files" type="file" multiple accept=".pdf,.xml,.jpg,.jpeg,.png,application/pdf,text/xml,image/*"></div>
+        <div class="campo"><label>Enlace a la factura — opcional</label><input id="pg-link" placeholder="Pega el link (Drive, correo…)"></div>
+      </div>
+      <div class="campo" style="margin-top:10px"><label>Notas del pago</label><textarea id="pg-notas" style="min-height:56px" placeholder="Ej. pagado en una exhibición, factura recibida por correo…"></textarea></div>
+      <button class="btn btn-tinta" id="btn-registrar-pago" style="margin-top:10px;background:#0F766E">✓ Registrar pago y cerrar orden</button>
+    </div>`;
+  }
+  if(o.pago){
+    h+=`<div class="seccion">Pago y factura</div><div class="dg-ver">
+      <div class="par"><b>Fecha de pago</b><span class="mono">${fmtF(o.pago.fecha)}</span></div>
+      <div class="par"><b>Monto pagado</b><span class="mono">${fmtM(o.pago.monto)}</span></div>
+      <div class="par"><b>Forma de pago</b>${esc(o.pago.forma||"—")}</div>
+      <div class="par"><b>Nº de factura</b>${esc(o.pago.factura)}</div>
+      ${o.pago.uuid?`<div class="par"><b>Folio fiscal</b><span class="mono" style="word-break:break-all">${esc(o.pago.uuid)}</span></div>`:""}
+      <div class="par"><b>Registró</b>${esc(o.pago.quien)}</div></div>`;
+    if(o.pago.archivos&&o.pago.archivos.length)h+=`<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">`+
+      o.pago.archivos.map((a,i)=>`<button class="btn btn-borde" data-fact-i="${i}" style="padding:6px 13px;font-size:12.5px">📎 ${esc(a.nombre)}</button>`).join("")+`</div>`;
+    if(puedePagar())h+=`<div style="margin-top:10px"><label class="btn btn-borde" style="padding:6px 13px;font-size:12.5px;cursor:pointer">＋ Adjuntar archivo<input id="pg-mas" type="file" multiple class="hide" accept=".pdf,.xml,.jpg,.jpeg,.png,application/pdf,text/xml,image/*"></label></div>`;
+    if(o.pago.link)h+=`<div style="margin-top:10px"><a href="${esc(o.pago.link)}" target="_blank" rel="noopener" class="btn btn-borde" style="text-decoration:none;padding:6px 14px;font-size:13px">📄 Ver factura ↗</a></div>`;
+    if(o.pago.notas)h+=`<div style="white-space:pre-wrap;font-size:13.5px;margin-top:8px"><b>Notas:</b> ${esc(o.pago.notas)}</div>`;
+  }
+  if(o.motivoRechazo)h+=`<div class="seccion" style="border-color:var(--rojo);color:var(--rojo)">Motivo de rechazo</div><div style="font-size:13.5px;white-space:pre-wrap">${esc(o.motivoRechazo)}</div>`;
+
+  // Comentarios
+  h+=`<div class="seccion">Comentarios</div><div id="coms-wrap">`+
+    ((o.coms&&o.coms.length)?o.coms.map(c=>`<div class="coment"><span class="quien">${esc(c.u)}</span><span class="cuando mono">${esc(c.f)}</span><div>${esc(c.t)}</div></div>`).join(""):`<div style="color:var(--grafito);font-size:13px">Sin comentarios.</div>`)+
+    `</div><div style="display:flex;gap:8px;margin-top:8px"><input id="com-txt" placeholder="Agregar comentario o recomendación…"><button class="btn btn-borde" id="com-add">Comentar</button></div>`;
+  // Historial
+  h+=`<div class="seccion">Historial</div>`+(o.hist||[]).map(x=>`<div class="hist-item"><span class="mono">${esc(x.f)}</span> · <b>${esc(x.u)}</b> — ${esc(x.a)}</div>`).join("");
+  h+=`</div>`; // cuerpo
+
+  // Acciones pie
+  let acc=`<button class="btn btn-borde" id="btn-print-sol">🖨 Imprimir solicitud</button>`;
+  if(o.aut)acc+=`<button class="btn btn-borde" id="btn-print-oc">🖨 Imprimir autorización</button><button class="btn btn-borde" id="btn-word-oc">⬇ Word para firma</button>`;
+  if(esPend&&(isAdmin()||o.solicitante===CU.n))acc+=`<button class="btn btn-borde" id="btn-editar">✎ Editar</button>`;
+  if(o.estatus==="Autorizada"&&puedeAut())acc+=`<button class="btn btn-tinta" id="btn-ordenada">Marcar como Ordenada</button>`;
+  if(o.estatus==="Ordenada"&&puedeAut())acc+=`<button class="btn btn-tinta" id="btn-recibida">Marcar como Recibida</button>`;
+  if(isAdmin()&&!["Recibida","Pagada"].includes(o.estatus)&&o.estatus!=="Cancelada")acc+=`<button class="btn btn-borde" id="btn-cancelar" style="margin-left:auto;color:var(--grafito)">Cancelar orden</button>`;
+  if(isAdmin())acc+=`<button class="btn btn-borde" id="btn-borrar" style="color:var(--rojo)">Eliminar</button>`;
+  h+=`<div class="acciones">${acc}</div>`;
+
+  $("modal").innerHTML=h;$("velo").classList.remove("hide");
+  formSucio=false;
+  $("modal").oninput=e=>{if(e.target.closest&&(e.target.closest(".caja-aut")||e.target.closest(".caja-pago")))formSucio=true};
+  if(!silencio)document.body.style.overflow="hidden";
+
+  $("m-x").onclick=cerrarModal;
+  $("com-add").onclick=()=>{const t=$("com-txt").value.trim();if(!t)return;
+    o.coms=o.coms||[];o.coms.push({f:ahora(),u:CU.n,t});o.hist.push({f:ahora(),u:CU.n,a:"Comentó"});saveOrd(o)};
+  const be=$("btn-editar");if(be)be.onclick=()=>editarSolicitud(f);
+  const bo=$("btn-ordenada");if(bo)bo.onclick=()=>cambiaEstatus(f,"Ordenada","Marcó la compra como Ordenada (pedido realizado)");
+  const br=$("btn-recibida");if(br)br.onclick=()=>cambiaEstatus(f,"Recibida","Marcó la compra como Recibida");
+  const bc=$("btn-cancelar");if(bc)bc.onclick=()=>{const m=prompt("Motivo de la cancelación:");if(m===null)return;
+    o.estatus="Cancelada";o.motivoRechazo=m||"Cancelada por administración";o.hist.push({f:ahora(),u:CU.n,a:"Canceló la orden"});saveOrd(o).then(()=>toast("Orden cancelada"))};
+  const bb=$("btn-borrar");if(bb)bb.onclick=()=>{if(confirm("¿Eliminar definitivamente el folio "+f+"? Esta acción no se puede deshacer."))
+    oRef().child(f).remove().then(()=>{fRef(f).remove();cerrarModal();toast("Folio "+f+" eliminado")})};
+  const bpg=$("btn-registrar-pago");if(bpg)bpg.onclick=()=>registrarPago(o);
+  const bps=$("btn-print-sol");if(bps)bps.onclick=()=>imprimir(o,"sol");
+  const bpo=$("btn-print-oc");if(bpo)bpo.onclick=()=>imprimir(o,"oc");
+  const bwo=$("btn-word-oc");if(bwo)bwo.onclick=()=>descargaWordOC(o);
+  document.querySelectorAll("[data-fact-i]").forEach(b=>b.onclick=()=>descargaFactura(o,+b.dataset.factI));
+  const pgm=$("pg-mas");if(pgm)pgm.onchange=()=>agregaArchivos(o,[...pgm.files]);
+  const ba=$("btn-autorizar");
+  if(ba){
+    pintaCostos(o);
+    document.querySelectorAll(".check-part").forEach(c=>c.onchange=()=>pintaCostos(o));
+    initFirma();
+    ba.onclick=()=>autorizar(o);
+    $("btn-rechazar").onclick=()=>{const m=prompt("Motivo del rechazo:");if(m===null)return;
+      o.estatus="Rechazada";o.motivoRechazo=m||"Sin motivo registrado";o.hist.push({f:ahora(),u:CU.n,a:"Rechazó la solicitud"});
+      formSucio=false;saveOrd(o).then(()=>toast("Solicitud rechazada"))};
+  }
+}
+function pintaCostos(o){
+  const sel=[...document.querySelectorAll(".check-part")].filter(c=>c.checked).map(c=>+c.dataset.i);
+  $("aut-costos").innerHTML=sel.length?`<div class="campo" style="margin-top:10px"><label>Costo unitario final de lo autorizado</label>`+
+    sel.map(i=>`<div style="display:flex;gap:10px;align-items:center;margin-bottom:6px;font-size:13px">
+      <span class="mono" style="width:34px">${String(i+1).padStart(2,"0")}</span>
+      <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(o.partidas[i].desc)}</span>
+      <input class="aut-costo mono" data-i="${i}" type="number" step="0.01" value="${o.partidas[i].costo}" style="width:130px"></div>`).join("")+`</div>`:"";
+}
+function autorizar(o){
+  const sel=[...document.querySelectorAll(".check-part")].filter(c=>c.checked).map(c=>+c.dataset.i);
+  if(!sel.length){toast("Palomea al menos una opción a comprar");return}
+  const prov=$("aut-prov").value.trim();if(!prov){toast("Falta el proveedor elegido");return}
+  let tarj=(document.querySelector('input[name="aut-tarj"]:checked')||{}).value;
+  if(tarj==="__otra"){tarj=$("aut-tarj-otra").value.trim();if(!tarj){toast("Escribe cuál tarjeta");return}}
+  const costos={};document.querySelectorAll(".aut-costo").forEach(inp=>costos[inp.dataset.i]=parseFloat(inp.value)||0);
+  const items=sel.map(i=>({...o.partidas[i],costo:costos[i]!==undefined?costos[i]:o.partidas[i].costo}));
+  if(!_firmaTiene||!_firmaCanvas){toast("Falta la firma digital del autorizador");return}
+  const firma=_firmaCanvas.toDataURL("image/png");
+  o.aut={prov,tarjeta:tarj,fecha:$("aut-fecha").value||hoyISO(),obs:$("aut-obs").value.trim(),quien:CU.n,items,firma};
+  o.estatus="Autorizada";o.hist.push({f:ahora(),u:CU.n,a:"Autorizó la compra ("+prov+") con firma digital"});
+  formSucio=false;
+  saveOrd(o).then(()=>{toast("Compra autorizada · Se descargó el Word para la firma en papel");descargaWordOC(o)});
+}
+/* Archivos de factura: viven en compras/facturas/{folio} (cajón aparte, se
+   descargan SOLO al hacer clic — así la app no carga pesado al abrir). */
+const FACT_MAX_MB=2,FACT_MAX_FILES=3;
+function fRef(folio){return db.ref(RAIZ+"/facturas/"+folio)}
+function leeArchivo(f){return new Promise((res,rej)=>{const r=new FileReader();
+  r.onload=()=>res({nombre:f.name,tipo:f.type||"application/octet-stream",tam:f.size,data:r.result});
+  r.onerror=()=>rej(new Error("No se pudo leer "+f.name));r.readAsDataURL(f)})}
+function validaArchivos(files,yaHay){
+  if((yaHay||0)+files.length>FACT_MAX_FILES){toast("Máximo "+FACT_MAX_FILES+" archivos por factura");return false}
+  for(const f of files){if(f.size>FACT_MAX_MB*1024*1024){toast('"'+f.name+'" pesa más de '+FACT_MAX_MB+' MB. Comprímelo o usa el campo de enlace.');return false}}
+  return true;
+}
+function descargaFactura(o,i){
+  toast("Descargando archivo…");
+  fRef(o.folio).once("value").then(sn=>{
+    let arr=[];try{arr=sn.val()?JSON.parse(sn.val()):[]}catch(e){}
+    const a=arr[i];
+    if(!a){toast("No se encontró el archivo en la base");return}
+    const el=document.createElement("a");el.href=a.data;el.download=a.nombre;
+    document.body.appendChild(el);el.click();setTimeout(()=>el.remove(),400);
+  }).catch(e=>toast("Error: "+e.message));
+}
+function agregaArchivos(o,files){
+  if(!files.length)return;
+  if(!validaArchivos(files,(o.pago.archivos||[]).length))return;
+  toast("Subiendo archivo(s)…");
+  Promise.all(files.map(leeArchivo)).then(nuevos=>
+    fRef(o.folio).once("value").then(sn=>{
+      let arr=[];try{arr=sn.val()?JSON.parse(sn.val()):[]}catch(e){}
+      arr=arr.concat(nuevos.map(a=>({...a,quien:CU.n,fecha:hoyISO()})));
+      return fRef(o.folio).set(JSON.stringify(arr)).then(()=>{
+        o.pago.archivos=arr.map(a=>({nombre:a.nombre,tipo:a.tipo,tam:a.tam}));
+        o.hist.push({f:ahora(),u:CU.n,a:"Adjuntó "+nuevos.length+" archivo(s) a la factura"});
+        formSucio=false;
+        return saveOrd(o);
+      });
+    })
+  ).then(()=>toast("Archivo(s) adjuntado(s)")).catch(e=>toast("Error: "+e.message));
+}
+function registrarPago(o){
+  const monto=parseFloat($("pg-monto").value);
+  const fact=$("pg-fact").value.trim();
+  if(!(monto>0)){toast("Escribe el monto pagado");return}
+  if(!fact){toast("Falta el número de factura");return}
+  const files=[...(($("pg-files")&&$("pg-files").files)||[])];
+  if(files.length&&!validaArchivos(files,0))return;
+  const btn=$("btn-registrar-pago");btn.disabled=true;btn.textContent="Guardando…";
+  const revive=()=>{btn.disabled=false;btn.textContent="✓ Registrar pago y cerrar orden"};
+  const listo=metas=>{
+    o.pago={fecha:$("pg-fecha").value||hoyISO(),monto,forma:$("pg-forma").value.trim(),factura:fact,
+      uuid:$("pg-uuid").value.trim(),link:$("pg-link").value.trim(),notas:$("pg-notas").value.trim(),quien:CU.n,
+      archivos:metas};
+    o.estatus="Pagada";
+    o.hist.push({f:ahora(),u:CU.n,a:"Registró el pago y la factura "+fact+(metas.length?" · "+metas.length+" archivo"+(metas.length===1?"":"s")+" adjunto"+(metas.length===1?"":"s"):"")+" — cerró la orden"});
+    formSucio=false;
+    saveOrd(o).then(()=>toast("Pago registrado · Folio "+o.folio+" cerrado")).catch(e=>{toast("Error: "+e.message);revive()});
+  };
+  if(!files.length){listo([]);return}
+  toast("Subiendo factura…");
+  Promise.all(files.map(leeArchivo)).then(arr=>
+    fRef(o.folio).set(JSON.stringify(arr.map(a=>({...a,quien:CU.n,fecha:hoyISO()})))).then(()=>listo(arr.map(a=>({nombre:a.nombre,tipo:a.tipo,tam:a.tam}))))
+  ).catch(e=>{toast("Error al adjuntar: "+e.message);revive()});
+}
+function cambiaEstatus(f,e,txt){const o=getOrd(f);if(!o)return;o.estatus=e;o.hist.push({f:ahora(),u:CU.n,a:txt});saveOrd(o).then(()=>toast("Folio "+f+" → "+e))}
+function cerrarModal(){modalFolio=null;$("velo").classList.add("hide");document.body.style.overflow=""}
+$("velo").addEventListener("click",e=>{if(e.target.id==="velo")cerrarModal()});
+
+/* ═════════ Reportes mensuales y anuales ═════════ */
+const MESES=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+let repModo="mes";
+document.querySelectorAll("#rep-modo button").forEach(b=>b.onclick=()=>{
+  repModo=b.dataset.m;
+  document.querySelectorAll("#rep-modo button").forEach(x=>x.classList.toggle("act",x===b));
+  $("rep-mes").classList.toggle("hide",repModo!=="mes");
+  $("rep-anio").classList.toggle("hide",repModo!=="anio");
+  if(repModo==="anio")llenaAnios();
+  renderReporte();
+});
+$("rep-mes").addEventListener("change",renderReporte);
+$("rep-anio").addEventListener("change",renderReporte);
+function llenaAnios(){
+  const ys=new Set([new Date().getFullYear()]);
+  allOrds().forEach(o=>{if(o.fechaSol)ys.add(+o.fechaSol.slice(0,4));if(o.aut&&o.aut.fecha)ys.add(+o.aut.fecha.slice(0,4))});
+  const prev=$("rep-anio").value;
+  $("rep-anio").innerHTML=[...ys].sort((a,b)=>b-a).map(y=>`<option>${y}</option>`).join("");
+  if(prev&&[...ys].includes(+prev))$("rep-anio").value=prev;
+}
+function periodoActual(){
+  if(repModo==="mes"){const v=$("rep-mes").value||hoyISO().slice(0,7);const[a,m]=v.split("-");return{pref:v,label:MESES[+m-1]+" "+a}}
+  const y=$("rep-anio").value||String(new Date().getFullYear());return{pref:y,label:"Año "+y};
+}
+const sumAut=o=>o.aut?o.aut.items.reduce((s,i)=>s+i.cant*i.costo,0):0;
+function datosReporte(){
+  const{pref,label}=periodoActual();
+  const todas=allOrds();
+  const sols=todas.filter(o=>o.fechaSol&&o.fechaSol.startsWith(pref));
+  const auts=todas.filter(o=>o.aut&&o.aut.fecha&&o.aut.fecha.startsWith(pref));
+  const rech=sols.filter(o=>o.estatus==="Rechazada"||o.estatus==="Cancelada");
+  const recib=auts.filter(o=>o.estatus==="Recibida");
+  const monto=auts.reduce((s,o)=>s+sumAut(o),0);
+  const pagos=todas.filter(o=>o.pago&&o.pago.fecha&&o.pago.fecha.startsWith(pref));
+  const montoPagado=pagos.reduce((s,o)=>s+(parseFloat(o.pago.monto)||0),0);
+  const agrupa=fn=>{const m={};auts.forEach(o=>{const k=fn(o)||"—";m[k]=m[k]||{cnt:0,monto:0};m[k].cnt++;m[k].monto+=sumAut(o)});
+    return Object.entries(m).sort((a,b)=>b[1].monto-a[1].monto)};
+  const porArea=agrupa(o=>o.area), porTarj=agrupa(o=>o.aut.tarjeta), porProv=agrupa(o=>o.aut.prov);
+  let porMes=null;
+  if(repModo==="anio"){porMes=MESES.map(()=>({cnt:0,monto:0}));
+    auts.forEach(o=>{const m=+o.aut.fecha.slice(5,7)-1;porMes[m].cnt++;porMes[m].monto+=sumAut(o)})}
+  return{pref,label,sols,auts,rech,recib,monto,pagos,montoPagado,porArea,porTarj,porProv,porMes};
+}
+function filasBarra(pares,max){
+  return pares.map(([nom,v])=>`<div class="rep-fila"><span class="nom" title="${esc(nom)}">${esc(nom)}</span>
+    <span class="cnt">${v.cnt} orden${v.cnt===1?"":"es"}</span>
+    <span class="barra"><i style="width:${max?Math.max(3,Math.round(v.monto/max*100)):0}%"></i></span>
+    <span class="mon">${fmtM(v.monto)}</span></div>`).join("")||`<div style="color:var(--grafito);font-size:13px;padding:6px 0">Sin compras autorizadas en el periodo.</div>`;
+}
+function renderReporte(){
+  if(!veReportes())return;
+  if(repModo==="anio")llenaAnios();
+  const d=datosReporte();
+  const maxA=Math.max(1,...d.porArea.map(x=>x[1].monto)),maxT=Math.max(1,...d.porTarj.map(x=>x[1].monto)),maxP=Math.max(1,...d.porProv.map(x=>x[1].monto));
+  let h=`<div class="kpis">
+    <div class="kpi"><small>Periodo</small><b style="font-size:17px">${esc(d.label)}</b><div class="sub2">${repModo==="mes"?"Reporte mensual":"Reporte anual"}</div></div>
+    <div class="kpi"><small>Solicitudes creadas</small><b>${d.sols.length}</b><div class="sub2">${d.rech.length} rechazada${d.rech.length===1?"":"s"}/cancelada${d.rech.length===1?"":"s"}</div></div>
+    <div class="kpi"><small>Compras autorizadas</small><b>${d.auts.length}</b><div class="sub2">${d.recib.length} ya recibida${d.recib.length===1?"":"s"}</div></div>
+    <div class="kpi"><small>Monto autorizado</small><b class="mono" style="font-size:19px">${fmtM(d.monto)}</b><div class="sub2">IVA y envío incluidos · por fecha de pedido</div></div>
+    <div class="kpi"><small>Pagado en el periodo</small><b class="mono" style="font-size:19px;color:#0F766E">${fmtM(d.montoPagado)}</b><div class="sub2">${d.pagos.length} pago${d.pagos.length===1?"":"s"} · por fecha de pago</div></div>
   </div>`;
-  Object.entries(GRP).forEach(([gname,teams])=>{
-    let grpDone=0;
-    const rows=teams.map(team=>{
-      const ya=picks["tc_"+team+"_ya"];
-      const rd=picks["tc_"+team+"_rd"];
-      const da=picks["tc_"+team+"_da"];
-      const done=ya!==undefined&&rd!==undefined&&da!==undefined;
-      if(done){grpDone++;totalDone++;}
-      return{team,ya,rd,da,done};
-    });
-    html+=`<div class="card">
-      <div class="card-header">
-        <span>Grupo ${gname}</span>
-        <span style="font-size:11px">${grpDone}/${teams.length}</span>
-      </div>
-      <div style="display:flex;align-items:center;padding:5px 12px 3px;gap:6px;border-top:1px solid var(--border)">
-        <span style="flex:1;font-size:10px;color:var(--text3)">Equipo</span>
-        <span style="font-size:10px;color:var(--warning);width:52px;text-align:center">🟡 Amar.</span>
-        <span style="font-size:10px;color:var(--danger);width:52px;text-align:center">🟥 Roja D.</span>
-        <span style="font-size:10px;color:var(--warning);width:52px;text-align:center">🟡🔴 Doble</span>
-        <span style="width:6px"></span>
-      </div>`;
-    rows.forEach(({team,ya,rd,da,done})=>{
-      const fp=picks["tc_"+team+"_ya"]!==undefined?getFP(team,picks):"—";
-      html+=`<div class="tc-row${done?" done":""}">
-        <span class="tc-label">${fl(team)}</span>
-        <span class="tc-name">${team}</span>
-        <div class="tc-inputs">
-          <div class="tc-group" style="flex-direction:column;align-items:center;gap:2px">
-            <input class="tc-input" type="number" min="0" max="20" step="1"
-              value="${ya!==undefined?ya:""}" placeholder="-"
-              ${saved?"disabled":""}
-              oninput="saveTarjeta('${team}','ya',this,'${gname}')"/>
-            ${tcResBadge(team,'ya',picks)}
-          </div>
-          <div class="tc-group" style="flex-direction:column;align-items:center;gap:2px">
-            <input class="tc-input" type="number" min="0" max="10" step="1"
-              value="${rd!==undefined?rd:""}" placeholder="-"
-              ${saved?"disabled":""}
-              oninput="saveTarjeta('${team}','rd',this,'${gname}')"/>
-            ${tcResBadge(team,'rd',picks)}
-          </div>
-          <div class="tc-group" style="flex-direction:column;align-items:center;gap:2px">
-            <input class="tc-input" type="number" min="0" max="10" step="1"
-              value="${da!==undefined?da:""}" placeholder="-"
-              ${saved?"disabled":""}
-              oninput="saveTarjeta('${team}','da',this,'${gname}')"/>
-            ${tcResBadge(team,'da',picks)}
-          </div>
-        </div>
-        <span class="fp-badge" title="Fair Play acumulado">${fp}</span>
-        <span class="tc-dot${done?" on":""}" id="tcdot-${team}"></span>
-      </div>`;
-    });
-    html+=`</div>`;
-  });
-  c.innerHTML=html;
-}
-function saveTarjeta(team,type,input,gname){
-  if(isSaved(CU))return;
-  let val=parseInt(input.value);if(isNaN(val))return;
-  val=Math.max(0,Math.min(type==="ya"?20:10,val));input.value=val;
-  sP(CU,"tc_"+team+"_"+type,val);
-  // Check if all 3 inputs done for this team
-  const picks=getPicks(CU);
-  const ya=picks["tc_"+team+"_ya"];const rd=picks["tc_"+team+"_rd"];const da=picks["tc_"+team+"_da"];
-  const done=ya!==undefined&&rd!==undefined&&da!==undefined;
-  const dot=document.getElementById("tcdot-"+team);
-  if(dot){dot.classList.toggle("on",done);const row=dot.closest(".tc-row");if(row)row.classList.toggle("done",done);}
-  // Update FP badge
-  if(done){
-    const fp=getFP(team,picks);
-    const badge=dot?dot.previousElementSibling:null;
-    if(badge&&badge.classList.contains("fp-badge"))badge.textContent=fp;
+  h+=`<div class="hoja" style="margin-bottom:16px"><div class="hoja-cab"><h2>Gasto por pirámide (área)</h2></div><div class="hoja-cuerpo">${filasBarra(d.porArea,maxA)}</div></div>`;
+  h+=`<div class="grid-2">
+    <div class="hoja"><div class="hoja-cab"><h2>Por tarjeta</h2></div><div class="hoja-cuerpo">${filasBarra(d.porTarj,maxT)}</div></div>
+    <div class="hoja"><div class="hoja-cab"><h2>Por proveedor</h2></div><div class="hoja-cuerpo">${filasBarra(d.porProv,maxP)}</div></div>
+  </div>`;
+  if(d.porMes){
+    const maxM=Math.max(1,...d.porMes.map(x=>x.monto));
+    h+=`<div class="hoja" style="margin-top:16px"><div class="hoja-cab"><h2>Mes por mes</h2></div><div class="hoja-cuerpo">`+
+      d.porMes.map((v,i)=>`<div class="rep-fila"><span class="nom">${MESES[i]}</span><span class="cnt">${v.cnt} orden${v.cnt===1?"":"es"}</span>
+        <span class="barra"><i style="width:${Math.max(v.monto?3:0,Math.round(v.monto/maxM*100))}%"></i></span><span class="mon">${fmtM(v.monto)}</span></div>`).join("")+`</div></div>`;
   }
-  // Update group counter
-  const cards=document.querySelectorAll("#tab-tarjetas .card");
-  const gnames=Object.keys(GRP);const gi=gnames.indexOf(gname);
-  if(gi>=0&&cards[gi]){
-    const teams=GRP[gname];let cnt=0;
-    teams.forEach(t=>{const p=picks;if(p["tc_"+t+"_ya"]!==undefined&&p["tc_"+t+"_rd"]!==undefined&&p["tc_"+t+"_da"]!==undefined)cnt++;});
-    const sp=cards[gi].querySelector(".card-header span:last-child");if(sp)sp.textContent=`${cnt}/${teams.length}`;
-  }
-  updateProg();
-  if(activeTab==="posiciones")renderStandings();
+  $("rep-wrap").innerHTML=h;
 }
-
-// ---- GRUPOS ----
-function renderGroups(){
-  const c=document.getElementById("tab-grupos");const picks=getPicks(CU);const saved=isSaved(CU);let html="";
-  Object.entries(GRP).forEach(([gname,teams])=>{
-    const mat=getMat(teams);
-    const done=mat.filter((_,i)=>{const p=picks[gname+"-"+i];return p&&p.s1!==undefined&&p.s2!==undefined;}).length;
-    html+=`<div class="card"><div class="card-header"><span>Grupo ${gname}</span><span style="font-size:11px">${done}/${mat.length}</span></div>`;
-    mat.forEach(([t1,t2],i)=>{
-      const key=gname+"-"+i;const p=picks[key]||{};const sv=p.s1!==undefined&&p.s2!==undefined;
-      html+=`<div class="mr${sv?" done":""}">
-        <span class="flag">${fl(t1)}</span><span class="tn${sv?" done-text":""}">${t1}</span>
-        <div class="sinputs">
-          <input class="sinput" type="number" min="0" max="20" step="1" value="${p.s1!==undefined?p.s1:""}" placeholder="-" ${saved?"disabled":""} oninput="sgp('${key}',this,'s1','${gname}',${mat.length})"/>
-          <span class="vs">:</span>
-          <input class="sinput" type="number" min="0" max="20" step="1" value="${p.s2!==undefined?p.s2:""}" placeholder="-" ${saved?"disabled":""} oninput="sgp('${key}',this,'s2','${gname}',${mat.length})"/>
-        </div>
-        <span class="tn r${sv?" done-text":""}">${t2}</span><span class="flag">${fl(t2)}</span>
-        ${realScoreLabel(key)}${grpResBadge(key,picks)}
-        <span class="dot ${sv?"on":""}" id="dot-${key}"></span>
-      </div>`;
-    });
-    html+=`</div>`;
-  });
-  c.innerHTML=html;
-}
-function sgp(key,input,field,gname,total){
-  if(isSaved(CU))return;
-  let val=parseInt(input.value);if(isNaN(val))return;
-  val=Math.max(0,Math.min(20,val));input.value=val;
-  const p=getPicks(CU)[key]||{};p[field]=val;sP(CU,key,p);
-  const np=getPicks(CU)[key]||{};
-  if(np.s1!==undefined&&np.s2!==undefined){
-    const d=document.getElementById("dot-"+key);if(d)d.classList.add("on");
-    const row=d?d.closest(".mr"):null;
-    if(row){row.classList.add("done");row.querySelectorAll(".tn").forEach(el=>el.classList.add("done-text"));}
-  }
-  const cards=document.querySelectorAll("#tab-grupos .card");
-  const gi=Object.keys(GRP).indexOf(gname);
-  if(gi>=0&&cards[gi]){
-    let done=0;for(let i=0;i<total;i++){const pk=getPicks(CU)[gname+"-"+i];if(pk&&pk.s1!==undefined&&pk.s2!==undefined)done++;}
-    const sp=cards[gi].querySelector(".card-header span:last-child");if(sp)sp.textContent=`${done}/${total}`;
-  }
-  updateProg();updateTabLocks();
-  // Invalidar cache de 3ros al cambiar marcadores
-  _third3Cache.u=null;
-  if(activeTab==="posiciones")renderStandings();
-}
-
-// ---- ELIM ----
-function renderElimTab(tabId,slots,title,isR32){
-  const c=document.getElementById("tab-"+tabId);const picks=getPicks(CU);const saved=isSaved(CU);
-  let html=`<div class="card"><div class="card-header">${title}</div>`;
-  slots.forEach(slot=>{
-    const{n1,n2}=getMatchPair(slot,CU,isR32);
-    const winner=picks["w_"+slot.id]||null;
-    const lb1=n1||(isR32?phLabel(slot,1):"Por definir");
-    const lb2=n2||(isR32?phLabel(slot,2):"Por definir");
-    const ph1=!n1;const ph2=!n2;
-    const canPick=!!(n1&&n2)&&!saved;
-    const pending=!winner&&canPick;
-    html+=`<div class="em">
-      <div class="et"><span class="flag">${n1?fl(n1):"❔"}</span><span class="etn ${ph1?"eph":""}${pending&&!ph1?" pending-red":""}" style="${winner===lb1?"font-weight:700":""}">${lb1}</span></div>
-      <div class="pc">
-        <button class="pb${winner===lb1?" sel":""}${pending&&!ph1?" pending":""}" ${canPick?"":"disabled"} onclick="pickW('${slot.id}',\`${lb1.replace(/`/g,"")}\`,'${tabId}')">${winner===lb1?"✓ Gana":"Gana"}</button>
-        <button class="pb${winner===lb2?" sel":""}${pending&&!ph2?" pending":""}" ${canPick?"":"disabled"} onclick="pickW('${slot.id}',\`${lb2.replace(/`/g,"")}\`,'${tabId}')">${winner===lb2?"✓ Gana":"Gana"}</button>
-      </div>
-      <div class="et r"><span class="etn ${ph2?"eph":""}${pending&&!ph2?" pending-red":""}" style="${winner===lb2?"font-weight:700":""}">${lb2}</span><span class="flag">${n2?fl(n2):"❔"}</span></div>
-      <div style="min-width:48px;text-align:center">${elimResBadge(slot.id,picks,slots,isR32)}</div>
-    </div>`;
-  });
-  html+=`</div>`;c.innerHTML=html;
-}
-
-// ---- FINAL ----
-function renderFinal(){
-  const c=document.getElementById("tab-final");const picks=getPicks(CU);const saved=isSaved(CU);
-  const{n1,n2}=getMatchPair(FIN[0],CU,false);
-  const winner=picks["w_"+FIN[0].id]||null;const canPick=!!(n1&&n2)&&!saved;
-  const d1=n1||"Semifinalista 1";const d2=n2||"Semifinalista 2";const pending=!winner&&canPick;
-  let html=`<div class="final-box">
-    <div style="font-size:13px;font-weight:500;color:var(--text3);margin-bottom:.75rem">🏆 Final · 19 julio · MetLife Stadium, Nueva Jersey</div>
-    ${winner?`<div style="font-size:22px;font-weight:600">${fl(winner)} ${winner}</div><div style="font-size:12px;color:var(--text2);margin-top:4px">Tu campeón del mundo</div>`:`<div style="font-size:13px;color:${pending?"var(--danger)":"var(--text3)"}">Elige tu campeón abajo</div>`}
-  </div>
-  <div class="card"><div class="card-header">Partido final</div>
-  <div class="em">
-    <div class="et"><span class="flag">${n1?fl(n1):"❔"}</span><span class="etn ${!n1?"eph":""}${pending&&n1?" pending-red":""}" style="${winner===d1?"font-weight:700":""}">${d1}</span></div>
-    <div class="pc">
-      <button class="pb${winner===d1?" sel":""}${pending&&n1?" pending":""}" ${canPick?"":"disabled"} onclick="pickFin(\`${d1.replace(/`/g,"")}\`)">${winner===d1?"✓ Campeón":"🏆 Campeón"}</button>
-      <button class="pb${winner===d2?" sel":""}${pending&&n2?" pending":""}" ${canPick?"":"disabled"} onclick="pickFin(\`${d2.replace(/`/g,"")}\`)">${winner===d2?"✓ Campeón":"🏆 Campeón"}</button>
-    </div>
-    <div class="et r"><span class="etn ${!n2?"eph":""}${pending&&n2?" pending-red":""}" style="${winner===d2?"font-weight:700":""}">${d2}</span><span class="flag">${n2?fl(n2):"❔"}</span></div>
-  </div></div>
-  <button class="btn-save" onclick="saveAll()" ${saved||!winner?"disabled":""}>${saved?"✅ Quiniela guardada":"💾 Guardar quiniela"}</button>`;
-  c.innerHTML=html;
-}
-
-function pickW(slotId,team,tabId){if(isSaved(CU))return;sP(CU,"w_"+slotId,team);updateProg();updateTabLocks();renderTabContent(tabId);}
-function pickFin(team){if(isSaved(CU))return;sP(CU,"w_"+FIN[0].id,team);updateProg();renderFinal();showToast("¡"+team+" es tu campeón! 🏆");}
-
-// ---- RANKING ----
-function renderRanking(){
-  const users=allUsers();
-  const data=users.map(u=>({name:u,picks:totalPicks(u),pts:calcUserPts(u),champ:getPicks(u)["w_"+FIN[0].id]||null,saved:isSaved(u)})).sort((a,b)=>b.pts-a.pts||b.picks-a.picks);
-  const c=document.getElementById("ranking-content");
-  if(!data.length){c.innerHTML=`<div style="text-align:center;padding:2rem;color:var(--text3)">Aún no hay participantes</div>`;return;}
-  const medals=["🥇","🥈","🥉"];
-  let html=`<div style="font-size:12px;color:var(--text3);padding:8px 14px;display:flex;justify-content:space-between"><span>Jugador</span><span>Puntos · Picks</span></div><div class="rt">`;
-  data.forEach((u,i)=>{
-    const isMe=u.name===CU;
-    html+=`<div class="rr" style="${isMe?"background:var(--infobg)":""}">
-      <span style="font-size:13px;width:24px;text-align:center;color:var(--text3)">${medals[i]||i+1}</span>
-      <div style="flex:1"><div style="font-size:14px;font-weight:${isMe?"500":"400"};color:${isMe?"var(--info)":"var(--text)"}">${u.name}${isMe?" (tú)":""}${u.saved?" 🔒":""}</div>${u.champ?`<div style="font-size:11px;color:var(--text3)">${fl(u.champ)} ${u.champ}</div>`:""}</div>
-      <div style="text-align:right"><div style="font-size:15px;font-weight:500">${u.pts} pts</div><div style="font-size:11px;color:var(--text3)">${u.picks}/${TOTAL}</div></div>
-    </div>`;
-  });
-  html+=`</div><div style="font-size:11px;color:var(--text3);padding:10px 4px;line-height:1.6">Grupos: 1 pt ganador / 3 pts marcador exacto · Clasificación: 1 pt por equipo que llega a 16avos · Eliminatorias: 1 pt por cada equipo que avanza de ronda (sin importar la llave) · Tarjetas: 2 pts por acierto</div>`;
-  c.innerHTML=html;
-}
-function renderLoginRankings(){
-  const users=allUsers();const box=document.getElementById("login-rankings");
-  if(!users.length){if(box)box.innerHTML="";return;}
-  const medals=["🥇","🥈","🥉"];
-  const data=users.map(u=>({name:u,pts:getPoints(u),picks:totalPicks(u),saved:isSaved(u),champ:getPicks(u)["w_"+FIN[0].id]||null})).sort((a,b)=>b.pts-a.pts||b.picks-a.picks);
-  let html=`<p style="font-size:13px;font-weight:500;color:var(--text2);margin-bottom:8px">Participantes</p><div class="rt">`;
-  data.forEach((u,i)=>{
-    html+=`<div class="rr"><span style="font-size:13px;width:24px;text-align:center;color:var(--text3)">${medals[i]||i+1}</span><div style="flex:1"><div style="font-size:14px;color:var(--text)">${u.name}${u.saved?" 🔒":""}</div>${u.champ?`<div style="font-size:11px;color:var(--text3)">${fl(u.champ)} ${u.champ}</div>`:""}</div><div style="text-align:right"><div style="font-size:14px;font-weight:500">${u.pts} pts</div><div style="font-size:11px;color:var(--text3)">${u.picks}/${TOTAL}</div></div></div>`;
-  });
-  html+=`</div>`;document.getElementById("login-rankings").innerHTML=html;
-}
-
-// ---- ADMIN ----
-function showAdminLogin(){document.getElementById("admin-pass-input").value="";document.getElementById("admin-err").style.display="none";document.getElementById("admin-modal").style.display="block";setTimeout(()=>document.getElementById("admin-pass-input").focus(),100);}
-function closeAdminModal(){document.getElementById("admin-modal").style.display="none";}
-function checkAdminPass(){if(document.getElementById("admin-pass-input").value===ADMIN_PASS){closeAdminModal();document.getElementById("login-section").style.display="none";document.getElementById("admin-section").style.display="block";renderAdminPanel();}else{document.getElementById("admin-err").style.display="block";document.getElementById("admin-pass-input").value="";document.getElementById("admin-pass-input").focus();}}
-function logoutAdmin(){document.getElementById("admin-section").style.display="none";document.getElementById("login-section").style.display="block";renderLoginRankings();}
-function renderAdminPanel(){
-  const users=allUsers();const c=document.getElementById("admin-panel-content");
-  if(!users.length){c.innerHTML=`<div style="text-align:center;padding:2rem;color:var(--text3)">No hay participantes aún</div>`;return;}
-  let html=`<div class="admin-panel"><h3>🔐 Gestión de quinielas</h3>`;
-  users.forEach(u=>{
-    const saved=isSaved(u);const picks=totalPicks(u);const pts=getPoints(u);const champ=getPicks(u)["w_"+FIN[0].id]||"";
-    const uEsc=encodeURIComponent(u);
-    html+=`<div class="admin-row"><div style="flex:1;min-width:100px"><div style="font-size:13px;font-weight:500;color:var(--text)">${u}</div><div style="font-size:11px;color:var(--text3)">${picks}/${TOTAL} · ${pts} pts${champ?" · "+fl(champ)+" "+champ:""}</div></div>
-      <span class="status-badge ${saved?"status-locked":"status-open"}">${saved?"🔒 Guardada":"✏️ Abierta"}</span>
-      <button class="btn-excel" data-user="${uEsc}" onclick="adminDownloadOne(decodeURIComponent(this.dataset.user))" title="Descargar Excel">📥</button>
-      ${saved?`<button class="btn btn-warning" style="font-size:11px;padding:4px 8px" data-user="${uEsc}" onclick="adminUnlock(decodeURIComponent(this.dataset.user))">Desbloquear</button>`:`<span style="min-width:74px"></span>`}
-      <button class="btn btn-danger" data-user="${uEsc}" onclick="adminDelete(decodeURIComponent(this.dataset.user))">Eliminar</button></div>`;
-  });
-  html+=`</div><p style="font-size:12px;color:var(--text3);padding:0 4px">Eliminar borra permanentemente la quiniela del participante.</p>`;
-  c.innerHTML=html;
-  try{renderAdminResults();}catch(e){console.error("renderAdminResults error:",e);}
-}
-
-// ---- EXCEL ----
-function buildExcelData(u){
-  const picks=getPicks(u);const rows=[];
-  rows.push(["RUVICIA — Quiniela Mundial 2026 — "+u]);
-  rows.push(["Generado:",new Date().toLocaleDateString("es-MX")]);
-  rows.push(["Total picks:",totalPicks(u)+"/"+TOTAL,"Puntos:",getPoints(u)]);rows.push([]);
-  rows.push(["=== TARJETAS ==="]);rows.push(["Grupo","Equipo","Amarillas","Roja Directa","Doble Amarilla","Fair Play"]);
-  Object.entries(GRP).forEach(([g,teams])=>{teams.forEach(t=>{const ya=picks["tc_"+t+"_ya"]!==undefined?picks["tc_"+t+"_ya"]:"";const rd=picks["tc_"+t+"_rd"]!==undefined?picks["tc_"+t+"_rd"]:"";const da=picks["tc_"+t+"_da"]!==undefined?picks["tc_"+t+"_da"]:"";const fp=(ya!==""&&rd!==""&&da!=="")?ya*(-1)+rd*(-4)+da*(-3):"";rows.push([g,t,ya,rd,da,fp]);});});
-  rows.push([]);
-  rows.push(["=== FASE DE GRUPOS ==="]);rows.push(["Grupo","Local","G.Local","G.Visita","Visita","Resultado"]);
-  Object.entries(GRP).forEach(([g,teams])=>{getMat(teams).forEach(([t1,t2],i)=>{const p=picks[g+"-"+i]||{};const s1=p.s1!==undefined?p.s1:"";const s2=p.s2!==undefined?p.s2:"";let res="";if(p.s1!==undefined&&p.s2!==undefined)res=p.s1>p.s2?t1:p.s1<p.s2?t2:"Empate";rows.push([g,t1,s1,s2,t2,res]);});});
-  rows.push([]);
-  [[" === 16VOS ===",R32,true],[" === OCTAVOS ===",R16,false],[" === CUARTOS ===",QF,false],[" === SEMIFINALES ===",SF,false],[" === FINAL ===",FIN,false]].forEach(([title,slots,isR32])=>{
-    rows.push([title]);rows.push(["#","Equipo 1","Equipo 2","Ganador"]);
-    slots.forEach((slot,i)=>{const{n1,n2}=getMatchPair(slot,u,isR32);const lb1=n1||(isR32?phLabel(slot,1):"Por definir");const lb2=n2||(isR32?phLabel(slot,2):"Por definir");rows.push([i+1,lb1,lb2,picks["w_"+slot.id]||""]);});
-    rows.push([]);
-  });
-  return rows;
-}
-function downloadExcel(){if(!CU)return;const wb=XLSX.utils.book_new();const ws=XLSX.utils.aoa_to_sheet(buildExcelData(CU));ws["!cols"]=[{wch:8},{wch:22},{wch:10},{wch:10},{wch:22},{wch:22}];XLSX.utils.book_append_sheet(wb,ws,"Quiniela");XLSX.writeFile(wb,`RUVICIA_${CU}_Mundial2026.xlsx`);showToast("📥 Excel descargado");}
-function adminDownloadOne(u){const wb=XLSX.utils.book_new();const ws=XLSX.utils.aoa_to_sheet(buildExcelData(u));ws["!cols"]=[{wch:8},{wch:22},{wch:10},{wch:10},{wch:22},{wch:22}];XLSX.utils.book_append_sheet(wb,ws,"Quiniela");XLSX.writeFile(wb,`RUVICIA_${u}_Mundial2026.xlsx`);showToast("📥 Excel de "+u+" descargado");}
-function downloadAllExcel(){
-  const users=allUsers();if(!users.length){showToast("No hay participantes");return;}
+$("btn-rep-excel").onclick=()=>{
+  const d=datosReporte();
   const wb=XLSX.utils.book_new();
-  const rankRows=[["RUVICIA — Quiniela Mundial 2026 — Ranking"],[""],["#","Jugador","Puntos","Picks","Campeón","Estado"]];
-  users.map(u=>({name:u,pts:getPoints(u),picks:totalPicks(u),champ:getPicks(u)["w_"+FIN[0].id]||"",saved:isSaved(u)})).sort((a,b)=>b.pts-a.pts||b.picks-a.picks).forEach((u,i)=>{rankRows.push([i+1,u.name,u.pts,u.picks+"/"+TOTAL,u.champ,u.saved?"Guardada":"Abierta"]);});
-  const wsR=XLSX.utils.aoa_to_sheet(rankRows);wsR["!cols"]=[{wch:4},{wch:18},{wch:8},{wch:10},{wch:22},{wch:10}];XLSX.utils.book_append_sheet(wb,wsR,"Ranking");
-  users.forEach(u=>{const ws=XLSX.utils.aoa_to_sheet(buildExcelData(u));ws["!cols"]=[{wch:8},{wch:22},{wch:10},{wch:10},{wch:22},{wch:22}];XLSX.utils.book_append_sheet(wb,ws,u.substring(0,31));});
-  XLSX.writeFile(wb,"RUVICIA_QuinielaMundial2026.xlsx");showToast("📥 Excel de todas descargado");
+  const resumen=[{Concepto:"Periodo",Valor:d.label},{Concepto:"Solicitudes creadas",Valor:d.sols.length},
+    {Concepto:"Rechazadas/canceladas",Valor:d.rech.length},{Concepto:"Compras autorizadas",Valor:d.auts.length},
+    {Concepto:"Ya recibidas",Valor:d.recib.length},{Concepto:"Monto autorizado (IVA y envío incl.)",Valor:d.monto},
+    {Concepto:"Pagos registrados",Valor:d.pagos.length},{Concepto:"Monto pagado",Valor:d.montoPagado}];
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(resumen),"Resumen");
+  const hojaDe=(pares,titulo)=>XLSX.utils.json_to_sheet(pares.map(([n,v])=>({[titulo]:n,"Órdenes":v.cnt,"Monto":v.monto})));
+  XLSX.utils.book_append_sheet(wb,hojaDe(d.porArea,"Pirámide"),"Por pirámide");
+  XLSX.utils.book_append_sheet(wb,hojaDe(d.porTarj,"Tarjeta"),"Por tarjeta");
+  XLSX.utils.book_append_sheet(wb,hojaDe(d.porProv,"Proveedor"),"Por proveedor");
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(d.pagos.map(o=>({Folio:o.folio,"Fecha de pago":fmtF(o.pago.fecha),
+    "Nº factura":o.pago.factura,"Folio fiscal":o.pago.uuid||"",Proveedor:o.aut?o.aut.prov:"","Forma de pago":o.pago.forma||"",
+    "Monto pagado":o.pago.monto,"Registró":o.pago.quien}))),"Pagos");
+  if(d.porMes)XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(d.porMes.map((v,i)=>({Mes:MESES[i],"Órdenes":v.cnt,"Monto":v.monto}))),"Por mes");
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(d.auts.map(o=>({Folio:o.folio,"Fecha de pedido":fmtF(o.aut.fecha),Solicitante:o.solicitante,
+    "Pirámide":o.area,"Se necesita para":o.para,Proveedor:o.aut.prov,Tarjeta:o.aut.tarjeta,Estatus:o.estatus,Monto:sumAut(o)}))),"Detalle");
+  XLSX.writeFile(wb,"reporte_compras_"+d.pref+".xlsx");
+  toast("Reporte exportado");
+};
+
+/* ═════════ Firma digital (panel de dibujo) ═════════ */
+function initFirma(){
+  const c=$("firma-canvas");_firmaCanvas=c||null;_firmaTiene=false;
+  if(!c)return;
+  const ctx=c.getContext("2d");
+  ctx.fillStyle="#fff";ctx.fillRect(0,0,c.width,c.height);
+  ctx.strokeStyle="#1F2430";ctx.lineWidth=2.4;ctx.lineCap="round";ctx.lineJoin="round";
+  let dib=false;
+  const pos=e=>{const r=c.getBoundingClientRect();return{x:(e.clientX-r.left)*c.width/r.width,y:(e.clientY-r.top)*c.height/r.height}};
+  c.onpointerdown=e=>{e.preventDefault();c.setPointerCapture(e.pointerId);dib=true;formSucio=true;_firmaTiene=true;
+    const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x+.1,p.y+.1);ctx.stroke()};
+  c.onpointermove=e=>{if(!dib)return;const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke()};
+  c.onpointerup=c.onpointercancel=()=>{dib=false};
+  const bl=$("firma-limpiar");if(bl)bl.onclick=()=>{ctx.fillStyle="#fff";ctx.fillRect(0,0,c.width,c.height);_firmaTiene=false};
 }
 
+function initFirmaSol(){
+  const c=$("firma-sol-canvas");if(!c)return;
+  if(_firmaSolCanvas===c&&_firmaSolCtx)return;
+  _firmaSolCanvas=c;_firmaSolCtx=c.getContext("2d");
+  limpiaFirmaSol();
+  _firmaSolCtx.strokeStyle="#1F2430";_firmaSolCtx.lineWidth=2.4;_firmaSolCtx.lineCap="round";_firmaSolCtx.lineJoin="round";
+  let dib=false;
+  const pos=e=>{const r=c.getBoundingClientRect();return{x:(e.clientX-r.left)*c.width/r.width,y:(e.clientY-r.top)*c.height/r.height}};
+  c.onpointerdown=e=>{e.preventDefault();c.setPointerCapture(e.pointerId);dib=true;_firmaSolTiene=true;
+    const p=pos(e);_firmaSolCtx.beginPath();_firmaSolCtx.moveTo(p.x,p.y);_firmaSolCtx.lineTo(p.x+.1,p.y+.1);_firmaSolCtx.stroke()};
+  c.onpointermove=e=>{if(!dib)return;const p=pos(e);_firmaSolCtx.lineTo(p.x,p.y);_firmaSolCtx.stroke()};
+  c.onpointerup=c.onpointercancel=()=>{dib=false};
+  $("firma-sol-limpiar").onclick=()=>limpiaFirmaSol();
+}
+function limpiaFirmaSol(){if(!_firmaSolCtx)return;_firmaSolCtx.fillStyle="#fff";_firmaSolCtx.fillRect(0,0,_firmaSolCanvas.width,_firmaSolCanvas.height);_firmaSolTiene=false}
+function cargaFirmaSol(dataUrl){
+  if(!_firmaSolCtx)initFirmaSol();
+  if(!_firmaSolCtx)return;
+  limpiaFirmaSol();
+  const img=new Image();
+  img.onload=()=>{_firmaSolCtx.drawImage(img,0,0,_firmaSolCanvas.width,_firmaSolCanvas.height);_firmaSolTiene=true};
+  img.src=dataUrl;
+}
 
-// ============================================================
-// RESULTADOS REALES
-// Guardados en Firebase bajo results/blob (string JSON)
-// Estructura: { grp: { "A-0": {s1,s2}, ... }, elim: { "m73": "México", ... }, tc: { "México_ya": 3, ... } }
-// ============================================================
-function gR(){return _cache.results;}
-function sR(d){_cache.results=d;fbWriteResults();}
-function getRealGrp(key){const r=gR();return(r.grp&&r.grp[key])||null;}
-function getRealElim(slotId){const r=gR();return(r.elim&&r.elim[slotId])||null;}
-function getRealTC(team,type){const r=gR();return(r.tc&&r.tc[team+"_"+type]!==undefined)?r.tc[team+"_"+type]:null;}
+/* ═════════ Word para firma física (documento SIN firma) ═════════ */
+function descargaBlob(contenido,tipo,nombre){
+  const b=new Blob([contenido],{type:tipo});const a=document.createElement("a");
+  a.href=URL.createObjectURL(b);a.download=nombre;document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);
+}
+function descargaWordOC(o){
+  if(!o.aut){toast("Esta orden aún no está autorizada");return}
+  const tot=o.aut.items.reduce((s,i)=>s+i.cant*i.costo,0);
+  const marca=t=>o.aut.tarjeta===t?"☒":"☐";
+  const filas=o.aut.items.map((p,i)=>`<tr><td>${String(i+1).padStart(2,"0")}</td><td>${p.cant}</td><td>${esc(p.desc)}</td><td>${esc(o.aut.prov)}</td><td>${fmtM(p.costo)}</td><td>${esc(p.envio)}</td></tr>`).join("");
+  const html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>OC ${o.folio}</title><!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]--><style>body{font-family:Calibri,Arial,sans-serif;font-size:11pt;color:#000;margin:1.6cm}table{border-collapse:collapse;width:100%}td,th{border:1pt solid #808080;padding:4pt 6pt;font-size:10pt;vertical-align:top}th{background:#3A3F4B;color:#fff;text-align:left;font-size:9.5pt}h1{font-size:15pt;margin:0 0 2pt 0}.sub{font-size:9pt;color:#444}.sec{font-weight:bold;font-size:11pt;border-bottom:2pt solid #000;margin:14pt 0 6pt;padding-bottom:2pt}</style></head><body>
+<table style="border:none"><tr><td style="border:none"><h1>Autorización para compra con tarjeta de crédito</h1><div class="sub">RUVALCABA VILLALOBOS · Consultores Fiscales · Orden de compra · Folio ${o.folio}</div></td><td style="border:none;text-align:right;width:80pt"><img src="logo.png" width="66"></td></tr></table>
+<div class="sec">Datos generales</div>
+<table><tr><td style="width:18%"><b>Folio</b></td><td style="width:32%">${o.folio}</td><td style="width:18%"><b>Fecha de pedido</b></td><td>${fmtF(o.aut.fecha)}</td></tr>
+<tr><td><b>Solicitante</b></td><td>${esc(o.solicitante)}</td><td><b>Pirámide</b></td><td>${esc(o.area)}</td></tr>
+<tr><td><b>Proveedor elegido</b></td><td>${esc(o.aut.prov)}</td><td><b>Prioridad</b></td><td>${o.prioridad==="Urgente"?"☒":"☐"} Urgente&nbsp;&nbsp;&nbsp;${o.prioridad==="Normal"?"☒":"☐"} Normal</td></tr>
+<tr><td><b>Tarjeta en uso</b></td><td>${marca("Servifis")} Servifis</td><td colspan="2">${marca("Ruvalcaba Villalobos Cía.")} Ruvalcaba Villalobos Cía.${TARJETAS.includes(o.aut.tarjeta)?"":" &nbsp;·&nbsp; ☒ "+esc(o.aut.tarjeta)}</td></tr></table>
+<div class="sec">Producto del pedido</div>
+<table><tr><th style="width:6%">N.º</th><th style="width:7%">Cant.</th><th>Producto / descripción</th><th style="width:16%">Proveedor</th><th style="width:13%">Costo unit.</th><th style="width:9%">Envío</th></tr>${filas}
+<tr><td colspan="4" style="text-align:right"><b>Total del pedido (IVA y envío incluido)</b></td><td><b>${fmtM(tot)}</b></td><td></td></tr></table>
+${o.aut.obs?`<div class="sec">Observaciones</div><div style="font-size:10.5pt">${esc(o.aut.obs)}</div>`:""}
+<table style="border:none;margin-top:70pt"><tr>
+<td style="border:none;width:42%;text-align:center;border-top:1pt solid #000;padding-top:4pt"><b>Autorización del socio</b><br><span style="font-size:9pt">Nombre, firma y fecha</span></td>
+<td style="border:none;width:16%"></td>
+<td style="border:none;width:42%;text-align:center;border-top:1pt solid #000;padding-top:4pt"><b>Solicitante — ${esc(o.solicitante)}</b><br><span style="font-size:9pt">firma y fecha</span></td>
+</tr></table></body></html>`;
+  const logo64=LOGO_FULL.split(",")[1].replace(/(.{76})/g,"$1\r\n");
+  const mht=["MIME-Version: 1.0",'Content-Type: multipart/related; boundary="RV-OC"',"","--RV-OC",'Content-Type: text/html; charset="utf-8"',"Content-Location: documento.htm","",html,"","--RV-OC","Content-Type: image/png","Content-Transfer-Encoding: base64","Content-Location: logo.png","",logo64,"--RV-OC--",""].join("\r\n");
+  descargaBlob(mht,"application/msword","OC-"+o.folio+"_para_firma.doc");
+}
 
-function setRealGrp(key,s1,s2){const r=gR();if(!r.grp)r.grp={};r.grp[key]={s1,s2};sR(r);recalcAllPts();if(activeTab==="grupos")renderGroups();if(activeTab==="posiciones")renderStandings();}
-function setRealElim(slotId,winner){const r=gR();if(!r.elim)r.elim={};r.elim[slotId]=winner;sR(r);recalcAllPts();}
-function setRealTC(team,type,val){const r=gR();if(!r.tc)r.tc={};r.tc[team+"_"+type]=val;sR(r);recalcAllPts();}
-
-// ── Scoring ───────────────────────────────────────────────────────────────
-function calcUserPts(u){
-  const picks=getPicks(u);let pts=0;
-  // Grupos
-  Object.entries(GRP).forEach(([g,teams])=>{
-    getMat(teams).forEach(([t1,t2],i)=>{
-      const key=g+"-"+i;
-      const real=getRealGrp(key);if(!real)return;
-      const pred=picks[key];if(!pred||pred.s1===undefined||pred.s2===undefined)return;
-      const rs1=parseInt(real.s1),rs2=parseInt(real.s2);
-      const ps1=parseInt(pred.s1),ps2=parseInt(pred.s2);
-      if(ps1===rs1&&ps2===rs2){pts+=3;}
-      else if((ps1>ps2&&rs1>rs2)||(ps1<ps2&&rs1<rs2)||(ps1===ps2&&rs1===rs2)){pts+=1;}
-    });
-  });
-  // Eliminatorias: 1 pt por cada EQUIPO que el usuario predijo que avanza en esa ronda
-  // y que realmente avanzó — SIN IMPORTAR la llave. (El bracket de cada quien se arma con
-  // sus propios grupos, así que un acierto legítimo podía caer en otra llave que la real;
-  // comparar llave por llave castigaba esos aciertos.)
-  [R32,R16,QF,SF,FIN].forEach(slots=>{
-    const adv=new Set(); // equipos que YA avanzaron en la realidad (ganadores capturados)
-    slots.forEach(sl=>{const w=getRealElim(sl.id);if(w)adv.add(w);});
-    if(!adv.size)return;
-    const mine=new Set(); // equipos que el usuario predijo que ganan en esta ronda
-    slots.forEach(sl=>{const p=picks["w_"+sl.id];if(p)mine.add(p);});
-    mine.forEach(t=>{if(adv.has(t))pts+=1;});
-  });
-  // Tarjetas (2 pts por cada tipo acertado por equipo)
-  Object.values(GRP).flat().forEach(team=>{
-    ["ya","rd","da"].forEach(type=>{
-      const real=getRealTC(team,type);if(real===null)return;
-      const pred=picks["tc_"+team+"_"+type];if(pred===undefined)return;
-      if(parseInt(pred)===parseInt(real))pts+=2;
-    });
-  });
-  // Clasificación a 16avos: +1 por cada equipo que el usuario predijo entre los 32
-  // clasificados (2 primeros de cada grupo + 8 mejores terceros) y que realmente clasificó.
-  // Sin importar la posición ni la llave; solo cuenta cuando TODOS los grupos reales ya están capturados.
-  if(allRealGroupsDone()){
-    const real32=qualifiedSet(REAL_USER);
-    qualifiedSet(u).forEach(team=>{if(real32.has(team))pts+=1;});
+/* ═════════ Impresión (réplica de sus formatos) ═════════ */
+function prCab(tit,sub){return `<div class="pr-cab"><div class="pr-tit"><h1>${tit}</h1><div class="sub">RUVALCABA VILLALOBOS · Consultores Fiscales · ${sub}</div></div>
+  <div class="pr-marca"><img class="pr-logo" src="${LOGO_FULL}" alt="Ruvalcaba Villalobos"></div></div>`}
+function prFirmas(o,firmaAut,firmaSol){return `<div class="pr-firmas">
+  <div class="pr-firma">${firmaAut?`<img src="${firmaAut}" style="height:14mm;display:block;margin:0 auto 1mm">`:`<div style="height:14mm"></div>`}<div class="raya"><b>Autorización del socio</b><br>${firmaAut?`<span style="font-size:9px">Firmado digitalmente por ${esc(o.aut.quien)} · ${fmtF(o.aut.fecha)} — validar con firma en papel</span>`:"Nombre, firma y fecha"}</div></div>
+  <div class="pr-firma">${firmaSol?`<img src="${firmaSol}" style="height:14mm;display:block;margin:0 auto 1mm">`:`<div style="height:14mm"></div>`}<div class="raya"><b>Solicitante — ${esc(o.solicitante)}</b><br>${firmaSol?`<span style="font-size:9px">Firmado digitalmente · ${fmtF(o.fechaSol)}</span>`:"firma y fecha"}</div></div></div>`}
+function imprimir(o,tipo){
+  let h="";
+  if(tipo==="sol"){
+    h=`<div class="pr-hoja">`+prCab("Solicitud de compra","Solicitud de compra")+
+    `<div class="pr-sec">Datos generales</div><table class="pr-t"><tr>
+      <td style="width:16%"><b>Folio</b></td><td style="width:34%">${o.folio}</td><td style="width:20%"><b>Fecha de solicitud</b></td><td>${fmtF(o.fechaSol)}</td></tr>
+      <tr><td><b>Solicitante</b></td><td>${esc(o.solicitante)}</td><td><b>Pirámide</b></td><td>${esc(o.area)}</td></tr>
+      <tr><td><b>Prioridad</b></td><td>${o.prioridad}</td><td><b>Se necesita para</b></td><td>${esc(o.para)}</td></tr></table>
+    <div class="pr-sec">Productos cotizados</div><table class="pr-t"><tr><th>N.º</th><th>Cant.</th><th>Producto / descripción</th><th>Justificación (para qué o para quién)</th><th>Producto solicitado para</th><th>Costo unit. est.</th><th>Envío</th></tr>`+
+    o.partidas.map((p,i)=>`<tr><td>${String(i+1).padStart(2,"0")}</td><td>${p.cant}</td><td>${esc(p.desc)}</td><td>${esc(p.just)}</td><td>${esc(p.para)}</td><td>${fmtM(p.costo)}</td><td>${esc(p.envio)}</td></tr>`).join("")+
+    `</table>`+(o.obs?`<div class="pr-sec">Observaciones</div><div class="pr-obs">${esc(o.obs)}</div>`:"")+prFirmas(o,(o.aut&&o.aut.firma)||null,o.firmaSol||null)+`</div>`;
+  }else{
+    const tot=o.aut.items.reduce((s,i)=>s+i.cant*i.costo,0);
+    const marca=t=>o.aut.tarjeta===t?"☒":"☐";
+    h=`<div class="pr-hoja">`+prCab("Autorización para compra con tarjeta de crédito","Orden de compra")+
+    `<div class="pr-sec">Datos generales</div><table class="pr-t"><tr>
+      <td style="width:18%"><b>Folio</b></td><td style="width:32%">${o.folio}</td><td style="width:18%"><b>Fecha de pedido</b></td><td>${fmtF(o.aut.fecha)}</td></tr>
+      <tr><td><b>Solicitante</b></td><td>${esc(o.solicitante)}</td><td><b>Pirámide</b></td><td>${esc(o.area)}</td></tr>
+      <tr><td><b>Proveedor elegido</b></td><td>${esc(o.aut.prov)}</td><td><b>Prioridad</b></td><td>${o.prioridad==="Urgente"?"☒":"☐"} Urgente&nbsp;&nbsp;${o.prioridad==="Normal"?"☒":"☐"} Normal</td></tr>
+      <tr><td><b>Tarjeta en uso</b></td><td>${marca("Servifis")} Servifis</td><td colspan="2">${marca("Ruvalcaba Villalobos Cía.")} Ruvalcaba Villalobos Cía.${TARJETAS.includes(o.aut.tarjeta)?"":" &nbsp;·&nbsp; ☒ "+esc(o.aut.tarjeta)}</td></tr></table>
+    <div class="pr-sec">Producto del pedido</div><table class="pr-t"><tr><th>N.º</th><th>Cant.</th><th>Producto / descripción</th><th>Proveedor</th><th>Costo unit.</th><th>Envío</th></tr>`+
+    o.aut.items.map((p,i)=>`<tr><td>${String(i+1).padStart(2,"0")}</td><td>${p.cant}</td><td>${esc(p.desc)}</td><td>${esc(o.aut.prov)}</td><td>${fmtM(p.costo)}</td><td>${esc(p.envio)}</td></tr>`).join("")+
+    `<tr><td colspan="4" style="text-align:right"><b>Total del pedido (IVA y envío incluido)</b></td><td><b>${fmtM(tot)}</b></td><td></td></tr></table>`+
+    (o.aut.obs?`<div class="pr-sec">Observaciones</div><div class="pr-obs">${esc(o.aut.obs)}</div>`:"")+prFirmas(o,o.aut.firma||null,o.firmaSol||null)+`</div>`;
   }
-  return pts;
+  $("print-root").innerHTML=h;window.print();
 }
 
-function recalcAllPts(){
-  // Los puntos se recalculan siempre en vivo (getPoints -> calcUserPts),
-  // así que no es necesario persistirlos. Solo refrescamos el ranking si está visible.
-  if(activeTab==="ranking")renderRanking();
-}
-
-// ── Badge helper ──────────────────────────────────────────────────────────
-function grpResBadge(key,picks){
-  const real=getRealGrp(key);if(!real)return'<span class="res-badge res-pending">—</span>';
-  const pred=picks[key];if(!pred||pred.s1===undefined||pred.s2===undefined)return'<span class="res-badge res-pending">—</span>';
-  const rs1=parseInt(real.s1),rs2=parseInt(real.s2),ps1=parseInt(pred.s1),ps2=parseInt(pred.s2);
-  if(ps1===rs1&&ps2===rs2)return'<span class="res-badge res-exact">✅ +3</span>';
-  if((ps1>ps2&&rs1>rs2)||(ps1<ps2&&rs1<rs2)||(ps1===ps2&&rs1===rs2))return'<span class="res-badge res-win">⚪ +1</span>';
-  return'<span class="res-badge res-miss">❌ 0</span>';
-}
-function realScoreLabel(key){
-  const real=getRealGrp(key);if(!real)return"";
-  return`<span class="real-score">(${real.s1}-${real.s2})</span>`;
-}
-// Estado real de una ronda de eliminatorias: equipos que YA avanzaron (ganadores
-// capturados), equipos YA eliminados (perdedores de partidos capturados) y si la
-// ronda está completa.
-function elimRoundReal(slots,isR32){
-  const adv=new Set(),out=new Set();let captured=0;
-  slots.forEach(sl=>{
-    const w=getRealElim(sl.id);if(!w)return;
-    captured++;adv.add(w);
-    let n1=null,n2=null;
-    try{
-      if(isR32){n1=realR32Side(sl,1);n2=realR32Side(sl,2);}
-      else{const mp=getMatchPair(sl,REAL_USER,false);n1=mp.n1;n2=mp.n2;}
-    }catch(e){}
-    [n1,n2].forEach(n=>{if(n&&n!==w)out.add(n);});
-  });
-  return{adv,out,done:captured===slots.length};
-}
-function elimResBadge(slotId,picks,slots,isR32){
-  const pred=picks["w_"+slotId];if(!pred)return'<span class="res-badge res-pending">—</span>';
-  const r=elimRoundReal(slots,isR32);
-  if(r.adv.has(pred))return'<span class="res-badge res-exact">✅ +1</span>'; // el equipo avanzó (en cualquier llave)
-  if(r.out.has(pred)||r.done)return'<span class="res-badge res-miss">❌ 0</span>'; // ya quedó eliminado o la ronda terminó
-  return'<span class="res-badge res-pending">—</span>'; // aún puede ganar un partido no capturado
-}
-function tcResBadge(team,type,picks){
-  const real=getRealTC(team,type);if(real===null)return'<span class="res-badge res-pending">—</span>';
-  const pred=picks["tc_"+team+"_"+type];if(pred===undefined)return'<span class="res-badge res-pending">—</span>';
-  return parseInt(pred)===parseInt(real)?'<span class="res-badge res-exact">✅ +2</span>':'<span class="res-badge res-miss">❌ 0</span>';
-}
-
-// ── Admin: panel de resultados ────────────────────────────────────────────
-let adminResTab="grupos";
-function renderAdminResults(){
-  const c=document.getElementById("admin-results-content");
-  const tabs=["grupos","16vos","octavos","cuartos","semis","final","tarjetas"];
-  const tabIds=["grupos","r32","r16","qf","sf","fin","tarjetas"];
-  let html=`<div class="res-panel"><h3>📋 Ingresar Resultados Reales</h3>
-    <div class="res-tabs">`;
-  tabs.forEach((t,i)=>{html+=`<button class="res-tab${adminResTab===tabIds[i]?" active":""}" onclick="setAdminResTab('${tabIds[i]}')">${t}</button>`;});
-  html+=`</div><div id="res-panel-body">`;
-  html+=buildResBody(adminResTab);
-  html+=`</div></div>`;
-  c.innerHTML=html;
-}
-function setAdminResTab(tab){adminResTab=tab;renderAdminResults();}
-
-function buildResBody(tab){
-  let html="";
-  if(tab==="grupos"){
-    Object.entries(GRP).forEach(([g,teams])=>{
-      html+=`<div style="margin-bottom:.5rem"><div style="font-size:11px;color:var(--text3);padding:4px 0;font-weight:600">Grupo ${g}</div>`;
-      getMat(teams).forEach(([t1,t2],i)=>{
-        const key=g+"-"+i;const real=getRealGrp(key)||{};
-        const hasSaved=real.s1!==undefined&&real.s2!==undefined;
-        html+=`<div class="res-match">
-          <span class="res-team">${fl(t1)} ${t1}</span>
-          <input class="res-sinput" type="number" min="0" max="20" value="${real.s1!==undefined?real.s1:""}" placeholder="-" oninput="saveRealGrpInput('${key}',this,'s1')"/>
-          <span style="font-size:10px;color:var(--text3)">:</span>
-          <input class="res-sinput" type="number" min="0" max="20" value="${real.s2!==undefined?real.s2:""}" placeholder="-" oninput="saveRealGrpInput('${key}',this,'s2')"/>
-          <span class="res-team r">${t2} ${fl(t2)}</span>
-          ${hasSaved?`<button onclick="deleteRealGrp('${key}')" style="background:var(--dangerbg);color:var(--danger);border:1px solid var(--danger);border-radius:6px;font-size:11px;padding:2px 6px;cursor:pointer" title="Borrar resultado">🗑️</button>`:'<span style="width:28px"></span>'}
-        </div>`;
-      });
-      html+=`</div>`;
-    });
-  } else if(tab==="tarjetas"){
-    Object.entries(GRP).forEach(([g,teams])=>{
-      html+=`<div style="margin-bottom:.5rem"><div style="font-size:11px;color:var(--text3);padding:4px 0;font-weight:600">Grupo ${g}</div>`;
-      html+=`<div style="display:flex;padding:3px 0;gap:6px"><span style="flex:1;font-size:10px;color:var(--text3)">Equipo</span><span style="font-size:10px;color:var(--warning);width:60px;text-align:center">🟡 Amar.</span><span style="font-size:10px;color:var(--danger);width:60px;text-align:center">🟥 Roja D.</span><span style="font-size:10px;color:var(--warning);width:60px;text-align:center">🟡🔴 Doble</span></div>`;
-      teams.forEach(team=>{
-        const ya=getRealTC(team,"ya"),rd=getRealTC(team,"rd"),da=getRealTC(team,"da");
-        html+=`<div class="res-match">
-          <span class="res-team">${fl(team)} ${team}</span>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
-            <input class="res-sinput" type="number" min="0" max="20" value="${ya!==null?ya:""}" placeholder="-" style="width:48px" oninput="saveRealTC('${team}','ya',this)"/>
-            ${ya!==null?`<button onclick="deleteRealTC('${team}','ya')" style="font-size:9px;color:var(--danger);background:none;border:none;cursor:pointer">🗑️</button>`:''}
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
-            <input class="res-sinput" type="number" min="0" max="10" value="${rd!==null?rd:""}" placeholder="-" style="width:48px" oninput="saveRealTC('${team}','rd',this)"/>
-            ${rd!==null?`<button onclick="deleteRealTC('${team}','rd')" style="font-size:9px;color:var(--danger);background:none;border:none;cursor:pointer">🗑️</button>`:''}
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
-            <input class="res-sinput" type="number" min="0" max="10" value="${da!==null?da:""}" placeholder="-" style="width:48px" oninput="saveRealTC('${team}','da',this)"/>
-            ${da!==null?`<button onclick="deleteRealTC('${team}','da')" style="font-size:9px;color:var(--danger);background:none;border:none;cursor:pointer">🗑️</button>`:''}
-          </div>
-        </div>`;
-      });
-      html+=`</div>`;
-    });
-  } else {
-    const slotMap={r32:[R32,"Dieciseisavos",true],r16:[R16,"Octavos",false],qf:[QF,"Cuartos",false],sf:[SF,"Semifinales",false],fin:[FIN,"Final",false]};
-    const[slots,title,isR32]=slotMap[tab]||[[],"",false];
-    _third3Cache.u=null; // recalcular siempre los mejores terceros reales (por si cambió un marcador de grupos)
-    // Aviso de estado según los resultados reales capturados
-    if(isR32&&!allRealGroupsDone()){
-      html+=`<div style="font-size:11px;color:var(--warning);background:var(--warningbg);border-radius:8px;padding:8px 10px;margin-bottom:.6rem;line-height:1.4">⚠️ Las llaves se arman con los resultados reales de la <b>fase de grupos</b>. Termina de capturar todos los partidos de grupos para que se definan los equipos (especialmente los mejores terceros).</div>`;
-    }
-    slots.forEach((slot,idx)=>{
-      // Equipos REALES de la llave: en 16vos salen de los grupos reales; de octavos en adelante, de los ganadores reales ya marcados.
-      let n1,n2;
-      if(isR32){n1=realR32Side(slot,1);n2=realR32Side(slot,2);}
-      else{const mp=getMatchPair(slot,REAL_USER,false);n1=mp.n1;n2=mp.n2;}
-      const lb1=n1||phLabel(slot,1);
-      const lb2=n2||phLabel(slot,2);
-      const ready=!!(n1&&n2);
-      const real=getRealElim(slot.id);
-      const stale=ready&&real&&real!==n1&&real!==n2; // un ganador guardado que ya no corresponde a estos equipos
-      function btn(name,placeholder){
-        if(ready){
-          const sel=real===name;
-          return `<button class="res-winner-btn${sel?" sel":""}" onclick="saveRealElim('${slot.id}','${name.replace(/'/g,"\\'")}',this.parentElement)">${sel?"✓ ":""}${name}</button>`;
-        }
-        return `<button class="res-winner-btn" disabled style="opacity:.35;cursor:not-allowed">${placeholder}</button>`;
-      }
-      html+=`<div class="res-elim-row">
-        <span style="font-size:11px;color:var(--text3);width:20px">${idx+1}</span>
-        <span style="flex:1;font-size:12px;color:var(--text)">${n1?fl(n1)+" ":""}${lb1}</span>
-        <span style="font-size:11px;color:var(--text3)">vs</span>
-        <span style="flex:1;font-size:12px;color:var(--text);text-align:right">${lb2}${n2?" "+fl(n2):""}</span>
-        ${btn(n1,lb1)}
-        ${btn(n2,lb2)}
-        ${stale?`<span style="font-size:10px;color:var(--danger)" title="El ganador guardado ya no juega esta llave; vuelve a elegir">⚠️</span>`:""}
-      </div>`;
-    });
-  }
-  return html;
-}
-
-// Pending input buffers for group results (wait for both scores)
-const _grpBuf={};
-function saveRealGrpInput(key,input,field){
-  let val=parseInt(input.value);if(isNaN(val))return;
-  val=Math.max(0,Math.min(20,val));input.value=val;
-  if(!_grpBuf[key])_grpBuf[key]={};
-  _grpBuf[key][field]=val;
-  const buf=_grpBuf[key];
-  if(buf.s1!==undefined&&buf.s2!==undefined){
-    setRealGrp(key,buf.s1,buf.s2);
-    showToast("Resultado guardado ✓");
-  }
-}
-function saveRealElim(slotId,winner,row){
-  setRealElim(slotId,winner);
-  row.querySelectorAll(".res-winner-btn").forEach(b=>{b.classList.remove("sel");b.textContent=b.textContent.replace("✓ ","");});
-  // Re-render to reflect selection
-  renderAdminResults();
-  recalcAllPts();
-  showToast("Ganador guardado ✓");
-}
-function saveRealTC(team,type,input){
-  let val=parseInt(input.value);if(isNaN(val))return;
-  val=Math.max(0,Math.min(type==="ya"?20:10,val));input.value=val;
-  setRealTC(team,type,val);
-  showToast("Tarjeta guardada ✓");
-}
-
-function deleteRealGrp(key){
-  const r=gR();if(r.grp){delete r.grp[key];sR(r);}
-  if(_grpBuf[key])delete _grpBuf[key];
-  recalcAllPts();renderAdminResults();
-  if(activeTab==="grupos")renderGroups();
-  if(activeTab==="posiciones")renderStandings();
-  showToast("Resultado borrado");
-}
-function deleteRealElim(slotId){
-  const r=gR();if(r.elim){delete r.elim[slotId];sR(r);}
-  recalcAllPts();renderAdminResults();
-  showToast("Ganador borrado");
-}
-function deleteRealTC(team,type){
-  const r=gR();if(r.tc){delete r.tc[team+"_"+type];sR(r);}
-  recalcAllPts();renderAdminResults();
-  if(activeTab==="tarjetas")renderTarjetas();
-  showToast("Tarjeta borrada");
-}
-
-let confirmCb=null;
-function showConfirm(msg,cb){document.getElementById("confirm-msg").textContent=msg;confirmCb=cb;document.getElementById("confirm-ok").onclick=()=>{closeConfirm();if(confirmCb)confirmCb();};document.getElementById("confirm-modal").style.display="flex";}
-function closeConfirm(){document.getElementById("confirm-modal").style.display="none";confirmCb=null;}
-function showToast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2500);}
-
-// ============================================================
-// SIMULACIONES — reconstruidas desde cero con bracket coherente
-// La clave: primero calculamos QUIÉN clasifica de grupos (standings),
-// luego construimos el bracket completo como un torneo real
-// asegurando que cada equipo aparezca exactamente una vez.
-// ============================================================
-function buildSimPicks(seed){
-  let s=seed;
-  function sr(){s=(s*9301+49297)%233280;return s/233280;}
-  function srScore(){
-    const sc=[[0,0],[1,0],[0,1],[1,1],[2,0],[0,2],[2,1],[1,2],[2,2],[3,0],[0,3],[3,1],[1,3],[3,2],[2,3],[4,0],[0,4]];
-    return sc[Math.floor(sr()*sc.length)];
-  }
-
-  // 1. Generar marcadores de fase de grupos
-  const picks={};
-  Object.entries(GRP).forEach(([g,teams])=>{
-    getMat(teams).forEach((_,i)=>{
-      const[s1,s2]=srScore();picks[g+"-"+i]={s1,s2};
-    });
-  });
-
-  // 1b. Generar tarjetas por equipo (amarillas 0-8, rojas directas 0-3, doble amarilla 0-3)
-  Object.values(GRP).flat().forEach(team=>{
-    picks["tc_"+team+"_ya"]=Math.floor(sr()*9);   // 0-8 amarillas
-    picks["tc_"+team+"_rd"]=Math.floor(sr()*4);   // 0-3 rojas directas
-    picks["tc_"+team+"_da"]=Math.floor(sr()*4);   // 0-3 roja doble amarilla
-  });
-
-  // 2. Calcular standings de cada grupo (con Fair Play)
-  function simFP(team){
-    const ya=picks["tc_"+team+"_ya"]||0;
-    const rd=picks["tc_"+team+"_rd"]||0;
-    const da=picks["tc_"+team+"_da"]||0;
-    return ya*(-1)+rd*(-4)+da*(-3);
-  }
-  function simStandings(g){
-    const teams=GRP[g];const stats=new Map();
-    teams.forEach((t,idx)=>{stats.set(idx,{pts:0,gf:0,ga:0,gd:0,name:t,idx,fp:0});});
-    getMat(teams).forEach(([t1,t2],i)=>{
-      const p=picks[g+"-"+i];if(!p)return;
-      const s1=p.s1,s2=p.s2;const i1=teams.indexOf(t1),i2=teams.indexOf(t2);
-      if(i1<0||i2<0||i1===i2)return;
-      stats.get(i1).gf+=s1;stats.get(i1).ga+=s2;stats.get(i1).gd+=s1-s2;
-      stats.get(i2).gf+=s2;stats.get(i2).ga+=s1;stats.get(i2).gd+=s2-s1;
-      if(s1>s2)stats.get(i1).pts+=3;else if(s1<s2)stats.get(i2).pts+=3;
-      else{stats.get(i1).pts+=1;stats.get(i2).pts+=1;}
-    });
-    teams.forEach((t,idx)=>{stats.get(idx).fp=simFP(t);});
-    return[...stats.values()].sort((a,b)=>b.pts-a.pts||b.gd-a.gd||b.gf-a.gf||b.fp-a.fp||a.idx-b.idx);
-  }
-
-  // 3. Obtener clasificados
-  const standings={};
-  Object.keys(GRP).forEach(g=>{standings[g]=simStandings(g);});
-  function pos(g,p){return standings[g][p-1]?standings[g][p-1].name:null;}
-
-  // 4. Calcular los 8 mejores terceros (uno por grupo, ordenados por rendimiento)
-  const thirds=Object.keys(GRP).map(g=>({g,t:standings[g][2]})).filter(x=>x.t).sort((a,b)=>b.t.pts-a.t.pts||b.t.gd-a.t.gd||b.t.gf-a.t.gf||b.t.fp-a.t.fp);
-  const top8thirds=thirds.slice(0,8);
-
-  // Cada 3er lugar se asigna a exactamente un slot R32 (sin repetir)
-  const usedThirds=new Set();
-  function best3rdFromPool(pool){
-    // 1er intento: mejor del pool en top8 no usado
-    for(const entry of top8thirds){
-      if(pool.includes(entry.g)&&!usedThirds.has(entry.t.name)){
-        usedThirds.add(entry.t.name);return entry.t.name;
-      }
-    }
-    // Fallback: cualquier top8 no usado (el pool ya no tiene candidatos)
-    for(const entry of top8thirds){
-      if(!usedThirds.has(entry.t.name)){
-        usedThirds.add(entry.t.name);return entry.t.name;
-      }
-    }
-    return null;
-  }
-
-  // 5. Resolver los 16 partidos de R32 con equipos reales
-  // Primer pase: 1ros y 2dos de grupo (deterministas)
-  // Segundo pase: 3ros de grupo (sin repetir, en orden de slots)
-  const r32teams={};
-  R32.forEach(slot=>{
-    let n1=null,n2=null;
-    const role1=slot.role1,g1=slot.g1;
-    if(role1===1||role1===2)n1=pos(g1,role1);
-    const role2=slot.role2,g2=slot.g2;
-    if(role2===1||role2===2)n2=pos(g2,role2);
-    r32teams[slot.id]={n1,n2};
-  });
-  // Asignar 3ros en segundo pase para respetar el Set de usados
-  R32.forEach(slot=>{
-    if(slot.role2===3){
-      r32teams[slot.id].n2=best3rdFromPool(slot.pool2);
-    }
-  });
-
-  // 6. Simular el bracket completo
-  // Usamos un Set para rastrear equipos ya usados como ganadores
-  // en slots del mismo nivel para detectar inconsistencias
-  function simMatch(n1,n2){
-    if(!n1&&!n2)return null;
-    if(!n1)return n2;if(!n2)return n1;
-    if(n1===n2)return n1;
-    return sr()<0.5?n1:n2;
-  }
-
-  // R32
-  R32.forEach(slot=>{
-    const{n1,n2}=r32teams[slot.id];
-    picks["w_"+slot.id]=simMatch(n1,n2);
-  });
-
-  // R16 — cada partido usa ganadores de 2 partidos R32 distintos
-  R16.forEach(slot=>{
-    const n1=picks["w_"+slot.f1];
-    const n2=picks["w_"+slot.f2];
-    picks["w_"+slot.id]=simMatch(n1,n2);
-  });
-
-  // QF
-  QF.forEach(slot=>{
-    const n1=picks["w_"+slot.f1];
-    const n2=picks["w_"+slot.f2];
-    picks["w_"+slot.id]=simMatch(n1,n2);
-  });
-
-  // SF
-  SF.forEach(slot=>{
-    const n1=picks["w_"+slot.f1];
-    const n2=picks["w_"+slot.f2];
-    picks["w_"+slot.id]=simMatch(n1,n2);
-  });
-
-  // Final
-  picks["w_"+FIN[0].id]=simMatch(picks["w_"+SF[0].id],picks["w_"+SF[1].id]);
-
-  return picks;
-}
-
-function loadSimulations(){
-  const sims=[
-    {name:"Carlos",  seed:12345, pw:"1234"},
-    {name:"Mariana", seed:67890, pw:"1234"},
-    {name:"Roberto", seed:11111, pw:"1234"},
-    {name:"Sofía",   seed:54321, pw:"1234"},
-    {name:"Diego",   seed:99999, pw:"1234"},
-  ];
-  const d=gS();if(!d.users)d.users={};if(!d.deleted)d.deleted=[];
-  // Solo crear simulaciones si no existen Y no fueron eliminadas por el admin
-  sims.forEach(({name,seed,pw})=>{
-    if(!d.users[name]&&!d.deleted.includes(name)){
-      d.users[name]={picks:buildSimPicks(seed),saved:true,pts:0,pw};
-    }
-  });
-  sS(d);
-}
-
-document.getElementById("uinput").addEventListener("keydown",e=>{if(e.key==="Enter")enterQ();});
-document.getElementById("pinput").addEventListener("keydown",e=>{if(e.key==="Enter")enterQ();});
-document.getElementById("pinput2").addEventListener("keydown",e=>{if(e.key==="Enter")enterQ();});
-document.getElementById("admin-pass-input").addEventListener("keydown",e=>{if(e.key==="Escape")closeAdminModal();});
-
-// ============================================================
-//  ARRANQUE: conectar a Firebase y escuchar cambios en vivo
-// ============================================================
-function refreshCurrentView(){
-  try{
-    var adminVisible=document.getElementById("admin-section").style.display!=="none";
-    var loginVisible=document.getElementById("login-section").style.display!=="none";
-    // No auto-refrescamos pestañas con inputs (grupos/tarjetas/eliminatorias/admin)
-    // para no interrumpir lo que la persona está escribiendo.
-    if(loginVisible){renderLoginRankings();}
-    else if(!adminVisible && CU && activeTab==="ranking"){renderRanking();}
-  }catch(e){console.error("refreshCurrentView",e);}
-}
-function _upsertUser(snap){try{var o=JSON.parse(snap.val());if(o&&o.name)_cache.state.users[o.name]=o;}catch(e){}refreshCurrentView();}
-function _removeUser(snap){try{var o=JSON.parse(snap.val());if(o&&o.name)delete _cache.state.users[o.name];}catch(e){}refreshCurrentView();}
-
-function initFirebase(){
-  var lb=document.getElementById("login-btn");
-  lb.disabled=true;lb.textContent="Conectando…";
-  try{
-    firebase.initializeApp(FB_CONFIG);
-    fbDB=firebase.database();
-  }catch(e){
-    console.error("Firebase init error",e);
-    lb.textContent="Sin conexión";
-    showErr("No se pudo conectar a la base de datos. Revisa la configuración de Firebase en el código.");
-    return;
-  }
-  var started=false,gotUsers=false,gotResults=false;
-  function maybeStart(){
-    if(started||!gotUsers||!gotResults)return;
-    started=true;_fbReady=true;
-    lb.disabled=false;lb.textContent="Entrar";
-    // loadSimulations();  // ← descomenta si quieres participantes de prueba (Carlos, Mariana, …)
-    renderLoginRankings();
-  }
-  // Carga inicial (una sola vez) para saber cuándo ya tenemos los datos
-  fbDB.ref("state/users").once("value").then(function(){gotUsers=true;maybeStart();}).catch(function(e){console.error(e);gotUsers=true;maybeStart();});
-  fbDB.ref("results/blob").once("value").then(function(){gotResults=true;maybeStart();}).catch(function(e){console.error(e);gotResults=true;maybeStart();});
-  // Escucha en vivo por hijo (cada cambio trae solo UN usuario, no todo el árbol)
-  fbDB.ref("state/users").on("child_added",_upsertUser);
-  fbDB.ref("state/users").on("child_changed",_upsertUser);
-  fbDB.ref("state/users").on("child_removed",_removeUser);
-  fbDB.ref("state/deleted").on("value",function(s){try{_cache.state.deleted=JSON.parse(s.val()||"[]");}catch(e){_cache.state.deleted=[];}});
-  fbDB.ref("results/blob").on("value",function(s){
-    try{_cache.results=JSON.parse(s.val()||"{}");}catch(e){_cache.results={};}
-    if(!_cache.results.grp)_cache.results.grp={};
-    if(!_cache.results.elim)_cache.results.elim={};
-    if(!_cache.results.tc)_cache.results.tc={};
-    refreshCurrentView();
-  });
-  // Si tras 10s no conectó, avisar (red bloqueada / config mala)
-  setTimeout(function(){if(!started){lb.textContent="Sin conexión";showErr("No se pudo conectar. Revisa tu internet o la configuración de Firebase.");}},10000);
-}
-initFirebase();
+boot();
 </script>
 </body>
 </html>
