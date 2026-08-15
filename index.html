@@ -290,7 +290,7 @@ table.lista tbody tr:hover td{background:#FBFAF6}
           <div class="dg">
             <div class="campo"><label>Solicitante</label><input id="ns-sol" disabled></div>
             <div class="campo"><label>Fecha de solicitud</label><input id="ns-fecha" type="date"></div>
-            <div class="campo"><label>Pirámide (área)</label><input id="ns-area" list="areas-dl" placeholder="Administrativo, Sistemas…"><datalist id="areas-dl"><option>Administrativo</option><option>Sistemas</option><option>Contabilidad</option><option>Fiscal</option><option>Auditoría</option><option>Nóminas</option><option>Dirección</option></datalist></div>
+            <div class="campo"><label>Pirámide (área)</label><select id="ns-area"></select></div>
             <div class="campo"><label>Prioridad</label><select id="ns-prio"><option>Normal</option><option>Urgente</option></select></div>
             <div class="campo" style="grid-column:1/-1"><label>Se necesita para</label><input id="ns-para" placeholder="Ej. Stock laptop, papelería del mes…"></div>
           </div>
@@ -343,7 +343,7 @@ table.lista tbody tr:hover td{background:#FBFAF6}
               <option value="pagos">Pagos / Facturación — registra pagos y cierra órdenes</option>
               <option value="admin">Administrador — todo</option>
             </select></div>
-            <div class="campo"><label>Pirámide (área)</label><input id="us-area" list="areas-dl"></div>
+            <div class="campo"><label>Pirámide (área)</label><select id="us-area"></select></div>
             <button class="btn btn-rojo" id="btn-add-user">Dar de alta</button>
             <div class="err" id="us-err"></div>
           </div>
@@ -402,7 +402,16 @@ const PIR_DEF=["Administrativo","Sistemas","Contabilidad","Fiscal","Auditoría",
 let pirsCache=null; // null = usar PIR_DEF hasta que llegue el catálogo de la base
 function getPirs(){return pirsCache&&pirsCache.length?pirsCache:PIR_DEF.slice()}
 function savePirs(arr){return db.ref(RAIZ+"/config/piramides").set(JSON.stringify(arr))}
-function renderAreasDL(){$("areas-dl").innerHTML=getPirs().map(p=>`<option>${esc(p)}</option>`).join("")}
+function opsPirs(val){
+  const ps=getPirs().slice();
+  if(val&&!ps.includes(val))ps.unshift(val); // respeta áreas antiguas que ya no estén en el catálogo
+  return ps.map(p=>`<option${p===val?" selected":""}>${esc(p)}</option>`).join("");
+}
+function renderAreasDL(){
+  const ns=$("ns-area");if(ns)ns.innerHTML=(ns.value?"":'<option value="" disabled selected>Elige el área…</option>')+opsPirs(ns.value||"");
+  const us=$("us-area");if(us)us.innerHTML=`<option value=""${us.value?"":" selected"}>— sin área —</option>`+opsPirs(us.value||"");
+  document.querySelectorAll(".p-para").forEach(el=>{if(el.tagName==="SELECT")el.innerHTML=opsPirs(el.value||"")});
+}
 function renderPirs(){
   if(!isAdmin())return;
   $("pirs-wrap").innerHTML=getPirs().map(p=>`<span class="pir-chip">${esc(p)}<button data-delpir="${esc(p)}" title="Quitar">✕</button></span>`).join("");
@@ -489,7 +498,7 @@ function entrar(u){
   $("tab-reportes-btn").classList.toggle("hide",!veReportes());
   if(!$("rep-mes").value)$("rep-mes").value=hoyISO().slice(0,7);
   renderAreasDL();
-  $("ns-sol").value=u.n;$("ns-fecha").value=hoyISO();if(u.area)$("ns-area").value=u.area;
+  $("ns-sol").value=u.n;$("ns-fecha").value=hoyISO();if(u.area)$("ns-area").innerHTML=opsPirs(u.area);
   if(!$("partidas").children.length)addPartida();
   initFirmaSol();
   if(CU.rol==="pagos"){filtroEstatus="PorPagar";document.querySelectorAll("#filtros button").forEach(x=>x.classList.toggle("act",x.dataset.f==="PorPagar"))}
@@ -532,7 +541,7 @@ function renderUsers(){
         return `<tr>
           <td><input id="ue-nom" value="${esc(u.n)}" style="min-width:120px"></td>
           <td><select id="ue-rol">${["solicitante","autorizador","pagos","admin"].map(r=>`<option value="${r}" ${u.rol===r?"selected":""}>${r}</option>`).join("")}</select></td>
-          <td><input id="ue-area" list="areas-dl" value="${esc(u.area||"")}" style="min-width:110px"></td>
+          <td><select id="ue-area" style="min-width:110px"><option value=""${u.area?"":" selected"}>—</option>${opsPirs(u.area||"")}</select></td>
           <td><input id="ue-pw" class="mono" value="${esc(u.pw)}" style="min-width:110px"></td>
           <td style="white-space:nowrap">
             <button class="btn btn-rojo" id="ue-save" style="padding:5px 11px;font-size:12px">Guardar</button>
@@ -591,7 +600,7 @@ function addPartida(p){
       <div class="campo"><label>Justificación (para qué o para quién)</label><textarea class="p-just" style="min-height:56px">${p?esc(p.just):""}</textarea></div>
     </div>
     <div class="part-grid2">
-      <div class="campo"><label>Producto solicitado para (área)</label><input class="p-para" list="areas-dl" value="${p?esc(p.para):""}"></div>
+      <div class="campo"><label>Producto solicitado para (área)</label><select class="p-para">${opsPirs(p?p.para:(($("ns-area")&&$("ns-area").value)||""))}</select></div>
       <div class="campo"><label>Costo unit. est.</label><input class="p-costo" type="number" min="0" step="0.01" value="${p?esc(p.costo):""}"></div>
       <div class="campo"><label>Envío</label><input class="p-envio" value="${p?esc(p.envio):"Gratis"}"></div>
     </div>`;
@@ -641,6 +650,7 @@ function finFormulario(){
   editandoFolio=null;$("btn-guardar-sol").disabled=false;$("btn-guardar-sol").textContent="Guardar solicitud";
   $("btn-cancelar-edit").classList.add("hide");$("ns-folio").textContent="FOLIO NUEVO";$("ns-titulo").textContent="Solicitud de compra";
   $("partidas").innerHTML="";addPartida();$("ns-para").value="";$("ns-obs").value="";$("ns-prio").value="Normal";$("ns-fecha").value=hoyISO();
+  $("ns-area").innerHTML=opsPirs(CU&&CU.area?CU.area:"");
   limpiaFirmaSol();
   irTab("ordenes");
 }
@@ -649,7 +659,7 @@ function editarSolicitud(f){
   const o=getOrd(f);if(!o)return;
   editandoFolio=f;cerrarModal();irTab("nueva");
   $("ns-folio").textContent="FOLIO "+o.folio;$("ns-titulo").textContent="Editar solicitud";
-  $("ns-fecha").value=o.fechaSol;$("ns-area").value=o.area;$("ns-prio").value=o.prioridad;$("ns-para").value=o.para;$("ns-obs").value=o.obs||"";
+  $("ns-fecha").value=o.fechaSol;$("ns-area").innerHTML=opsPirs(o.area);$("ns-prio").value=o.prioridad;$("ns-para").value=o.para;$("ns-obs").value=o.obs||"";
   $("partidas").innerHTML="";o.partidas.forEach(p=>addPartida(p));
   if(o.firmaSol)cargaFirmaSol(o.firmaSol);else limpiaFirmaSol();
   $("btn-guardar-sol").textContent="Guardar cambios";$("btn-cancelar-edit").classList.remove("hide");
