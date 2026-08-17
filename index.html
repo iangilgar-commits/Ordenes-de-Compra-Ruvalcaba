@@ -173,6 +173,23 @@ table.lista tbody tr:hover td{background:#FBFAF6}
 #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--tinta);color:#fff;padding:11px 20px;border-radius:9px;font-size:13.5px;opacity:0;pointer-events:none;transition:.22s;z-index:200;max-width:90vw;text-align:center}
 #toast.ver{opacity:1;transform:translateX(-50%)}
 
+/* ── Suscripciones ── */
+.sus-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.sus-card{cursor:pointer;transition:transform .12s}
+.sus-card:hover{transform:translateY(-2px)}
+.sus-cuerpo{padding:14px 16px}
+.sus-nom{font-family:"Archivo";font-weight:700;font-size:15px}
+.sus-sub{font-size:12.5px;color:var(--grafito);margin-top:2px}
+.sus-costo{font-family:"IBM Plex Mono";font-size:15px;margin:8px 0 10px}
+.sus-costo small{font-family:"IBM Plex Sans";color:var(--grafito)}
+.vida{height:9px;background:var(--linea-suave);border-radius:99px;overflow:hidden}
+.vida i{display:block;height:100%;border-radius:99px}
+.v-ok{background:var(--verde)}.v-warn{background:var(--amb)}.v-bad{background:var(--rojo)}
+.vida-txt{font-size:12px;color:var(--grafito);margin-top:6px}
+.vida-txt b{color:var(--tinta)}
+.ch-Activa{color:var(--verde);background:#E6F4EC}
+.ch-Vencida{color:var(--rojo);background:#FBEAEA}
+
 /* ── Reportes ── */
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:12px;margin-bottom:16px}
 .kpi{background:var(--hoja);border:1px solid var(--linea);border-radius:10px;padding:14px 16px;box-shadow:var(--sombra)}
@@ -257,6 +274,7 @@ table.lista tbody tr:hover td{background:#FBFAF6}
       <button data-tab="ordenes" class="act">Órdenes</button>
       <button data-tab="nueva">Nueva solicitud</button>
       <button data-tab="reportes" id="tab-reportes-btn" class="hide">Reportes</button>
+      <button data-tab="sus" id="tab-sus-btn" class="hide">Suscripciones</button>
       <button data-tab="usuarios" id="tab-usuarios-btn" class="hide">Administración</button>
     </nav>
   </header>
@@ -316,6 +334,21 @@ table.lista tbody tr:hover td{background:#FBFAF6}
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- ── Suscripciones y licencias ── -->
+    <section id="view-sus" class="hide">
+      <div class="toolbar">
+        <div class="filtros" id="filtros-sus">
+          <button data-fs="Activas" class="act">Activas</button>
+          <button data-fs="PorVencer">Por vencer</button>
+          <button data-fs="Canceladas">Dadas de baja</button>
+          <button data-fs="Todas">Todas</button>
+        </div>
+        <button class="btn btn-rojo hide" id="btn-nueva-sus">＋ Nueva suscripción</button>
+        <button class="btn btn-borde" id="btn-sus-excel" style="margin-left:auto">⬇ Excel</button>
+      </div>
+      <div id="sus-grid" class="sus-grid"></div>
     </section>
 
     <!-- ── Reportes ── -->
@@ -390,10 +423,11 @@ const ahora=()=>{const d=new Date();return d.toISOString().slice(0,10)+" "+d.toT
 function toast(m){const t=$("toast");t.textContent=m;t.classList.add("ver");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("ver"),2600)}
 
 /* ═════════ Estado en memoria ═════════ */
-const cache={users:{},ord:{}};
+const cache={users:{},ord:{},sus:{}};
 let CU=null; // usuario actual {n, rol, area}
 let filtroEstatus="Todas", editandoFolio=null, modalFolio=null;
 let formSucio=false,_firmaTiene=false,_firmaCanvas=null;
+let modalSus=null,filtroSus="Activas";
 let _firmaSolTiene=false,_firmaSolCanvas=null,_firmaSolCtx=null;
 
 const ESTATUS_FLUJO=["Pendiente","Autorizada","Ordenada","Recibida","Pagada"];
@@ -439,8 +473,8 @@ const veReportes=()=>CU&&(CU.rol==="admin"||CU.rol==="autorizador"||CU.rol==="pa
 /* ═════════ Arranque ═════════ */
 function boot(){
   firebase.initializeApp(FB_CONFIG);db=firebase.database();
-  Promise.all([uRef().once("value"),oRef().once("value")]).then(([su,so])=>{
-    cache.users=su.val()||{};cache.ord=so.val()||{};
+  Promise.all([uRef().once("value"),oRef().once("value"),sRef().once("value")]).then(([su,so,ss])=>{
+    cache.users=su.val()||{};cache.ord=so.val()||{};cache.sus=ss.val()||{};
     _ready=true;
     // listeners en vivo
     uRef().on("child_added",s=>{cache.users[s.key]=s.val();refresco("u")});
@@ -449,6 +483,9 @@ function boot(){
     oRef().on("child_added",s=>{cache.ord[s.key]=s.val();refresco("o",s.key)});
     oRef().on("child_changed",s=>{cache.ord[s.key]=s.val();refresco("o",s.key)});
     oRef().on("child_removed",s=>{delete cache.ord[s.key];refresco("o",s.key)});
+    sRef().on("child_added",x=>{cache.sus[x.key]=x.val();refresco("s",x.key)});
+    sRef().on("child_changed",x=>{cache.sus[x.key]=x.val();refresco("s",x.key)});
+    sRef().on("child_removed",x=>{delete cache.sus[x.key];refresco("s",x.key)});
     db.ref(RAIZ+"/config/piramides").on("value",sn=>{
       try{pirsCache=sn.val()?JSON.parse(sn.val()):null}catch(e){pirsCache=null}
       renderAreasDL();
@@ -462,6 +499,10 @@ function refresco(tipo,clave){
   if(tipo==="o"){
     if(!$("view-ordenes").classList.contains("hide"))renderLista();
     if(modalFolio&&(clave===undefined||clave===modalFolio)&&!formSucio)abrirDetalle(modalFolio,true);
+  }
+  if(tipo==="s"){
+    if(!$("view-sus").classList.contains("hide"))renderSus();
+    if(modalSus&&(clave===undefined||clave===modalSus)&&!formSucio)abrirSus(modalSus,true);
   }
   if(tipo==="u"&&!$("view-usuarios").classList.contains("hide")&&!userEditando)renderUsers();
 }
@@ -496,6 +537,8 @@ function entrar(u){
   $("u-nom").textContent=u.n;$("u-rol").textContent=u.rol;
   $("tab-usuarios-btn").classList.toggle("hide",!isAdmin());
   $("tab-reportes-btn").classList.toggle("hide",!veReportes());
+  $("tab-sus-btn").classList.toggle("hide",!veReportes());
+  $("btn-nueva-sus").classList.toggle("hide",!isAdmin());
   if(!$("rep-mes").value)$("rep-mes").value=hoyISO().slice(0,7);
   renderAreasDL();
   $("ns-sol").value=u.n;$("ns-fecha").value=hoyISO();if(u.area)$("ns-area").innerHTML=opsPirs(u.area);
@@ -510,8 +553,9 @@ $("btn-salir").onclick=()=>{localStorage.removeItem("rv_oc_ses");location.reload
 document.querySelectorAll("nav.tabs button").forEach(b=>b.onclick=()=>irTab(b.dataset.tab));
 function irTab(t){
   document.querySelectorAll("nav.tabs button").forEach(b=>b.classList.toggle("act",b.dataset.tab===t));
-  ["ordenes","nueva","reportes","usuarios"].forEach(v=>$("view-"+v).classList.toggle("hide",v!==t));
+  ["ordenes","nueva","sus","reportes","usuarios"].forEach(v=>$("view-"+v).classList.toggle("hide",v!==t));
   if(t==="ordenes")renderLista();
+  if(t==="sus")renderSus();
   if(t==="reportes")renderReporte();
   if(t==="usuarios"){renderUsers();renderPirs()}
 }
@@ -722,7 +766,7 @@ function rutaHTML(o){
 }
 function abrirDetalle(f,silencio){
   const o=getOrd(f);if(!o){cerrarModal();return}
-  modalFolio=f;
+  modalFolio=f;modalSus=null;
   const esPend=o.estatus==="Pendiente";
   const totalEst=o.partidas.reduce((s,p)=>s+p.cant*p.costo,0);
   let h=`<div class="modal-cab"><span class="folio-sello">FOLIO ${o.folio}</span><h2 style="font-size:16px">${esPend?"Solicitud de compra":"Orden de compra"}</h2>
@@ -954,8 +998,219 @@ function registrarPago(o){
   ).catch(e=>{toast("Error al adjuntar: "+e.message);revive()});
 }
 function cambiaEstatus(f,e,txt){const o=getOrd(f);if(!o)return;o.estatus=e;o.hist.push({f:ahora(),u:CU.n,a:txt});saveOrd(o).then(()=>toast("Folio "+f+" → "+e))}
-function cerrarModal(){modalFolio=null;$("velo").classList.add("hide");document.body.style.overflow=""}
+function cerrarModal(){modalFolio=null;modalSus=null;$("velo").classList.add("hide");document.body.style.overflow=""}
 $("velo").addEventListener("click",e=>{if(e.target.id==="velo")cerrarModal()});
+
+/* ═════════ Suscripciones y licencias ═════════ */
+function sRef(){return db.ref(RAIZ+"/suscripciones")}
+function getSus(id){const j=cache.sus[id];if(!j)return null;try{return JSON.parse(j)}catch(e){return null}}
+function allSus(){return Object.keys(cache.sus).map(getSus).filter(Boolean)}
+function saveSus(x){return sRef().child(x.id).set(JSON.stringify(x))}
+function sumaCiclo(iso,ciclo){const d=new Date((iso||hoyISO())+"T12:00:00");if(ciclo==="Anual")d.setFullYear(d.getFullYear()+1);else d.setMonth(d.getMonth()+1);return d.toISOString().slice(0,10)}
+function diasEntre(a,b){return Math.round((new Date(b+"T12:00:00")-new Date(a+"T12:00:00"))/86400000)}
+function vidaDe(x){
+  const hoy=hoyISO();const dRest=diasEntre(hoy,x.vence);
+  const ini=x.periodoInicio||x.inicio||hoy;
+  const total=Math.max(1,diasEntre(ini,x.vence));
+  let pct=Math.round(diasEntre(ini,hoy)/total*100);pct=Math.max(0,Math.min(100,pct));
+  let cls="v-ok";
+  if(dRest<0){cls="v-bad";pct=100}
+  else if(pct>=90||dRest<=7)cls="v-bad";
+  else if(pct>=70||dRest<=21)cls="v-warn";
+  const txt=dRest<0?`<b style="color:var(--rojo)">VENCIDA hace ${-dRest} día${dRest===-1?"":"s"}</b>`:
+    dRest===0?`<b style="color:var(--rojo)">Vence HOY</b>`:
+    `Quedan <b>${dRest} día${dRest===1?"":"s"}</b> · vence ${fmtF(x.vence)}`;
+  return{pct,cls,txt,dRest};
+}
+function chipSus(x){
+  if(x.estatus==="Cancelada")return'<span class="chip ch-Cancelada">Baja</span>';
+  return vidaDe(x).dRest<0?'<span class="chip ch-Vencida">Vencida</span>':'<span class="chip ch-Activa">Activa</span>';
+}
+document.querySelectorAll("#filtros-sus button").forEach(b=>b.onclick=()=>{
+  filtroSus=b.dataset.fs;
+  document.querySelectorAll("#filtros-sus button").forEach(x=>x.classList.toggle("act",x===b));
+  renderSus();
+});
+$("btn-nueva-sus").onclick=()=>abrirFormSus(null);
+function renderSus(){
+  let xs=allSus();
+  xs.sort((a,b)=>{
+    if((a.estatus==="Cancelada")!==(b.estatus==="Cancelada"))return a.estatus==="Cancelada"?1:-1;
+    return diasEntre(hoyISO(),a.vence)-diasEntre(hoyISO(),b.vence);
+  });
+  if(filtroSus==="Activas")xs=xs.filter(x=>x.estatus!=="Cancelada");
+  else if(filtroSus==="PorVencer")xs=xs.filter(x=>x.estatus!=="Cancelada"&&vidaDe(x).dRest<=30);
+  else if(filtroSus==="Canceladas")xs=xs.filter(x=>x.estatus==="Cancelada");
+  if(!xs.length){$("sus-grid").innerHTML=`<div class="hoja" style="grid-column:1/-1"><div class="vacio"><b>Sin suscripciones que mostrar</b>${isAdmin()?'Crea la primera con "＋ Nueva suscripción".':"El administrador aún no registra ninguna."}</div></div>`;return}
+  $("sus-grid").innerHTML=xs.map(x=>{
+    const v=vidaDe(x);
+    return `<div class="hoja sus-card" data-sus="${x.id}"><div class="sus-cuerpo">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="folio-sello">${x.id}</span><span class="sus-nom" style="flex:1">${esc(x.nombre)}</span>${chipSus(x)}</div>
+      <div class="sus-sub">${esc(x.tipo)} · ${esc(x.prov||"—")} · ${esc(x.area||"—")}</div>
+      <div class="sus-costo">${fmtM(x.costo)} <small>/ ${x.ciclo==="Anual"?"año":"mes"}</small></div>
+      ${x.estatus==="Cancelada"?`<div class="vida-txt">Dada de baja</div>`:`<div class="vida"><i class="${v.cls}" style="width:${Math.max(3,v.pct)}%"></i></div><div class="vida-txt">${v.txt}</div>`}
+    </div></div>`;
+  }).join("");
+  document.querySelectorAll("[data-sus]").forEach(c=>c.onclick=()=>abrirSus(c.dataset.sus));
+}
+function abrirFormSus(id){
+  const x=id?getSus(id):null;
+  modalSus=null;modalFolio=null;
+  let h=`<div class="modal-cab"><span class="folio-sello">${x?x.id:"NUEVA"}</span><h2 style="font-size:16px">${x?"Editar suscripción":"Nueva suscripción o licencia"}</h2><button class="x" id="m-x">✕</button></div><div class="modal-cuerpo">
+    <div class="dg">
+      <div class="campo" style="grid-column:1/-1"><label>Nombre</label><input id="fs-nombre" value="${x?esc(x.nombre):""}" placeholder="Ej. Microsoft 365 Empresa, Antivirus, Hosting…"></div>
+      <div class="campo"><label>Tipo</label><select id="fs-tipo">${["Suscripción","Licencia","Contrato"].map(t=>`<option${x&&x.tipo===t?" selected":""}>${t}</option>`).join("")}</select></div>
+      <div class="campo"><label>Proveedor</label><input id="fs-prov" value="${x?esc(x.prov||""):""}"></div>
+      <div class="campo"><label>Pirámide (área)</label><select id="fs-area">${opsPirs(x?x.area:(CU&&CU.area?CU.area:""))}</select></div>
+      <div class="campo"><label>Ciclo de pago</label><select id="fs-ciclo"><option${x&&x.ciclo==="Mensual"?" selected":""}>Mensual</option><option${x&&x.ciclo==="Anual"?" selected":""}>Anual</option></select></div>
+      <div class="campo"><label>Costo por ciclo</label><input id="fs-costo" type="number" step="0.01" min="0" value="${x?x.costo:""}"></div>
+      <div class="campo"><label>Inicio de vigencia</label><input id="fs-inicio" type="date" value="${x?x.inicio:hoyISO()}"></div>
+      <div class="campo"><label>Fecha de vencimiento</label><input id="fs-vence" type="date" value="${x?x.vence:sumaCiclo(hoyISO(),"Mensual")}"></div>
+    </div>
+    <div class="campo" style="margin-top:10px"><label>Notas</label><textarea id="fs-notas" style="min-height:56px">${x?esc(x.notas||""):""}</textarea></div>
+  </div>
+  <div class="acciones"><button class="btn btn-rojo" id="fs-guardar">${x?"Guardar cambios":"Crear suscripción"}</button></div>`;
+  $("modal").innerHTML=h;$("velo").classList.remove("hide");document.body.style.overflow="hidden";
+  $("m-x").onclick=cerrarModal;
+  if(!x){
+    const recalc=()=>{$("fs-vence").value=sumaCiclo($("fs-inicio").value,$("fs-ciclo").value)};
+    $("fs-ciclo").onchange=recalc;$("fs-inicio").onchange=recalc;
+  }
+  $("fs-guardar").onclick=()=>{
+    const nombre=$("fs-nombre").value.trim(),costo=parseFloat($("fs-costo").value),vence=$("fs-vence").value;
+    if(!nombre){toast("Falta el nombre");return}
+    if(!(costo>0)){toast("Escribe el costo por ciclo");return}
+    if(!vence){toast("Falta la fecha de vencimiento");return}
+    const datos={nombre,tipo:$("fs-tipo").value,prov:$("fs-prov").value.trim(),area:$("fs-area").value,
+      ciclo:$("fs-ciclo").value,costo,inicio:$("fs-inicio").value||hoyISO(),notas:$("fs-notas").value.trim()};
+    $("fs-guardar").disabled=true;
+    if(x){
+      Object.assign(x,datos);
+      if(x.vence!==vence){x.hist.push({f:ahora(),u:CU.n,a:"Cambió el vencimiento a "+fmtF(vence)});x.vence=vence}
+      x.hist.push({f:ahora(),u:CU.n,a:"Editó la suscripción"});
+      saveSus(x).then(()=>{toast("Suscripción actualizada");abrirSus(x.id)});
+    }else{
+      db.ref(RAIZ+"/config/seqSus").transaction(v=>(v||0)+1).then(r=>{
+        const nid="S"+String(r.snapshot.val()).padStart(3,"0");
+        const nx={id:nid,...datos,vence,periodoInicio:datos.inicio,estatus:"Activa",pagos:[],
+          hist:[{f:ahora(),u:CU.n,a:"Creó la suscripción"}]};
+        return saveSus(nx).then(()=>{toast("Suscripción creada · "+nid);abrirSus(nid)});
+      }).catch(e=>{toast("Error: "+e.message);$("fs-guardar").disabled=false});
+    }
+  };
+}
+function abrirSus(id,silencio){
+  const x=getSus(id);if(!x){cerrarModal();return}
+  modalSus=id;modalFolio=null;
+  const v=vidaDe(x);
+  let h=`<div class="modal-cab"><span class="folio-sello">${x.id}</span><h2 style="font-size:16px">${esc(x.nombre)}</h2>${chipSus(x)}<button class="x" id="m-x">✕</button></div><div class="modal-cuerpo">`;
+  h+=`<div class="dg-ver">
+    <div class="par"><b>Tipo</b>${esc(x.tipo)}</div>
+    <div class="par"><b>Proveedor</b>${esc(x.prov||"—")}</div>
+    <div class="par"><b>Pirámide</b>${esc(x.area||"—")}</div>
+    <div class="par"><b>Ciclo</b>${x.ciclo} · ${fmtM(x.costo)}</div>
+    <div class="par"><b>Inicio de vigencia</b><span class="mono">${fmtF(x.inicio)}</span></div>
+    <div class="par"><b>Vence</b><span class="mono">${fmtF(x.vence)}</span></div></div>`;
+  if(x.estatus!=="Cancelada")h+=`<div style="margin-top:12px"><div class="vida"><i class="${v.cls}" style="width:${Math.max(3,v.pct)}%"></i></div><div class="vida-txt">${v.txt}</div></div>`;
+  if(x.notas)h+=`<div class="seccion">Notas</div><div style="white-space:pre-wrap;font-size:13.5px">${esc(x.notas)}</div>`;
+  if(x.estatus!=="Cancelada"&&puedePagar()){
+    h+=`<div class="caja-aut caja-pago"><h3>Registrar pago de renovación</h3>
+      <div class="dg">
+        <div class="campo"><label>Fecha de pago</label><input id="rn-fecha" type="date" value="${hoyISO()}"></div>
+        <div class="campo"><label>Monto pagado</label><input id="rn-monto" type="number" step="0.01" min="0" value="${x.costo}"></div>
+        <div class="campo"><label>Nº de factura</label><input id="rn-fact" placeholder="Ej. A-1234"></div>
+        <div class="campo"><label>Folio fiscal (UUID) — opcional</label><input id="rn-uuid" class="mono"></div>
+        <div class="campo"><label>Nueva fecha de vencimiento</label><input id="rn-vence" type="date" value="${sumaCiclo(v.dRest>=0?x.vence:hoyISO(),x.ciclo)}"></div>
+        <div class="campo"><label>Archivo(s) de la factura</label><input id="rn-files" type="file" multiple accept=".pdf,.xml,.jpg,.jpeg,.png,application/pdf,text/xml,image/*"></div>
+        <div class="campo" style="grid-column:1/-1"><label>Enlace a la factura — opcional</label><input id="rn-link" placeholder="Pega el link (Drive, correo…)"></div>
+      </div>
+      <div class="campo" style="margin-top:10px"><label>Notas del pago</label><textarea id="rn-notas" style="min-height:50px"></textarea></div>
+      <button class="btn btn-tinta" id="btn-renovar" style="margin-top:10px;background:#0F766E">✓ Registrar pago y extender vigencia</button>
+    </div>`;
+  }
+  h+=`<div class="seccion">Historial de pagos</div>`;
+  if(x.pagos&&x.pagos.length){
+    h+=`<div class="tabla-scroll"><table class="doc"><thead><tr><th>Fecha</th><th>Monto</th><th>Factura</th><th>Vigencia hasta</th><th>Archivos</th><th>Registró</th></tr></thead><tbody>`+
+      x.pagos.map(p=>`<tr><td class="mono">${fmtF(p.fecha)}</td><td class="mono">${fmtM(p.monto)}</td><td>${esc(p.factura)}${p.link?` · <a href="${esc(p.link)}" target="_blank" rel="noopener">↗</a>`:""}</td><td class="mono">${fmtF(p.vence)}</td>
+        <td>${(p.archivos||[]).map((a,i)=>`<button class="btn btn-borde" data-sfk="${esc(p.fkey)}" data-si="${i}" style="padding:3px 9px;font-size:11.5px;margin:1px">📎 ${esc(a.nombre)}</button>`).join("")||"—"}</td>
+        <td>${esc(p.quien)}</td></tr>`).join("")+`</tbody></table></div>`;
+    const totP=x.pagos.reduce((s,p)=>s+(parseFloat(p.monto)||0),0);
+    h+=`<div class="total-linea"><span>Total pagado:</span><b class="mono">${fmtM(totP)}</b></div>`;
+  }else h+=`<div style="color:var(--grafito);font-size:13px">Aún sin pagos registrados.</div>`;
+  h+=`<div class="seccion">Historial</div>`+(x.hist||[]).map(e=>`<div class="hist-item"><span class="mono">${esc(e.f)}</span> · <b>${esc(e.u)}</b> — ${esc(e.a)}</div>`).join("");
+  h+=`</div>`;
+  let acc="";
+  if(isAdmin()){
+    acc+=`<button class="btn btn-borde" id="btn-sus-editar">✎ Editar</button>`;
+    acc+=x.estatus==="Cancelada"?`<button class="btn btn-borde" id="btn-sus-alta">Reactivar</button>`:`<button class="btn btn-borde" id="btn-sus-baja" style="color:var(--grafito)">Dar de baja</button>`;
+    acc+=`<button class="btn btn-borde" id="btn-sus-borrar" style="margin-left:auto;color:var(--rojo)">Eliminar</button>`;
+  }
+  h+=`<div class="acciones">${acc||'<span style="font-size:12px;color:var(--grafito)">Consulta</span>'}</div>`;
+  $("modal").innerHTML=h;$("velo").classList.remove("hide");
+  if(!silencio)document.body.style.overflow="hidden";
+  formSucio=false;
+  $("modal").oninput=e=>{if(e.target.closest&&(e.target.closest(".caja-aut")||e.target.closest(".caja-pago")))formSucio=true};
+  $("m-x").onclick=cerrarModal;
+  document.querySelectorAll("[data-sfk]").forEach(b=>b.onclick=()=>descargaFacturaSus(b.dataset.sfk,+b.dataset.si));
+  const be=$("btn-sus-editar");if(be)be.onclick=()=>abrirFormSus(x.id);
+  const bb=$("btn-sus-baja");if(bb)bb.onclick=()=>{if(!confirm("¿Dar de baja esta suscripción? Se conserva su historial."))return;
+    x.estatus="Cancelada";x.hist.push({f:ahora(),u:CU.n,a:"Dio de baja la suscripción"});saveSus(x).then(()=>toast("Suscripción dada de baja"))};
+  const ba=$("btn-sus-alta");if(ba)ba.onclick=()=>{x.estatus="Activa";x.hist.push({f:ahora(),u:CU.n,a:"Reactivó la suscripción"});saveSus(x).then(()=>toast("Suscripción reactivada"))};
+  const bx=$("btn-sus-borrar");if(bx)bx.onclick=()=>{if(!confirm("¿Eliminar definitivamente "+x.id+" y sus archivos? No se puede deshacer."))return;
+    (x.pagos||[]).forEach(p=>{if(p.fkey)fRef(p.fkey).remove()});
+    sRef().child(x.id).remove().then(()=>{cerrarModal();toast(x.id+" eliminada")})};
+  const br=$("btn-renovar");if(br)br.onclick=()=>registrarRenov(x);
+}
+function descargaFacturaSus(fk,i){
+  toast("Descargando archivo…");
+  fRef(fk).once("value").then(sn=>{
+    let arr=[];try{arr=sn.val()?JSON.parse(sn.val()):[]}catch(e){}
+    const a=arr[i];if(!a){toast("No se encontró el archivo en la base");return}
+    const el=document.createElement("a");el.href=a.data;el.download=a.nombre;
+    document.body.appendChild(el);el.click();setTimeout(()=>el.remove(),400);
+  }).catch(e=>toast("Error: "+e.message));
+}
+function registrarRenov(x){
+  const monto=parseFloat($("rn-monto").value),fact=$("rn-fact").value.trim(),vence=$("rn-vence").value;
+  if(!(monto>0)){toast("Escribe el monto pagado");return}
+  if(!fact){toast("Falta el número de factura");return}
+  if(!vence){toast("Falta la nueva fecha de vencimiento");return}
+  const files=[...(($("rn-files")&&$("rn-files").files)||[])];
+  if(files.length&&!validaArchivos(files,0))return;
+  const btn=$("btn-renovar");btn.disabled=true;btn.textContent="Guardando…";
+  const revive=()=>{btn.disabled=false;btn.textContent="✓ Registrar pago y extender vigencia"};
+  const fkey=x.id+"-r"+((x.pagos||[]).length+1);
+  const listo=metas=>{
+    const pago={fecha:$("rn-fecha").value||hoyISO(),monto,factura:fact,uuid:$("rn-uuid").value.trim(),
+      link:$("rn-link").value.trim(),notas:$("rn-notas").value.trim(),quien:CU.n,fkey,archivos:metas,
+      venceAnterior:x.vence,vence};
+    x.periodoInicio=(x.vence&&x.vence>=hoyISO())?x.vence:pago.fecha;
+    x.vence=vence;
+    x.pagos=x.pagos||[];x.pagos.push(pago);
+    x.hist.push({f:ahora(),u:CU.n,a:"Registró pago de renovación ("+fact+") — nueva vigencia hasta "+fmtF(vence)});
+    formSucio=false;
+    saveSus(x).then(()=>toast("Pago registrado · "+x.id+" vigente hasta "+fmtF(vence))).catch(e=>{toast("Error: "+e.message);revive()});
+  };
+  if(!files.length){listo([]);return}
+  toast("Subiendo factura…");
+  Promise.all(files.map(leeArchivo)).then(arr=>
+    fRef(fkey).set(JSON.stringify(arr.map(a=>({...a,quien:CU.n,fecha:hoyISO()})))).then(()=>listo(arr.map(a=>({nombre:a.nombre,tipo:a.tipo,tam:a.tam}))))
+  ).catch(e=>{toast("Error al adjuntar: "+e.message);revive()});
+}
+$("btn-sus-excel").onclick=()=>{
+  const xs=allSus();
+  if(!xs.length){toast("No hay suscripciones para exportar");return}
+  const rows=xs.map(x=>({ID:x.id,Nombre:x.nombre,Tipo:x.tipo,Proveedor:x.prov||"","Pirámide":x.area||"",
+    Ciclo:x.ciclo,"Costo por ciclo":x.costo,Inicio:fmtF(x.inicio),Vence:fmtF(x.vence),
+    "Días restantes":vidaDe(x).dRest,Estatus:x.estatus==="Cancelada"?"Baja":(vidaDe(x).dRest<0?"Vencida":"Activa"),
+    "Pagos registrados":(x.pagos||[]).length,"Total pagado":(x.pagos||[]).reduce((s,p)=>s+(parseFloat(p.monto)||0),0)}));
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rows),"Suscripciones");
+  const pagos=[];xs.forEach(x=>(x.pagos||[]).forEach(p=>pagos.push({ID:x.id,Suscripción:x.nombre,"Fecha de pago":fmtF(p.fecha),
+    Monto:p.monto,"Nº factura":p.factura,"Vigencia hasta":fmtF(p.vence),"Registró":p.quien})));
+  if(pagos.length)XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(pagos),"Pagos");
+  XLSX.writeFile(wb,"suscripciones_RV.xlsx");
+};
 
 /* ═════════ Reportes mensuales y anuales ═════════ */
 const MESES=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
