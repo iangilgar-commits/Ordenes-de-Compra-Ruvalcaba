@@ -103,10 +103,13 @@ main{max-width:1180px;margin:0 auto;padding:22px 20px 90px}
 /* ── Tablas documento ── */
 table.doc{width:100%;border-collapse:collapse;font-size:13.5px}
 table.doc th{background:var(--tinta);color:#fff;font-weight:600;text-align:left;padding:8px 10px;font-size:12px;letter-spacing:.3px}
-table.doc td{border:1px solid var(--linea);padding:8px 10px;vertical-align:top;background:#fff}
+table.doc td{border:1px solid var(--linea);padding:8px 10px;vertical-align:top;background:#fff;overflow-wrap:anywhere;word-break:break-word}
+table.doc td.mono{white-space:nowrap}
 table.doc tr:nth-child(even) td{background:#FCFCFA}
 .tabla-scroll{overflow-x:auto;border-radius:6px;border:1px solid var(--linea)}
 .tabla-scroll table.doc td{border-left:none;border-right:1px solid var(--linea-suave);border-top:none;border-bottom:1px solid var(--linea-suave)}
+
+.obs-caja{background:#FFF9EC;border-left:4px solid var(--amb);border-radius:0 8px 8px 0;padding:12px 14px;font-size:14px;line-height:1.55;white-space:pre-wrap}
 
 /* ── Grid datos generales ── */
 .dg{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px 16px}
@@ -220,11 +223,11 @@ table.lista tbody tr:hover td{background:#FBFAF6}
   .pr-sec{font-weight:700;font-size:13px;border-bottom:2px solid #000;padding-bottom:4px;margin:8mm 0 4mm;font-family:"Archivo"}
   table.pr-t{width:100%;border-collapse:collapse;font-size:11.5px}
   table.pr-t th{background:#3a3f4b;color:#fff;padding:5px 7px;text-align:left;font-size:10.5px}
-  table.pr-t td{border:1px solid #999;padding:5px 7px;vertical-align:top}
+  table.pr-t td{border:1px solid #999;padding:5px 7px;vertical-align:top;overflow-wrap:anywhere;word-break:break-word}
   .pr-firmas{display:flex;justify-content:space-between;gap:30px;margin-top:26mm}
   .pr-firma{width:44%;text-align:center;font-size:11px}
   .pr-firma .raya{border-top:1px solid #000;padding-top:5px}
-  .pr-obs{font-size:12px;white-space:pre-wrap}
+  .pr-obs{font-size:12.5px;white-space:pre-wrap;border:1pt solid #999;background:#FBF7EC;padding:8px 10px}
 }
 @media(max-width:640px){
   .part-grid,.part-grid2{grid-template-columns:1fr}
@@ -310,6 +313,9 @@ table.lista tbody tr:hover td{background:#FBFAF6}
             <div class="campo"><label>Fecha de solicitud</label><input id="ns-fecha" type="date"></div>
             <div class="campo"><label>Pirámide (área)</label><select id="ns-area"></select></div>
             <div class="campo"><label>Prioridad</label><select id="ns-prio"><option>Normal</option><option>Urgente</option></select></div>
+            <div class="campo"><label>Tipo de compra</label><select id="ns-tipo"><option value="unica">Compra única</option><option value="sus">Suscripción / licencia</option></select></div>
+            <div class="campo sus-solo hide"><label>Nombre de la suscripción</label><input id="ns-sus-nombre" placeholder="Ej. Microsoft 365 Empresa"></div>
+            <div class="campo sus-solo hide"><label>Ciclo de pago</label><select id="ns-sus-ciclo"><option>Mensual</option><option>Anual</option></select></div>
             <div class="campo" style="grid-column:1/-1"><label>Se necesita para</label><input id="ns-para" placeholder="Ej. Stock laptop, papelería del mes…"></div>
           </div>
 
@@ -641,6 +647,7 @@ function guardarEdicionUser(){
 
 /* ═════════ Formulario de solicitud ═════════ */
 $("btn-add-part").onclick=()=>addPartida();
+$("ns-tipo").onchange=()=>{document.querySelectorAll(".sus-solo").forEach(el=>el.classList.toggle("hide",$("ns-tipo").value!=="sus"))};
 function addPartida(p){
   const wrap=$("partidas");const i=wrap.children.length;
   const d=document.createElement("div");d.className="part-fila";
@@ -679,10 +686,14 @@ $("btn-guardar-sol").onclick=()=>{
   if(!$("ns-para").value.trim()){toast('Falta el campo "Se necesita para"');return}
   if(!parts.length){toast("Agrega al menos un producto con descripción");return}
   if(!_firmaSolTiene||!_firmaSolCanvas){toast("Falta la firma del solicitante");return}
+  if($("ns-tipo").value==="sus"&&!$("ns-sus-nombre").value.trim()){toast("Falta el nombre de la suscripción");return}
   $("btn-guardar-sol").disabled=true;
   const base={
     fechaSol:$("ns-fecha").value||hoyISO(),solicitante:CU.n,area:$("ns-area").value.trim(),
     prioridad:$("ns-prio").value,para:$("ns-para").value.trim(),partidas:parts,obs:$("ns-obs").value.trim(),
+    esSus:$("ns-tipo").value==="sus",
+    susNombre:$("ns-tipo").value==="sus"?$("ns-sus-nombre").value.trim():"",
+    susCiclo:$("ns-tipo").value==="sus"?$("ns-sus-ciclo").value:"",
     firmaSol:_firmaSolCanvas.toDataURL("image/png")
   };
   if(editandoFolio){
@@ -703,6 +714,8 @@ function finFormulario(){
   $("btn-cancelar-edit").classList.add("hide");$("ns-folio").textContent="FOLIO NUEVO";$("ns-titulo").textContent="Solicitud de compra";
   $("partidas").innerHTML="";addPartida();$("ns-para").value="";$("ns-obs").value="";$("ns-prio").value="Normal";$("ns-fecha").value=hoyISO();
   $("ns-area").innerHTML=opsPirs(CU&&CU.area?CU.area:"");
+  $("ns-tipo").value="unica";$("ns-sus-nombre").value="";$("ns-sus-ciclo").value="Mensual";
+  document.querySelectorAll(".sus-solo").forEach(el=>el.classList.add("hide"));
   limpiaFirmaSol();
   irTab("ordenes");
 }
@@ -714,6 +727,9 @@ function editarSolicitud(f){
   $("ns-fecha").value=o.fechaSol;$("ns-area").innerHTML=opsPirs(o.area);$("ns-prio").value=o.prioridad;$("ns-para").value=o.para;$("ns-obs").value=o.obs||"";
   $("partidas").innerHTML="";o.partidas.forEach(p=>addPartida(p));
   if(o.firmaSol)cargaFirmaSol(o.firmaSol);else limpiaFirmaSol();
+  $("ns-tipo").value=o.esSus?"sus":"unica";
+  $("ns-sus-nombre").value=o.susNombre||"";$("ns-sus-ciclo").value=o.susCiclo||"Mensual";
+  document.querySelectorAll(".sus-solo").forEach(el=>el.classList.toggle("hide",!o.esSus));
   $("btn-guardar-sol").textContent="Guardar cambios";$("btn-cancelar-edit").classList.remove("hide");
 }
 
@@ -742,7 +758,7 @@ function renderLista(){
       <td class="mono">${fmtF(o.fechaSol)}</td>
       <td>${esc(o.solicitante)}${o.prioridad==="Urgente"?' <span class="urg">⚡ URGENTE</span>':""}</td>
       <td>${esc(o.area)}</td>
-      <td>${esc(o.para)}</td>
+      <td>${esc(o.para)}${o.esSus?' <span class="rol-tag">suscripción</span>':""}</td>
       <td class="mono" style="text-align:right">${fmtM(totalDe(o))}</td>
       <td><span class="chip ch-${o.estatus}">${o.estatus}</span></td></tr>`).join("")+`</tbody></table></div>`;
   document.querySelectorAll("#lista-wrap tr[data-folio]").forEach(tr=>tr.onclick=()=>abrirDetalle(tr.dataset.folio));
@@ -751,7 +767,7 @@ function renderLista(){
 /* ═════════ Excel ═════════ */
 $("btn-excel").onclick=()=>{
   const rows=allOrds().map(o=>({Folio:o.folio,"Fecha solicitud":fmtF(o.fechaSol),Solicitante:o.solicitante,"Área":o.area,
-    "Se necesita para":o.para,Prioridad:o.prioridad,Estatus:o.estatus,
+    "Se necesita para":o.para,Prioridad:o.prioridad,Tipo:o.esSus?"Suscripción":"Única",Estatus:o.estatus,
     "Proveedor elegido":o.aut?o.aut.prov:"","Tarjeta":o.aut?o.aut.tarjeta:"","Fecha de pedido":o.aut?fmtF(o.aut.fecha):"",
     "Total estimado":o.partidas.reduce((s,p)=>s+p.cant*p.costo,0),"Total autorizado":o.aut?o.aut.items.reduce((s,i)=>s+i.cant*i.costo,0):"",
     "Fecha de pago":o.pago?fmtF(o.pago.fecha):"","Nº factura":o.pago?o.pago.factura:"","Monto pagado":o.pago?o.pago.monto:""}));
@@ -778,7 +794,7 @@ function abrirDetalle(f,silencio){
   const esPend=o.estatus==="Pendiente";
   const totalEst=o.partidas.reduce((s,p)=>s+p.cant*p.costo,0);
   let h=`<div class="modal-cab"><span class="folio-sello">FOLIO ${o.folio}</span><h2 style="font-size:16px">${esPend?"Solicitud de compra":"Orden de compra"}</h2>
-    <span class="chip ch-${o.estatus}">${o.estatus}</span><button class="x" id="m-x">✕</button></div><div class="modal-cuerpo">`;
+    <span class="chip ch-${o.estatus}">${o.estatus}</span>${o.esSus?'<span class="rol-tag">Suscripción</span>':""}<button class="x" id="m-x">✕</button></div><div class="modal-cuerpo">`;
   h+=rutaHTML(o);
   h+=`<div class="seccion">Datos generales</div><div class="dg-ver">
     <div class="par"><b>Solicitante</b>${esc(o.solicitante)}</div>
@@ -796,7 +812,7 @@ function abrirDetalle(f,silencio){
       <td class="mono">${fmtM(p.costo)}</td><td>${esc(p.envio)}</td></tr>`;
   });
   h+=`</tbody></table></div><div class="total-linea"><span>Total estimado:</span><b class="mono">${fmtM(totalEst)}</b></div>`;
-  if(o.obs)h+=`<div class="seccion">Observaciones / recomendación</div><div style="white-space:pre-wrap;font-size:13.5px">${esc(o.obs)}</div>`;
+  if(o.obs)h+=`<div class="seccion">Observaciones / recomendación del solicitante</div><div class="obs-caja">${esc(o.obs)}</div>`;
 
   // Bloque de autorización (formulario si Pendiente y puede autorizar; datos si ya existe)
   if(esPend&&puedeAut()){
@@ -835,17 +851,18 @@ function abrirDetalle(f,silencio){
       <div class="tabla-scroll" style="margin-top:10px"><table class="doc"><thead><tr><th>N.º</th><th>Cant.</th><th>Producto / descripción</th><th>Proveedor</th><th>Costo unit.</th><th>Envío</th></tr></thead><tbody>`+
       o.aut.items.map((p,i)=>`<tr><td class="mono">${String(i+1).padStart(2,"0")}</td><td>${p.cant}</td><td>${esc(p.desc)}</td><td>${esc(o.aut.prov)}</td><td class="mono">${fmtM(p.costo)}</td><td>${esc(p.envio)}</td></tr>`).join("")+
       `</tbody></table></div><div class="total-linea"><span>Total del pedido (IVA y envío incluido):</span><b class="mono">${fmtM(totAut)}</b></div>`;
-    if(o.aut.obs)h+=`<div style="white-space:pre-wrap;font-size:13.5px;margin-top:8px"><b>Observaciones:</b> ${esc(o.aut.obs)}</div>`;
+    if(o.aut.obs)h+=`<div class="obs-caja" style="margin-top:12px"><b>Observaciones de la autorización:</b>\n${esc(o.aut.obs)}</div>`;
   }
   if(!o.pago&&puedePagar()&&["Autorizada","Ordenada","Recibida"].includes(o.estatus)){
     const sug=o.aut?o.aut.items.reduce((s,i)=>s+i.cant*i.costo,0):0;
-    h+=`<div class="caja-aut caja-pago"><h3>Registrar pago y factura final</h3>
+    h+=`<div class="caja-aut caja-pago"><h3>${o.esSus?"Registrar pago y activar la suscripción":"Registrar pago y factura final"}</h3>
       <div class="dg">
         <div class="campo"><label>Fecha de pago</label><input id="pg-fecha" type="date" value="${hoyISO()}"></div>
         <div class="campo"><label>Monto pagado</label><input id="pg-monto" type="number" step="0.01" min="0" value="${sug||""}"></div>
         <div class="campo"><label>Forma de pago</label><input id="pg-forma" value="${esc(o.aut?("Tarjeta "+o.aut.tarjeta):"")}" placeholder="Tarjeta, transferencia…"></div>
         <div class="campo"><label>Nº de factura</label><input id="pg-fact" placeholder="Ej. A-1234"></div>
         <div class="campo"><label>Folio fiscal (UUID) — opcional</label><input id="pg-uuid" class="mono" placeholder="XXXX-XXXX-…"></div>
+        ${o.esSus?`<div class="campo"><label>Vigencia hasta (vencimiento)</label><input id="pg-vence" type="date" value="${sumaCiclo(hoyISO(),o.susCiclo||"Mensual")}"></div>`:""}
         <div class="campo"><label>Archivo(s) de la factura — PDF, XML o imagen</label><input id="pg-files" type="file" multiple accept=".pdf,.xml,.jpg,.jpeg,.png,application/pdf,text/xml,image/*"></div>
         <div class="campo"><label>Enlace a la factura — opcional</label><input id="pg-link" placeholder="Pega el link (Drive, correo…)"></div>
       </div>
@@ -860,7 +877,8 @@ function abrirDetalle(f,silencio){
       <div class="par"><b>Forma de pago</b>${esc(o.pago.forma||"—")}</div>
       <div class="par"><b>Nº de factura</b>${esc(o.pago.factura)}</div>
       ${o.pago.uuid?`<div class="par"><b>Folio fiscal</b><span class="mono" style="word-break:break-all">${esc(o.pago.uuid)}</span></div>`:""}
-      <div class="par"><b>Registró</b>${esc(o.pago.quien)}</div></div>`;
+      <div class="par"><b>Registró</b>${esc(o.pago.quien)}</div>
+      ${o.susId?`<div class="par"><b>Suscripción</b><button class="btn btn-borde" data-versus="${o.susId}" style="padding:4px 12px;font-size:12.5px">🔁 ${o.susId} — ver suscripción</button></div>`:""}</div>`;
     if(o.pago.archivos&&o.pago.archivos.length)h+=`<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">`+
       o.pago.archivos.map((a,i)=>`<button class="btn btn-borde" data-fact-i="${i}" style="padding:6px 13px;font-size:12.5px">📎 ${esc(a.nombre)}</button>`).join("")+`</div>`;
     if(puedePagar())h+=`<div style="margin-top:10px"><label class="btn btn-borde" style="padding:6px 13px;font-size:12.5px;cursor:pointer">＋ Adjuntar archivo<input id="pg-mas" type="file" multiple class="hide" accept=".pdf,.xml,.jpg,.jpeg,.png,application/pdf,text/xml,image/*"></label></div>`;
@@ -908,6 +926,7 @@ function abrirDetalle(f,silencio){
   const bwo=$("btn-word-oc");if(bwo)bwo.onclick=()=>descargaWordOC(o);
   document.querySelectorAll("[data-fact-i]").forEach(b=>b.onclick=()=>descargaFactura(o,+b.dataset.factI));
   const pgm=$("pg-mas");if(pgm)pgm.onchange=()=>agregaArchivos(o,[...pgm.files]);
+  document.querySelectorAll("[data-versus]").forEach(b=>b.onclick=()=>abrirSus(b.dataset.versus));
   const ba=$("btn-autorizar");
   if(ba){
     pintaCostos(o);
@@ -996,8 +1015,25 @@ function registrarPago(o){
       archivos:metas};
     o.estatus="Pagada";
     o.hist.push({f:ahora(),u:CU.n,a:"Registró el pago y la factura "+fact+(metas.length?" · "+metas.length+" archivo"+(metas.length===1?"":"s")+" adjunto"+(metas.length===1?"":"s"):"")+" — cerró la orden"});
+    const crearSus=()=>{
+      if(!o.esSus||o.susId)return Promise.resolve();
+      const ciclo=o.susCiclo||"Mensual";
+      const vence=($("pg-vence")&&$("pg-vence").value)||sumaCiclo(o.pago.fecha,ciclo);
+      return db.ref(RAIZ+"/config/seqSus").transaction(v=>(v||0)+1).then(r=>{
+        const sid="S"+String(r.snapshot.val()).padStart(3,"0");
+        const sx={id:sid,nombre:o.susNombre||o.para,tipo:"Suscripción",prov:o.aut?o.aut.prov:"",area:o.area,
+          ciclo,costo:o.pago.monto,inicio:o.pago.fecha,periodoInicio:o.pago.fecha,vence,
+          notas:"Creada automáticamente desde la orden "+o.folio,estatus:"Activa",origenFolio:o.folio,
+          pagos:[{fecha:o.pago.fecha,monto:o.pago.monto,factura:o.pago.factura,uuid:o.pago.uuid,link:o.pago.link,
+            notas:o.pago.notas,quien:CU.n,fkey:o.folio,archivos:o.pago.archivos||[],venceAnterior:"",vence}],
+          hist:[{f:ahora(),u:CU.n,a:"Activada al registrarse el pago de la orden "+o.folio}]};
+        o.susId=sid;
+        o.hist.push({f:ahora(),u:CU.n,a:"Se activó la suscripción "+sid});
+        return saveSus(sx);
+      });
+    };
     formSucio=false;
-    saveOrd(o).then(()=>toast("Pago registrado · Folio "+o.folio+" cerrado")).catch(e=>{toast("Error: "+e.message);revive()});
+    crearSus().then(()=>saveOrd(o)).then(()=>toast(o.susId?"Pago registrado · Suscripción "+o.susId+" activa":"Pago registrado · Folio "+o.folio+" cerrado")).catch(e=>{toast("Error: "+e.message);revive()});
   };
   if(!files.length){listo([]);return}
   toast("Subiendo factura…");
@@ -1118,7 +1154,8 @@ function abrirSus(id,silencio){
     <div class="par"><b>Pirámide</b>${esc(x.area||"—")}</div>
     <div class="par"><b>Ciclo</b>${x.ciclo} · ${fmtM(x.costo)}</div>
     <div class="par"><b>Inicio de vigencia</b><span class="mono">${fmtF(x.inicio)}</span></div>
-    <div class="par"><b>Vence</b><span class="mono">${fmtF(x.vence)}</span></div></div>`;
+    <div class="par"><b>Vence</b><span class="mono">${fmtF(x.vence)}</span></div>
+    ${x.origenFolio?`<div class="par"><b>Origen</b>Orden de compra ${esc(x.origenFolio)}</div>`:""}</div>`;
   if(x.estatus!=="Cancelada")h+=`<div style="margin-top:12px"><div class="vida"><i class="${v.cls}" style="width:${Math.max(3,v.pct)}%"></i></div><div class="vida-txt">${v.txt}</div></div>`;
   if(x.notas)h+=`<div class="seccion">Notas</div><div style="white-space:pre-wrap;font-size:13.5px">${esc(x.notas)}</div>`;
   if(x.estatus!=="Cancelada"&&puedePagar()){
@@ -1367,7 +1404,7 @@ function descargaWordOC(o){
   const tot=o.aut.items.reduce((s,i)=>s+i.cant*i.costo,0);
   const marca=t=>o.aut.tarjeta===t?"☒":"☐";
   const filas=o.aut.items.map((p,i)=>`<tr><td>${String(i+1).padStart(2,"0")}</td><td>${p.cant}</td><td>${esc(p.desc)}</td><td>${esc(o.aut.prov)}</td><td>${fmtM(p.costo)}</td><td>${esc(p.envio)}</td></tr>`).join("");
-  const html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>OC ${o.folio}</title><!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]--><style>body{font-family:Calibri,Arial,sans-serif;font-size:11pt;color:#000;margin:1.6cm}table{border-collapse:collapse;width:100%}td,th{border:1pt solid #808080;padding:4pt 6pt;font-size:10pt;vertical-align:top}th{background:#3A3F4B;color:#fff;text-align:left;font-size:9.5pt}h1{font-size:15pt;margin:0 0 2pt 0}.sub{font-size:9pt;color:#444}.sec{font-weight:bold;font-size:11pt;border-bottom:2pt solid #000;margin:14pt 0 6pt;padding-bottom:2pt}</style></head><body>
+  const html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>OC ${o.folio}</title><!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]--><style>body{font-family:Calibri,Arial,sans-serif;font-size:11pt;color:#000;margin:1.6cm}table{border-collapse:collapse;width:100%;table-layout:fixed}td,th{border:1pt solid #808080;padding:4pt 6pt;font-size:10pt;vertical-align:top;word-wrap:break-word;word-break:break-all}th{background:#3A3F4B;color:#fff;text-align:left;font-size:9.5pt}h1{font-size:15pt;margin:0 0 2pt 0}.sub{font-size:9pt;color:#444}.sec{font-weight:bold;font-size:11pt;border-bottom:2pt solid #000;margin:14pt 0 6pt;padding-bottom:2pt}</style></head><body>
 <table style="border:none"><tr><td style="border:none"><h1>Autorización para compra con tarjeta de crédito</h1><div class="sub">RUVALCABA VILLALOBOS · Consultores Fiscales · Orden de compra · Folio ${o.folio}</div></td><td style="border:none;text-align:right;width:80pt"><img src="logo.png" width="66"></td></tr></table>
 <div class="sec">Datos generales</div>
 <table><tr><td style="width:18%"><b>Folio</b></td><td style="width:32%">${o.folio}</td><td style="width:18%"><b>Fecha de pedido</b></td><td>${fmtF(o.aut.fecha)}</td></tr>
@@ -1377,7 +1414,8 @@ function descargaWordOC(o){
 <div class="sec">Producto del pedido</div>
 <table><tr><th style="width:6%">N.º</th><th style="width:7%">Cant.</th><th>Producto / descripción</th><th style="width:16%">Proveedor</th><th style="width:13%">Costo unit.</th><th style="width:9%">Envío</th></tr>${filas}
 <tr><td colspan="4" style="text-align:right"><b>Total del pedido (IVA y envío incluido)</b></td><td><b>${fmtM(tot)}</b></td><td></td></tr></table>
-${o.aut.obs?`<div class="sec">Observaciones</div><div style="font-size:10.5pt">${esc(o.aut.obs)}</div>`:""}
+${o.obs?`<div class="sec">Observaciones / recomendación de la solicitud</div><div style="font-size:10.5pt;border:1pt solid #999;background:#FBF7EC;padding:6pt">${esc(o.obs)}</div>`:""}
+${o.aut.obs?`<div class="sec">Observaciones de la autorización</div><div style="font-size:10.5pt;border:1pt solid #999;background:#FBF7EC;padding:6pt">${esc(o.aut.obs)}</div>`:""}
 <table style="border:none;margin-top:70pt"><tr>
 <td style="border:none;width:42%;text-align:center;border-top:1pt solid #000;padding-top:4pt"><b>Autorización del socio</b><br><span style="font-size:9pt">Nombre, firma y fecha</span></td>
 <td style="border:none;width:16%"></td>
@@ -1417,7 +1455,8 @@ function imprimir(o,tipo){
     <div class="pr-sec">Producto del pedido</div><table class="pr-t"><tr><th>N.º</th><th>Cant.</th><th>Producto / descripción</th><th>Proveedor</th><th>Costo unit.</th><th>Envío</th></tr>`+
     o.aut.items.map((p,i)=>`<tr><td>${String(i+1).padStart(2,"0")}</td><td>${p.cant}</td><td>${esc(p.desc)}</td><td>${esc(o.aut.prov)}</td><td>${fmtM(p.costo)}</td><td>${esc(p.envio)}</td></tr>`).join("")+
     `<tr><td colspan="4" style="text-align:right"><b>Total del pedido (IVA y envío incluido)</b></td><td><b>${fmtM(tot)}</b></td><td></td></tr></table>`+
-    (o.aut.obs?`<div class="pr-sec">Observaciones</div><div class="pr-obs">${esc(o.aut.obs)}</div>`:"")+prFirmas(o,o.aut.firma||null,o.firmaSol||null)+`</div>`;
+    (o.obs?`<div class="pr-sec">Observaciones / recomendación de la solicitud</div><div class="pr-obs">${esc(o.obs)}</div>`:"")+
+    (o.aut.obs?`<div class="pr-sec">Observaciones de la autorización</div><div class="pr-obs">${esc(o.aut.obs)}</div>`:"")+prFirmas(o,o.aut.firma||null,o.firmaSol||null)+`</div>`;
   }
   $("print-root").innerHTML=h;window.print();
 }
