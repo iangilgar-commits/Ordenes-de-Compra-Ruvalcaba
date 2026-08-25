@@ -224,7 +224,7 @@ table.lista tbody tr:hover td{background:#FBFAF6}
   table.pr-t{width:100%;border-collapse:collapse;font-size:10.5px}
   table.pr-t th{background:#3a3f4b;color:#fff;padding:3.5px 6px;text-align:left;font-size:9.5px}
   table.pr-t td{border:1px solid #999;padding:3.5px 6px;vertical-align:top;overflow-wrap:anywhere;word-break:break-word}
-  .pr-firmas{display:flex;justify-content:space-between;gap:30px;margin-top:12mm;page-break-inside:avoid}
+  .pr-firmas{display:flex;justify-content:space-between;gap:30px;margin-top:18mm;page-break-inside:avoid}
   .pr-firma{width:44%;text-align:center;font-size:11px}
   .pr-firma .raya{border-top:1px solid #000;padding-top:5px}
   .pr-obs{font-size:11px;white-space:pre-wrap;border:1pt solid #999;background:#FBF7EC;padding:6px 8px}
@@ -376,7 +376,8 @@ table.lista tbody tr:hover td{background:#FBFAF6}
         <div class="hoja">
           <div class="hoja-cab"><h2>Dar de alta un usuario</h2></div>
           <div class="hoja-cuerpo">
-            <div class="campo"><label>Nombre</label><input id="us-nom"></div>
+            <div class="campo"><label>Usuario (para entrar)</label><input id="us-nom"></div>
+            <div class="campo"><label>Nombre completo (aparece en los documentos)</label><input id="us-nombre" placeholder="Ej. Ana Isabel García de Alba"></div>
             <div class="campo"><label>Contraseña</label><input id="us-pw"></div>
             <div class="campo"><label>Rol</label><select id="us-rol">
               <option value="solicitante">Solicitante — crea solicitudes</option>
@@ -419,7 +420,7 @@ const LOGO_FULL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAABxCAIAAAAiQ
 const LOGO_MARK="data:image/png;base64,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";
 document.querySelectorAll(".logo-full").forEach(i=>i.src=LOGO_FULL);
 document.querySelectorAll(".logo-mark").forEach(i=>i.src=LOGO_MARK);
-const APP_VER="v3.0";
+const APP_VER="v3.1";
 document.getElementById("ver-login").textContent=APP_VER+" · 17 ago 2026";
 document.getElementById("ver-top").textContent=APP_VER;
 let db=null,_ready=false;
@@ -473,6 +474,7 @@ function renderPirs(){
 function uRef(){return db.ref(RAIZ+"/usuarios")}
 function oRef(){return db.ref(RAIZ+"/ordenes")}
 function getUser(n){const j=cache.users[keyEnc(n)];if(!j)return null;try{return JSON.parse(j)}catch(e){return null}}
+function nombreDe(n){const u=getUser(n);return(u&&u.nombre)?u.nombre:n}
 function allUsers(){return Object.values(cache.users).map(j=>{try{return JSON.parse(j)}catch(e){return null}}).filter(Boolean)}
 function getOrd(f){const j=cache.ord[f];if(!j)return null;try{return JSON.parse(j)}catch(e){return null}}
 function allOrds(){return Object.keys(cache.ord).map(getOrd).filter(Boolean).sort((a,b)=>b.folio.localeCompare(a.folio))}
@@ -551,7 +553,7 @@ function intentarLogin(){
 }
 function entrar(u){
   CU=u;$("login").classList.add("hide");$("app").classList.remove("hide");
-  $("u-nom").textContent=u.n;$("u-rol").textContent=u.rol;
+  $("u-nom").textContent=u.nombre||u.n;$("u-rol").textContent=u.rol;
   $("tab-usuarios-btn").classList.toggle("hide",!isAdmin());
   $("tab-reportes-btn").classList.toggle("hide",!veReportes());
   $("tab-sus-btn").classList.toggle("hide",!veReportes());
@@ -559,7 +561,7 @@ function entrar(u){
   if(!$("rep-mes").value)$("rep-mes").value=hoyISO().slice(0,7);
   renderAreasDL();
   renderPersonasDL();
-  $("ns-sol").value=u.n;$("ns-fecha").value=hoyISO();if(u.area)$("ns-area").innerHTML=opsPirs(u.area);
+  $("ns-sol").value=u.nombre||u.n;$("ns-fecha").value=hoyISO();if(u.area)$("ns-area").innerHTML=opsPirs(u.area);
   if(!$("partidas").children.length)addPartida();
   initFirmaSol();
   if(CU.rol==="pagos"){filtroEstatus="PorPagar";document.querySelectorAll("#filtros button").forEach(x=>x.classList.toggle("act",x.dataset.f==="PorPagar"))}
@@ -581,10 +583,10 @@ function irTab(t){
 /* ═════════ Usuarios (admin) ═════════ */
 $("btn-add-user").onclick=()=>{
   if(!isAdmin())return;
-  const n=$("us-nom").value.trim(),pw=$("us-pw").value,rol=$("us-rol").value,area=$("us-area").value.trim();
+  const n=$("us-nom").value.trim(),pw=$("us-pw").value,rol=$("us-rol").value,area=$("us-area").value.trim(),nombre=$("us-nombre").value.trim();
   if(!n||!pw){$("us-err").textContent="Nombre y contraseña son obligatorios.";return}
   if(getUser(n)){$("us-err").textContent="Ya existe un usuario con ese nombre.";return}
-  saveUser({n,pw,rol,area}).then(()=>{$("us-nom").value="";$("us-pw").value="";$("us-area").value="";$("us-err").textContent="";toast("Usuario dado de alta: "+n)});
+  saveUser({n,pw,rol,area,nombre}).then(()=>{$("us-nom").value="";$("us-nombre").value="";$("us-pw").value="";$("us-area").value="";$("us-err").textContent="";toast("Usuario dado de alta: "+n)});
 };
 $("btn-add-pir").onclick=()=>{
   if(!isAdmin())return;
@@ -597,11 +599,12 @@ let userEditando=null;
 function renderUsers(){
   const us=allUsers().sort((a,b)=>a.n.localeCompare(b.n));
   if(!us.length){$("users-wrap").innerHTML=`<div class="vacio">Sin usuarios todavía.</div>`;return}
-  $("users-wrap").innerHTML=`<div class="tabla-scroll"><table class="doc"><thead><tr><th>Nombre</th><th>Rol</th><th>Área</th><th>Contraseña</th><th style="width:160px"></th></tr></thead><tbody>`+
+  $("users-wrap").innerHTML=`<div class="tabla-scroll"><table class="doc"><thead><tr><th>Usuario</th><th>Nombre completo</th><th>Rol</th><th>Área</th><th>Contraseña</th><th style="width:160px"></th></tr></thead><tbody>`+
     us.map(u=>{
       if(u.n===userEditando){
         return `<tr>
-          <td><input id="ue-nom" value="${esc(u.n)}" style="min-width:120px"></td>
+          <td><input id="ue-nom" value="${esc(u.n)}" style="min-width:100px"></td>
+          <td><input id="ue-nombre" value="${esc(u.nombre||"")}" style="min-width:140px" placeholder="Nombre completo"></td>
           <td><select id="ue-rol">${["solicitante","autorizador","pagos","admin"].map(r=>`<option value="${r}" ${u.rol===r?"selected":""}>${r}</option>`).join("")}</select></td>
           <td><select id="ue-area" style="min-width:110px"><option value=""${u.area?"":" selected"}>—</option>${opsPirs(u.area||"")}</select></td>
           <td><input id="ue-pw" class="mono" value="${esc(u.pw)}" style="min-width:110px"></td>
@@ -610,7 +613,7 @@ function renderUsers(){
             <button class="btn btn-borde" id="ue-cancel" style="padding:5px 11px;font-size:12px">Cancelar</button>
           </td></tr>`;
       }
-      return `<tr><td>${esc(u.n)}${u.n===CU.n?' <span class="rol-tag">tú</span>':""}</td><td>${esc(u.rol)}</td><td>${esc(u.area||"—")}</td><td class="mono">${esc(u.pw)}</td>
+      return `<tr><td>${esc(u.n)}${u.n===CU.n?' <span class="rol-tag">tú</span>':""}</td><td>${esc(u.nombre||"—")}</td><td>${esc(u.rol)}</td><td>${esc(u.area||"—")}</td><td class="mono">${esc(u.pw)}</td>
         <td style="white-space:nowrap">
           <button class="btn btn-borde" data-edituser="${esc(u.n)}" style="padding:4px 10px;font-size:12px">✎ Editar</button>
           ${u.n===CU.n?"":`<button class="btn btn-borde" data-deluser="${esc(u.n)}" style="padding:4px 10px;font-size:12px;color:var(--rojo)">Quitar</button>`}
@@ -627,18 +630,18 @@ function renderUsers(){
 }
 function guardarEdicionUser(){
   const viejo=getUser(userEditando);if(!viejo){userEditando=null;renderUsers();return}
-  const n=$("ue-nom").value.trim(),pw=$("ue-pw").value,rol=$("ue-rol").value,area=$("ue-area").value.trim();
+  const n=$("ue-nom").value.trim(),pw=$("ue-pw").value,rol=$("ue-rol").value,area=$("ue-area").value.trim(),nombre=$("ue-nombre").value.trim();
   if(!n||!pw){toast("Nombre y contraseña no pueden quedar vacíos");return}
   if(n!==viejo.n&&getUser(n)){toast("Ya existe un usuario llamado "+n);return}
   if(viejo.rol==="admin"&&rol!=="admin"&&allUsers().filter(x=>x.rol==="admin").length<=1){toast("Debe quedar al menos un administrador");return}
-  const nuevo={n,pw,rol,area};
+  const nuevo={n,pw,rol,area,nombre};
   const esYo=viejo.n===CU.n;
   const fin=()=>{
     userEditando=null;
     if(esYo){
       localStorage.setItem("rv_oc_ses",JSON.stringify({n,pw}));
       if(rol!==CU.rol){location.reload();return}
-      CU={...CU,n,pw,rol,area};$("u-nom").textContent=n;$("ns-sol").value=n;
+      CU={...CU,n,pw,rol,area,nombre};$("u-nom").textContent=nombre||n;$("ns-sol").value=nombre||n;
     }
     renderUsers();toast("Usuario actualizado");
   };
@@ -758,14 +761,14 @@ function renderLista(){
   let os=ordsVisibles();
   if(filtroEstatus==="PorPagar")os=os.filter(o=>["Autorizada","Ordenada","Recibida"].includes(o.estatus)&&!o.pago);
   else if(filtroEstatus!=="Todas")os=os.filter(o=>o.estatus===filtroEstatus);
-  if(q)os=os.filter(o=>(o.folio+" "+o.solicitante+" "+o.para+" "+o.area+" "+(o.aut?o.aut.prov:"")).toLowerCase().includes(q));
+  if(q)os=os.filter(o=>(o.folio+" "+o.solicitante+" "+nombreDe(o.solicitante)+" "+o.para+" "+o.area+" "+(o.aut?o.aut.prov:"")).toLowerCase().includes(q));
   if(!os.length){$("lista-wrap").innerHTML=`<div class="vacio"><b>Sin órdenes que mostrar</b>Crea la primera en la pestaña "Nueva solicitud".</div>`;return}
   $("lista-wrap").innerHTML=`<div class="tabla-scroll" style="border:none"><table class="lista"><thead><tr>
     <th>Folio</th><th>Fecha</th><th>Solicitante</th><th>Área</th><th>Se necesita para</th><th style="text-align:right">Total</th><th>Estatus</th></tr></thead><tbody>`+
     os.map(o=>`<tr data-folio="${o.folio}">
       <td><span class="folio-sello">${o.folio}</span></td>
       <td class="mono">${fmtF(o.fechaSol)}</td>
-      <td>${esc(o.solicitante)}${o.prioridad==="Urgente"?' <span class="urg">⚡ URGENTE</span>':""}</td>
+      <td>${esc(nombreDe(o.solicitante))}${o.prioridad==="Urgente"?' <span class="urg">⚡ URGENTE</span>':""}</td>
       <td>${esc(o.area)}</td>
       <td>${esc(o.para)}${o.esSus?' <span class="rol-tag">suscripción</span>':""}</td>
       <td class="mono" style="text-align:right">${fmtM(totalDe(o))}</td>
@@ -775,7 +778,7 @@ function renderLista(){
 
 /* ═════════ Excel ═════════ */
 $("btn-excel").onclick=()=>{
-  const rows=ordsVisibles().map(o=>({Folio:o.folio,"Fecha solicitud":fmtF(o.fechaSol),Solicitante:o.solicitante,"Área":o.area,
+  const rows=ordsVisibles().map(o=>({Folio:o.folio,"Fecha solicitud":fmtF(o.fechaSol),Solicitante:nombreDe(o.solicitante),"Área":o.area,
     "Se necesita para":o.para,Prioridad:o.prioridad,Tipo:o.esSus?"Suscripción":"Única",Estatus:o.estatus,
     "Proveedor elegido":o.aut?o.aut.prov:"","Tarjeta":o.aut?o.aut.tarjeta:"","Fecha de pedido":o.aut?fmtF(o.aut.fecha):"",
     "Total estimado":o.partidas.reduce((s,p)=>s+p.cant*p.costo,0),"Total autorizado":o.aut?o.aut.items.reduce((s,i)=>s+i.cant*i.costo,0):"",
@@ -807,7 +810,7 @@ function abrirDetalle(f,silencio){
     <span class="chip ch-${o.estatus}">${o.estatus}</span>${o.esSus?'<span class="rol-tag">Suscripción</span>':""}<button class="x" id="m-x">✕</button></div><div class="modal-cuerpo">`;
   h+=rutaHTML(o);
   h+=`<div class="seccion">Datos generales</div><div class="dg-ver">
-    <div class="par"><b>Solicitante</b>${esc(o.solicitante)}</div>
+    <div class="par"><b>Solicitante</b>${esc(nombreDe(o.solicitante))}</div>
     <div class="par"><b>Fecha de solicitud</b><span class="mono">${fmtF(o.fechaSol)}</span></div>
     <div class="par"><b>Pirámide</b>${esc(o.area)}</div>
     <div class="par"><b>Prioridad</b>${o.prioridad==="Urgente"?'<span class="urg">⚡ URGENTE</span>':"Normal"}</div>
@@ -832,7 +835,7 @@ function abrirDetalle(f,silencio){
         <div class="campo"><label>Proveedor elegido</label><input id="aut-prov" placeholder="Ej. ABASTEO (Opción 1)"></div>
         <div class="campo"><label>Fecha de pedido</label><input id="aut-fecha" type="date" value="${hoyISO()}"></div>
       </div>
-      <div class="campo" style="margin-top:10px"><label>Tarjeta en uso</label><div class="radios">
+      <div class="campo" style="margin-top:10px"><label>Tarjeta para pago</label><div class="radios">
         ${TARJETAS.map((t,i)=>`<label><input type="radio" name="aut-tarj" value="${esc(t)}" ${i===1?"checked":""}>${esc(t)}</label>`).join("")}
         <label><input type="radio" name="aut-tarj" value="__otra">Otra: <input id="aut-tarj-otra" style="width:130px;padding:4px 8px" placeholder="¿cuál?"></label>
       </div></div>
@@ -854,9 +857,9 @@ function abrirDetalle(f,silencio){
     const totAut=o.aut.items.reduce((s,i)=>s+i.cant*i.costo,0);
     h+=`<div class="seccion">Autorización de compra</div><div class="dg-ver">
       <div class="par"><b>Proveedor elegido</b>${esc(o.aut.prov)}</div>
-      <div class="par"><b>Tarjeta en uso</b>${esc(o.aut.tarjeta)}</div>
+      <div class="par"><b>Tarjeta para pago</b>${esc(o.aut.tarjeta)}</div>
       <div class="par"><b>Fecha de pedido</b><span class="mono">${fmtF(o.aut.fecha)}</span></div>
-      <div class="par"><b>Autorizó</b>${esc(o.aut.quien)}</div>
+      <div class="par"><b>Autorizó</b>${esc(nombreDe(o.aut.quien))}</div>
       ${o.aut.firma?`<div class="par" style="grid-column:1/-1"><b>Firma digital</b><img src="${o.aut.firma}" alt="Firma del autorizador" style="max-width:220px;border:1px solid var(--linea);border-radius:6px;background:#fff;display:block;margin-top:3px"></div>`:""}</div>
       <div class="tabla-scroll" style="margin-top:10px"><table class="doc"><thead><tr><th>N.º</th><th>Cant.</th><th>Producto / descripción</th><th>Proveedor</th><th>Costo unit.</th><th>Envío</th></tr></thead><tbody>`+
       o.aut.items.map((p,i)=>`<tr><td class="mono">${String(i+1).padStart(2,"0")}</td><td>${p.cant}</td><td>${esc(p.desc)}</td><td>${esc(o.aut.prov)}</td><td class="mono">${fmtM(p.costo)}</td><td>${esc(p.envio)}</td></tr>`).join("")+
@@ -887,7 +890,7 @@ function abrirDetalle(f,silencio){
       <div class="par"><b>Forma de pago</b>${esc(o.pago.forma||"—")}</div>
       <div class="par"><b>Nº de factura</b>${esc(o.pago.factura)}</div>
       ${o.pago.uuid?`<div class="par"><b>Folio fiscal</b><span class="mono" style="word-break:break-all">${esc(o.pago.uuid)}</span></div>`:""}
-      <div class="par"><b>Registró</b>${esc(o.pago.quien)}</div>
+      <div class="par"><b>Registró</b>${esc(nombreDe(o.pago.quien))}</div>
       ${o.susId?`<div class="par"><b>Suscripción</b><button class="btn btn-borde" data-versus="${o.susId}" style="padding:4px 12px;font-size:12.5px">🔁 ${o.susId} — ver suscripción</button></div>`:""}</div>`;
     if(o.pago.archivos&&o.pago.archivos.length)h+=`<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">`+
       o.pago.archivos.map((a,i)=>`<button class="btn btn-borde" data-fact-i="${i}" style="padding:6px 13px;font-size:12.5px">📎 ${esc(a.nombre)}</button>`).join("")+`</div>`;
@@ -899,10 +902,10 @@ function abrirDetalle(f,silencio){
 
   // Comentarios
   h+=`<div class="seccion">Comentarios</div><div id="coms-wrap">`+
-    ((o.coms&&o.coms.length)?o.coms.map(c=>`<div class="coment"><span class="quien">${esc(c.u)}</span><span class="cuando mono">${esc(c.f)}</span><div>${esc(c.t)}</div></div>`).join(""):`<div style="color:var(--grafito);font-size:13px">Sin comentarios.</div>`)+
+    ((o.coms&&o.coms.length)?o.coms.map(c=>`<div class="coment"><span class="quien">${esc(nombreDe(c.u))}</span><span class="cuando mono">${esc(c.f)}</span><div>${esc(c.t)}</div></div>`).join(""):`<div style="color:var(--grafito);font-size:13px">Sin comentarios.</div>`)+
     `</div><div style="display:flex;gap:8px;margin-top:8px"><input id="com-txt" placeholder="Agregar comentario o recomendación…"><button class="btn btn-borde" id="com-add">Comentar</button></div>`;
   // Historial
-  h+=`<div class="seccion">Historial</div>`+(o.hist||[]).map(x=>`<div class="hist-item"><span class="mono">${esc(x.f)}</span> · <b>${esc(x.u)}</b> — ${esc(x.a)}</div>`).join("");
+  h+=`<div class="seccion">Historial</div>`+(o.hist||[]).map(x=>`<div class="hist-item"><span class="mono">${esc(x.f)}</span> · <b>${esc(nombreDe(x.u))}</b> — ${esc(x.a)}</div>`).join("");
   h+=`</div>`; // cuerpo
 
   // Acciones pie
@@ -1189,11 +1192,11 @@ function abrirSus(id,silencio){
     h+=`<div class="tabla-scroll"><table class="doc"><thead><tr><th>Fecha</th><th>Monto</th><th>Factura</th><th>Vigencia hasta</th><th>Archivos</th><th>Registró</th></tr></thead><tbody>`+
       x.pagos.map(p=>`<tr><td class="mono">${fmtF(p.fecha)}</td><td class="mono">${fmtM(p.monto)}</td><td>${esc(p.factura)}${p.link?` · <a href="${esc(p.link)}" target="_blank" rel="noopener">↗</a>`:""}</td><td class="mono">${fmtF(p.vence)}</td>
         <td>${(p.archivos||[]).map((a,i)=>`<button class="btn btn-borde" data-sfk="${esc(p.fkey)}" data-si="${i}" style="padding:3px 9px;font-size:11.5px;margin:1px">📎 ${esc(a.nombre)}</button>`).join("")||"—"}</td>
-        <td>${esc(p.quien)}</td></tr>`).join("")+`</tbody></table></div>`;
+        <td>${esc(nombreDe(p.quien))}</td></tr>`).join("")+`</tbody></table></div>`;
     const totP=x.pagos.reduce((s,p)=>s+(parseFloat(p.monto)||0),0);
     h+=`<div class="total-linea"><span>Total pagado:</span><b class="mono">${fmtM(totP)}</b></div>`;
   }else h+=`<div style="color:var(--grafito);font-size:13px">Aún sin pagos registrados.</div>`;
-  h+=`<div class="seccion">Historial</div>`+(x.hist||[]).map(e=>`<div class="hist-item"><span class="mono">${esc(e.f)}</span> · <b>${esc(e.u)}</b> — ${esc(e.a)}</div>`).join("");
+  h+=`<div class="seccion">Historial</div>`+(x.hist||[]).map(e=>`<div class="hist-item"><span class="mono">${esc(e.f)}</span> · <b>${esc(nombreDe(e.u))}</b> — ${esc(e.a)}</div>`).join("");
   h+=`</div>`;
   let acc="";
   if(isAdmin()){
@@ -1263,7 +1266,7 @@ $("btn-sus-excel").onclick=()=>{
   const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rows),"Suscripciones");
   const pagos=[];xs.forEach(x=>(x.pagos||[]).forEach(p=>pagos.push({ID:x.id,Suscripción:x.nombre,"Fecha de pago":fmtF(p.fecha),
-    Monto:p.monto,"Nº factura":p.factura,"Vigencia hasta":fmtF(p.vence),"Registró":p.quien})));
+    Monto:p.monto,"Nº factura":p.factura,"Vigencia hasta":fmtF(p.vence),"Registró":nombreDe(p.quien)})));
   if(pagos.length)XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(pagos),"Pagos");
   XLSX.writeFile(wb,"suscripciones_RV.xlsx");
 };
@@ -1356,9 +1359,9 @@ $("btn-rep-excel").onclick=()=>{
   XLSX.utils.book_append_sheet(wb,hojaDe(d.porProv,"Proveedor"),"Por proveedor");
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(d.pagos.map(o=>({Folio:o.folio,"Fecha de pago":fmtF(o.pago.fecha),
     "Nº factura":o.pago.factura,"Folio fiscal":o.pago.uuid||"",Proveedor:o.aut?o.aut.prov:"","Forma de pago":o.pago.forma||"",
-    "Monto pagado":o.pago.monto,"Registró":o.pago.quien}))),"Pagos");
+    "Monto pagado":o.pago.monto,"Registró":nombreDe(o.pago.quien)}))),"Pagos");
   if(d.porMes)XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(d.porMes.map((v,i)=>({Mes:MESES[i],"Órdenes":v.cnt,"Monto":v.monto}))),"Por mes");
-  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(d.auts.map(o=>({Folio:o.folio,"Fecha de pedido":fmtF(o.aut.fecha),Solicitante:o.solicitante,
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(d.auts.map(o=>({Folio:o.folio,"Fecha de pedido":fmtF(o.aut.fecha),Solicitante:nombreDe(o.solicitante),
     "Pirámide":o.area,"Se necesita para":o.para,Proveedor:o.aut.prov,Tarjeta:o.aut.tarjeta,Estatus:o.estatus,Monto:sumAut(o)}))),"Detalle");
   XLSX.writeFile(wb,"reporte_compras_"+d.pref+".xlsx");
   toast("Reporte exportado");
@@ -1420,18 +1423,23 @@ function descargaWordOC(o){
 <table style="border:none"><tr><td style="border:none"><h1>Autorización para compra con tarjeta de crédito</h1><div class="sub">RUVALCABA VILLALOBOS · Consultores Fiscales · Orden de compra · Folio ${o.folio}</div></td><td style="border:none;text-align:right;width:64pt"><img src="logo.png" width="52"></td></tr></table>
 <div class="sec">Datos generales</div>
 <table><tr><td style="width:18%"><b>Folio</b></td><td style="width:32%">${o.folio}</td><td style="width:18%"><b>Fecha de pedido</b></td><td>${aut?fmtF(aut.fecha):""}</td></tr>
-<tr><td><b>Solicitante</b></td><td>${esc(o.solicitante)}</td><td><b>Pirámide</b></td><td>${esc(o.area)}</td></tr>
+<tr><td><b>Solicitante</b></td><td>${esc(nombreDe(o.solicitante))}</td><td><b>Pirámide</b></td><td>${esc(o.area)}</td></tr>
 <tr><td><b>Proveedor elegido</b></td><td>${aut?esc(aut.prov):""}</td><td><b>Prioridad</b></td><td>${o.prioridad==="Urgente"?"☒":"☐"} Urgente&nbsp;&nbsp;&nbsp;${o.prioridad==="Normal"?"☒":"☐"} Normal</td></tr>
-<tr><td><b>Tarjeta en uso</b></td><td>${marca("Servifis")} Servifis</td><td colspan="2">${marca("Ruvalcaba Villalobos Cía.")} Ruvalcaba Villalobos Cía.${aut&&!TARJETAS.includes(aut.tarjeta)?" &nbsp;·&nbsp; ☒ "+esc(aut.tarjeta):""}</td></tr></table>
+<tr><td><b>Tarjeta para pago</b></td><td>${marca("Servifis")} Servifis</td><td colspan="2">${marca("Ruvalcaba Villalobos Cía.")} Ruvalcaba Villalobos Cía.${aut&&!TARJETAS.includes(aut.tarjeta)?" &nbsp;·&nbsp; ☒ "+esc(aut.tarjeta):""}</td></tr></table>
 <div class="sec">${aut?"Producto del pedido":"Productos cotizados — marcar la opción a autorizar"}</div>
 <table><tr><th style="width:6%">N.º</th><th style="width:7%">Cant.</th><th>Producto / descripción</th><th style="width:16%">Proveedor</th><th style="width:13%">Costo unit.</th><th style="width:9%">Envío</th></tr>${filas}
 <tr><td colspan="4" style="text-align:right"><b>Total del pedido (IVA y envío incluido)</b></td><td><b>${tot===null?"":fmtM(tot)}</b></td><td></td></tr></table>
 ${o.obs?`<div class="sec">Observaciones / recomendación de la solicitud</div><div style="font-size:9.5pt;border:1pt solid #999;background:#FBF7EC;padding:5pt">${esc(o.obs)}</div>`:""}
-${aut&&aut.obs?`<div class="sec">Observaciones de la autorización</div><div style="font-size:9.5pt;border:1pt solid #999;background:#FBF7EC;padding:5pt">${esc(aut.obs)}</div>`:""}
-<table style="border:none;margin-top:26pt;page-break-inside:avoid"><tr>
-<td style="border:none;width:42%;text-align:center;border-top:1pt solid #000;padding-top:4pt"><b>Autorización del socio</b><br><span style="font-size:9pt">Nombre, firma y fecha</span></td>
+${aut?(aut.obs?`<div class="sec">Observaciones de la autorización</div><div style="font-size:9.5pt;border:1pt solid #999;background:#FBF7EC;padding:5pt">${esc(aut.obs)}</div>`:""):`<div class="sec">Observaciones de la autorización</div><div style="border:1pt solid #999;height:42pt"></div>`}
+<table style="border:none;margin-top:48pt;page-break-inside:avoid"><tr>
+<td style="border:none;width:42%;text-align:center;border-top:1pt solid #000;padding-top:4pt"><b>Solicitante — ${esc(nombreDe(o.solicitante))}</b><br><span style="font-size:9pt">Nombre, firma y fecha</span></td>
 <td style="border:none;width:16%"></td>
-<td style="border:none;width:42%;text-align:center;border-top:1pt solid #000;padding-top:4pt"><b>Solicitante — ${esc(o.solicitante)}</b><br><span style="font-size:9pt">firma y fecha</span></td>
+<td style="border:none;width:42%;text-align:center;border-top:1pt solid #000;padding-top:4pt"><b>Autorización del socio</b><br><span style="font-size:9pt">Nombre, firma y fecha</span></td>
+</tr>
+<tr><td colspan="3" style="border:none;height:30pt"></td></tr>
+<tr>
+<td style="border:none"></td><td style="border:none"></td>
+<td style="border:none;text-align:center;border-top:1pt solid #000;padding-top:4pt"><b>Administración</b><br><span style="font-size:9pt">Nombre, firma y fecha</span></td>
 </tr></table></body></html>`;
   const logo64=LOGO_FULL.split(",")[1].replace(/(.{76})/g,"$1\r\n");
   const mht=["MIME-Version: 1.0",'Content-Type: multipart/related; boundary="RV-OC"',"","--RV-OC",'Content-Type: text/html; charset="utf-8"',"Content-Location: documento.htm","",html,"","--RV-OC","Content-Type: image/png","Content-Transfer-Encoding: base64","Content-Location: logo.png","",logo64,"--RV-OC--",""].join("\r\n");
@@ -1442,15 +1450,17 @@ ${aut&&aut.obs?`<div class="sec">Observaciones de la autorización</div><div sty
 function prCab(tit,sub){return `<div class="pr-cab"><div class="pr-tit"><h1>${tit}</h1><div class="sub">RUVALCABA VILLALOBOS · Consultores Fiscales · ${sub}</div></div>
   <div class="pr-marca"><img class="pr-logo" src="${LOGO_FULL}" alt="Ruvalcaba Villalobos"></div></div>`}
 function prFirmas(o,firmaAut,firmaSol){return `<div class="pr-firmas">
-  <div class="pr-firma">${firmaAut?`<img src="${firmaAut}" style="height:11mm;display:block;margin:0 auto 1mm">`:`<div style="height:11mm"></div>`}<div class="raya"><b>Autorización del socio</b><br>${firmaAut?`<span style="font-size:9px">Firmado digitalmente por ${esc(o.aut.quien)} · ${fmtF(o.aut.fecha)} — validar con firma en papel</span>`:"Nombre, firma y fecha"}</div></div>
-  <div class="pr-firma">${firmaSol?`<img src="${firmaSol}" style="height:11mm;display:block;margin:0 auto 1mm">`:`<div style="height:11mm"></div>`}<div class="raya"><b>Solicitante — ${esc(o.solicitante)}</b><br>${firmaSol?`<span style="font-size:9px">Firmado digitalmente · ${fmtF(o.fechaSol)}</span>`:"firma y fecha"}</div></div></div>`}
+  <div class="pr-firma">${firmaSol?`<img src="${firmaSol}" style="height:11mm;display:block;margin:0 auto 1mm">`:`<div style="height:11mm"></div>`}<div class="raya"><b>Solicitante — ${esc(nombreDe(o.solicitante))}</b><br>${firmaSol?`<span style="font-size:9px">Firmado digitalmente · ${fmtF(o.fechaSol)}</span>`:"Nombre, firma y fecha"}</div></div>
+  <div class="pr-firma">${firmaAut?`<img src="${firmaAut}" style="height:11mm;display:block;margin:0 auto 1mm">`:`<div style="height:11mm"></div>`}<div class="raya"><b>Autorización del socio</b><br>${firmaAut?`<span style="font-size:9px">Firmado digitalmente por ${esc(nombreDe(o.aut.quien))} · ${fmtF(o.aut.fecha)} — validar con firma en papel</span>`:"Nombre, firma y fecha"}</div></div></div>
+<div class="pr-firmas" style="margin-top:12mm;justify-content:flex-end">
+  <div class="pr-firma"><div style="height:11mm"></div><div class="raya"><b>Administración</b><br>Nombre, firma y fecha</div></div></div>`}
 function imprimir(o,tipo){
   let h="";
   if(tipo==="sol"){
     h=`<div class="pr-hoja">`+prCab("Solicitud de compra","Solicitud de compra")+
     `<div class="pr-sec">Datos generales</div><table class="pr-t"><tr>
       <td style="width:16%"><b>Folio</b></td><td style="width:34%">${o.folio}</td><td style="width:20%"><b>Fecha de solicitud</b></td><td>${fmtF(o.fechaSol)}</td></tr>
-      <tr><td><b>Solicitante</b></td><td>${esc(o.solicitante)}</td><td><b>Pirámide</b></td><td>${esc(o.area)}</td></tr>
+      <tr><td><b>Solicitante</b></td><td>${esc(nombreDe(o.solicitante))}</td><td><b>Pirámide</b></td><td>${esc(o.area)}</td></tr>
       <tr><td><b>Prioridad</b></td><td>${o.prioridad}</td><td><b>Se necesita para</b></td><td>${esc(o.para)}</td></tr></table>
     <div class="pr-sec">Productos cotizados</div><table class="pr-t"><tr><th>N.º</th><th>Cant.</th><th>Producto / descripción</th><th>Justificación (para qué o para quién)</th><th>Producto solicitado para</th><th>Costo unit. est.</th><th>Envío</th></tr>`+
     o.partidas.map((p,i)=>`<tr><td>${String(i+1).padStart(2,"0")}</td><td>${p.cant}</td><td>${esc(p.desc)}</td><td>${esc(p.just)}</td><td>${esc(p.para)}</td><td>${fmtM(p.costo)}</td><td>${esc(p.envio)}</td></tr>`).join("")+
@@ -1461,9 +1471,9 @@ function imprimir(o,tipo){
     h=`<div class="pr-hoja">`+prCab("Autorización para compra con tarjeta de crédito","Orden de compra")+
     `<div class="pr-sec">Datos generales</div><table class="pr-t"><tr>
       <td style="width:18%"><b>Folio</b></td><td style="width:32%">${o.folio}</td><td style="width:18%"><b>Fecha de pedido</b></td><td>${fmtF(o.aut.fecha)}</td></tr>
-      <tr><td><b>Solicitante</b></td><td>${esc(o.solicitante)}</td><td><b>Pirámide</b></td><td>${esc(o.area)}</td></tr>
+      <tr><td><b>Solicitante</b></td><td>${esc(nombreDe(o.solicitante))}</td><td><b>Pirámide</b></td><td>${esc(o.area)}</td></tr>
       <tr><td><b>Proveedor elegido</b></td><td>${esc(o.aut.prov)}</td><td><b>Prioridad</b></td><td>${o.prioridad==="Urgente"?"☒":"☐"} Urgente&nbsp;&nbsp;${o.prioridad==="Normal"?"☒":"☐"} Normal</td></tr>
-      <tr><td><b>Tarjeta en uso</b></td><td>${marca("Servifis")} Servifis</td><td colspan="2">${marca("Ruvalcaba Villalobos Cía.")} Ruvalcaba Villalobos Cía.${TARJETAS.includes(o.aut.tarjeta)?"":" &nbsp;·&nbsp; ☒ "+esc(o.aut.tarjeta)}</td></tr></table>
+      <tr><td><b>Tarjeta para pago</b></td><td>${marca("Servifis")} Servifis</td><td colspan="2">${marca("Ruvalcaba Villalobos Cía.")} Ruvalcaba Villalobos Cía.${TARJETAS.includes(o.aut.tarjeta)?"":" &nbsp;·&nbsp; ☒ "+esc(o.aut.tarjeta)}</td></tr></table>
     <div class="pr-sec">Producto del pedido</div><table class="pr-t"><tr><th>N.º</th><th>Cant.</th><th>Producto / descripción</th><th>Proveedor</th><th>Costo unit.</th><th>Envío</th></tr>`+
     o.aut.items.map((p,i)=>`<tr><td>${String(i+1).padStart(2,"0")}</td><td>${p.cant}</td><td>${esc(p.desc)}</td><td>${esc(o.aut.prov)}</td><td>${fmtM(p.costo)}</td><td>${esc(p.envio)}</td></tr>`).join("")+
     `<tr><td colspan="4" style="text-align:right"><b>Total del pedido (IVA y envío incluido)</b></td><td><b>${fmtM(tot)}</b></td><td></td></tr></table>`+
