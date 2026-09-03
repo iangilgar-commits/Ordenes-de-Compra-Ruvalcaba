@@ -402,6 +402,14 @@ table.lista tbody tr:hover td{background:#FBFAF6}
             <div style="font-size:12px;color:var(--grafito);margin-top:12px">Aparecen como sugerencias al crear solicitudes y dar de alta usuarios. Quitar una no afecta las órdenes ya guardadas.</div>
           </div>
         </div>
+        <div class="hoja">
+          <div class="hoja-cab"><h2>Correo de notificaciones</h2></div>
+          <div class="hoja-cuerpo">
+            <div class="campo"><label>Enviar resúmenes de órdenes a</label><input id="cfg-correo" type="email" placeholder="anabel.garcia@ruvicia.com"></div>
+            <button class="btn btn-rojo" id="btn-cfg-correo">Guardar</button>
+            <div style="font-size:12px;color:var(--grafito);margin-top:12px">Se usa en el botón "✉️ Enviar por correo" de cada orden, y al registrar un pago se abre el borrador automáticamente.</div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -420,7 +428,7 @@ const LOGO_FULL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAABxCAIAAAAiQ
 const LOGO_MARK="data:image/png;base64,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";
 document.querySelectorAll(".logo-full").forEach(i=>i.src=LOGO_FULL);
 document.querySelectorAll(".logo-mark").forEach(i=>i.src=LOGO_MARK);
-const APP_VER="v3.6";
+const APP_VER="v3.7";
 document.getElementById("ver-login").textContent=APP_VER+" · 17 ago 2026";
 document.getElementById("ver-top").textContent=APP_VER;
 let db=null,_ready=false;
@@ -445,6 +453,7 @@ let _firmaSolTiene=false,_firmaSolCanvas=null,_firmaSolCtx=null;
 const ESTATUS_FLUJO=["Pendiente","Autorizada","Ordenada","Recibida","Pagada"];
 const TARJETAS=["Servifis","Ruvalcaba Villalobos Cía."];
 const PIR_DEF=["Administrativo","Sistemas","Contabilidad","Fiscal","Auditoría","Nóminas","Dirección"];
+let correoAdmin="anabel.garcia@ruvicia.com";
 let pirsCache=null; // null = usar PIR_DEF hasta que llegue el catálogo de la base
 function getPirs(){return pirsCache&&pirsCache.length?pirsCache:PIR_DEF.slice()}
 function savePirs(arr){return db.ref(RAIZ+"/config/piramides").set(JSON.stringify(arr))}
@@ -506,6 +515,10 @@ function boot(){
       try{pirsCache=sn.val()?JSON.parse(sn.val()):null}catch(e){pirsCache=null}
       renderAreasDL();
       if(CU&&isAdmin()&&!$("view-usuarios").classList.contains("hide"))renderPirs();
+    });
+    db.ref(RAIZ+"/config/correoAdmin").on("value",sn=>{
+      if(sn.val())correoAdmin=sn.val();
+      const el=$("cfg-correo");if(el&&document.activeElement!==el)el.value=correoAdmin;
     });
     initLogin();
   }).catch(e=>{$("li-err").textContent="No se pudo conectar a la base: "+e.message});
@@ -622,6 +635,12 @@ $("btn-add-pir").onclick=()=>{
   savePirs([...getPirs(),n]).then(()=>{$("pir-nueva").value="";toast("Pirámide agregada: "+n)});
 };
 $("pir-nueva").addEventListener("keydown",e=>{if(e.key==="Enter")$("btn-add-pir").click()});
+$("btn-cfg-correo").onclick=()=>{
+  if(!isAdmin())return;
+  const c=$("cfg-correo").value.trim();
+  if(!c.includes("@")){toast("Escribe un correo válido");return}
+  db.ref(RAIZ+"/config/correoAdmin").set(c).then(()=>toast("Correo de notificaciones guardado"));
+};
 let userEditando=null;
 function renderUsers(){
   const us=allUsers().sort((a,b)=>a.n.localeCompare(b.n));
@@ -936,7 +955,7 @@ function abrirDetalle(f,silencio){
   h+=`</div>`; // cuerpo
 
   // Acciones pie
-  let acc=`<button class="btn btn-borde" id="btn-print-sol">🖨 Imprimir solicitud</button>`;
+  let acc=`<button class="btn btn-borde" id="btn-print-sol">🖨 Imprimir solicitud</button><button class="btn btn-borde" id="btn-correo">✉️ Enviar por correo</button>`;
   if(o.aut)acc+=`<button class="btn btn-borde" id="btn-print-oc">🖨 Imprimir autorización</button>`;
   if(esPend||o.aut)acc+=`<button class="btn btn-borde" id="btn-word-oc">⬇ Formato Word para autorización</button>`;
   if(esPend&&(isAdmin()||o.solicitante===CU.n))acc+=`<button class="btn btn-borde" id="btn-editar">✎ Editar</button>`;
@@ -963,6 +982,7 @@ function abrirDetalle(f,silencio){
     oRef().child(f).remove().then(()=>{fRef(f).remove();cerrarModal();toast("Folio "+f+" eliminado")})};
   const bpg=$("btn-registrar-pago");if(bpg)bpg.onclick=()=>registrarPago(o);
   const bps=$("btn-print-sol");if(bps)bps.onclick=()=>imprimir(o,"sol");
+  const bco=$("btn-correo");if(bco)bco.onclick=()=>correoOrden(o);
   const bpo=$("btn-print-oc");if(bpo)bpo.onclick=()=>imprimir(o,"oc");
   const bwo=$("btn-word-oc");if(bwo)bwo.onclick=()=>descargaWordOC(o);
   document.querySelectorAll("[data-fact-i]").forEach(b=>b.onclick=()=>descargaFactura(o,+b.dataset.factI));
@@ -1074,7 +1094,7 @@ function registrarPago(o){
       });
     };
     formSucio=false;
-    crearSus().then(()=>saveOrd(o)).then(()=>toast(o.susId?"Pago registrado · Suscripción "+o.susId+" activa":"Pago registrado · Folio "+o.folio+" cerrado")).catch(e=>{toast("Error: "+e.message);revive()});
+    crearSus().then(()=>saveOrd(o)).then(()=>{toast(o.susId?"Pago registrado · Suscripción "+o.susId+" activa":"Pago registrado · Folio "+o.folio+" cerrado");setTimeout(()=>correoOrden(o),700)}).catch(e=>{toast("Error: "+e.message);revive()});
   };
   if(!files.length){listo([]);return}
   toast("Subiendo factura…");
@@ -1475,6 +1495,40 @@ ${aut&&aut.obs?`<div class="sec">Observaciones de la autorización</div><div sty
   const hdrHtml=`<html><head><meta charset="utf-8"></head><body><div style="mso-element:header" id="h1"><p class="MsoHeader" style="font-size:8.5pt;color:#555;margin:0;border-bottom:1pt solid #bbb;padding-bottom:2pt">Autorización para compra con tarjeta de crédito · Folio ${o.folio} · ${esc(nombreDe(o.solicitante))} — continuación</p></div></body></html>`;
   const mht=["MIME-Version: 1.0",'Content-Type: multipart/related; boundary="RV-OC"',"","--RV-OC",'Content-Type: text/html; charset="utf-8"',"Content-Location: documento.htm","",html,"","--RV-OC",'Content-Type: text/html; charset="utf-8"',"Content-Location: header.htm","",hdrHtml,"","--RV-OC","Content-Type: image/png","Content-Transfer-Encoding: base64","Content-Location: logo.png","",logo64,"--RV-OC--",""].join("\r\n");
   descargaBlob(mht,"application/msword","OC-"+o.folio+"_autorizacion.doc");
+}
+
+/* ═════════ Correo con el resumen de la orden ═════════ */
+function correoOrden(o){
+  const tot=totalDe(o);
+  let cuerpo="Orden de compra "+o.folio+" — "+o.estatus+"\r\n"+
+    "Ruvalcaba Villalobos · Consultores Fiscales\r\n\r\n"+
+    "Solicitante: "+nombreDe(o.solicitante)+"\r\n"+
+    "Pirámide: "+o.area+"\r\n"+
+    "Se necesita para: "+o.para+"\r\n"+
+    "Prioridad: "+o.prioridad+(o.esSus?" · Suscripción/licencia":"")+"\r\n";
+  if(o.aut){
+    cuerpo+="\r\nAUTORIZACIÓN\r\n"+
+      "Proveedor elegido: "+o.aut.prov+"\r\n"+
+      "Tarjeta para pago: "+o.aut.tarjeta+"\r\n"+
+      "Fecha de pedido: "+fmtF(o.aut.fecha)+"\r\n"+
+      "Total (IVA y envío incluido): "+fmtM(o.aut.items.reduce((a,i)=>a+i.cant*i.costo,0))+"\r\n"+
+      "Autorizó: "+nombreDe(o.aut.quien)+"\r\n";
+  }else{
+    cuerpo+="Total estimado: "+fmtM(tot)+"\r\n";
+  }
+  if(o.pago){
+    cuerpo+="\r\nPAGO\r\n"+
+      "Fecha de pago: "+fmtF(o.pago.fecha)+"\r\n"+
+      "Nº de factura: "+o.pago.factura+"\r\n"+
+      "Monto pagado: "+fmtM(o.pago.monto)+"\r\n"+
+      "Registró: "+nombreDe(o.pago.quien)+"\r\n";
+    if(o.susId)cuerpo+="Suscripción activada: "+o.susId+"\r\n";
+  }
+  cuerpo+="\r\nVer la orden completa en la plataforma:\r\n"+location.origin+location.pathname+"\r\n\r\n— Enviado desde la plataforma de Órdenes de compra";
+  const asunto="Orden de compra "+o.folio+" · "+o.estatus+" — "+o.para;
+  const a=document.createElement("a");
+  a.href="mailto:"+encodeURIComponent(correoAdmin)+"?subject="+encodeURIComponent(asunto)+"&body="+encodeURIComponent(cuerpo);
+  document.body.appendChild(a);a.click();setTimeout(()=>a.remove(),300);
 }
 
 /* ═════════ Impresión (réplica de sus formatos) ═════════ */
